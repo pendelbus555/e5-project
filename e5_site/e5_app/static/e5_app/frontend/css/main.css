@@ -17,3 +17,16 @@
     top: 0;
     background: rgba(0, 0, 0, 0.6);
 }
+
+.custom-description {
+	left: 50%;
+	position: absolute;
+	top: 45%;
+	transform: translate(-50%, -55%);
+	text-align: center;
+}
+custom-description p {
+	font-size: 1.3rem;
+	line-height: 1.5;
+}
+
