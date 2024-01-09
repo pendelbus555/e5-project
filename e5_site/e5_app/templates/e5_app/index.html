@@ -1,6 +1,10 @@
 {% load static %}
 <!-- Bootstrap -->
-<link href="{% static 'e5_site/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'e5_app/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<script src="{% static 'e5_app/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Custom -->
+<link href="{% static 'e5_app/frontend/css/main.css' %}" rel="stylesheet">
 
 
 <!DOCTYPE html>
@@ -11,14 +15,12 @@
 </head>
 <body>
 
-<!-- Bootstrap -->
-<script src="{% static 'e5_site/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
 
 <nav class="navbar navbar-expand-lg bg-light-subtle" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img src="{% static 'e5_site/frontend/images/main_icon.png' %}" alt="Bootstrap"
+            <img src="{% static 'e5_app/frontend/images/main_icon.png' %}" alt="Bootstrap"
                  width="40" height="30">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -105,37 +107,38 @@
 
 
 
+<header class="custom-header container-fluid ">
+   <div class="custom-overlay"></div>
+</header>
 
 
 
 
 
 
-<div class="container my-5">
     <footer class="bg-light-subtle text-center text-white" data-bs-theme="dark">
-        <div class="container p-4 pb-0">
-            <section class="mb-4">
+        <div class="container ">
+            <section>
                 <!-- Vk -->
-                <a class="btn btn-outline-light btn-floating m-1" href="https://vk.com/kafedra_e5" role="button">
-                    <img src="{% static 'e5_site/frontend/images/vk_icon.png' %}" alt="Вконтакте" style="width:40px;height:40px;">
+                <a class="btn btn-outline-dark btn-floating m-1" href="https://vk.com/kafedra_e5" role="button">
+                    <img src="{% static 'e5_app/frontend/images/vk_icon.png' %}" alt="Вконтакте" style="width:40px;height:40px;">
                 </a>
                 <!-- Youtube-->
-                <a class="btn btn-outline-light btn-floating m-1 btn-social-icon" href="https://www.youtube.com/channel/UC2zKy154i-Z01BJgu_bMPBQ" role="button">
-                    <img src="{% static 'e5_site/frontend/images/youtube_icon.png' %}" alt="Ютуб" style="width:40px;height:40px;color:white;">
+                <a class="btn btn-outline-dark btn-floating m-1 btn-social-icon" href="https://www.youtube.com/channel/UC2zKy154i-Z01BJgu_bMPBQ" role="button">
+                    <img src="{% static 'e5_app/frontend/images/youtube_icon.png' %}" alt="Ютуб" style="width:40px;height:40px;color:white;">
                 </a>
             </section>
         </div>
         <!-- Copyright -->
-        <div class="text-end p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <div class="text-end pe-3" style="background-color: rgba(0, 0, 0, 0.2);">
             105005, Москва, 2-я Бауманская ул., 5. МГТУ им. Н.Э.Баумана
         </div>
-        <div class="text-end p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <div class="text-end pe-3" style="background-color: rgba(0, 0, 0, 0.2);">
             8 (499) 263-62-64
         </div>
-        <div class="text-start p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <div class="text-start ps-3" style="background-color: rgba(0, 0, 0, 0.2);">
             Авторские права © 2024 Кафедра Э-5 Все права защищены.
         </div>
     </footer>
 
-</div>
 </body>
