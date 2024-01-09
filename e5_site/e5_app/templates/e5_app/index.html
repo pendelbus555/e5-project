@@ -7,23 +7,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Кафедра Э-5</title>
 </head>
 <body>
 
 <!-- Bootstrap -->
 <script src="{% static 'e5_site/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+
+<nav class="navbar navbar-expand-lg bg-light-subtle" data-bs-theme="dark">
     <div class="container-fluid">
-        <nav class="navbar bg-body-tertiary">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Bootstrap"
-                         width="30" height="24">
-                </a>
-            </div>
-        </nav>
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'e5_site/frontend/images/main_icon.png' %}" alt="Bootstrap"
+                 width="40" height="30">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -37,7 +34,7 @@
                     <a class="nav-link active" aria-current="page" href="#">Новости</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         Абитуриентам
                     </a>
@@ -52,7 +49,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         Студентам
                     </a>
@@ -68,7 +65,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         О кафедре
                     </a>
@@ -98,9 +95,47 @@
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Найти</button>
+                <button class="btn btn-outline-light" type="submit">Найти</button>
             </form>
         </div>
     </div>
 </nav>
+
+
+
+
+
+
+
+
+
+
+
+<div class="container my-5">
+    <footer class="bg-light-subtle text-center text-white" data-bs-theme="dark">
+        <div class="container p-4 pb-0">
+            <section class="mb-4">
+                <!-- Vk -->
+                <a class="btn btn-outline-light btn-floating m-1" href="https://vk.com/kafedra_e5" role="button">
+                    <img src="{% static 'e5_site/frontend/images/vk_icon.png' %}" alt="Вконтакте" style="width:40px;height:40px;">
+                </a>
+                <!-- Youtube-->
+                <a class="btn btn-outline-light btn-floating m-1 btn-social-icon" href="https://www.youtube.com/channel/UC2zKy154i-Z01BJgu_bMPBQ" role="button">
+                    <img src="{% static 'e5_site/frontend/images/youtube_icon.png' %}" alt="Ютуб" style="width:40px;height:40px;color:white;">
+                </a>
+            </section>
+        </div>
+        <!-- Copyright -->
+        <div class="text-end p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            105005, Москва, 2-я Бауманская ул., 5. МГТУ им. Н.Э.Баумана
+        </div>
+        <div class="text-end p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            8 (499) 263-62-64
+        </div>
+        <div class="text-start p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            Авторские права © 2024 Кафедра Э-5 Все права защищены.
+        </div>
+    </footer>
+
+</div>
 </body>
