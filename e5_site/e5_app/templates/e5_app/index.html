@@ -16,7 +16,6 @@
 <body>
 
 
-
 <nav class="navbar navbar-expand-lg bg-light-subtle" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
@@ -104,72 +103,127 @@
 </nav>
 
 
+<!-- <header class="custom-header container-fluid">
+    <div class="custom-overlay"></div>
 
-
-
-<header class="custom-header container-fluid ">
-   <div class="custom-overlay"></div>
-
-   <div class="custom-description text-white">
-   	<h1>Кафедра Э-5 «Вакуумная и компрессорная техника»</h1>
-   	<p>Кафедра ведет подготовку универсальных специалистов в области создания систем для повышения давления и транспорта воздуха и газов, а также уникальных специалистов по разработке вакуумной техники.</p>
-   </div>
+    <div class="custom-description text-white text-center">
+        <h1>Кафедра Э-5 «Вакуумная и компрессорная техника»</h1>
+        <p>Кафедра ведет подготовку универсальных специалистов в области создания систем для повышения давления и
+            транспорта воздуха и газов, а также уникальных специалистов по разработке вакуумной техники.</p>
+    </div>
+</header> -->
+<header>
+    <div class="position-relative custom-background">
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.6)"></div>
+  <div class="position-absolute top-50 start-50 translate-middle text-white text-center">
+         <h1>Кафедра Э-5 «Вакуумная и компрессорная техника»</h1>
+        <p>Кафедра ведет подготовку универсальных специалистов в области создания систем для повышения давления и
+            транспорта воздуха и газов, а также уникальных специалистов по разработке вакуумной техники.</p>
+  </div>
+</div>
 </header>
 
 <main>
-   <div class="container-fluid text-center">
+    <div class="container-fluid text-center">
 
-       <h1>Новости</h1>
-       <div class="row">
-           <div class="col-md-3">
-               <p>first</p>
-           </div>
-           <div class="col-md-3">
-               p
-           </div>
-           <div class="col-md-3">
-               tgds
-           </div>
-           <div class="col-md-3">
-               sdf
-           </div>
-       </div>
+        <h1>Новости</h1>
 
 
+        <div class="row g-4">
+           <div class="col-xl-3 col-sm-6">
+                <div class="card custom-card mx-auto h-100">
+                    <img src="{% static 'e5_app/frontend/images/news_default.png' %}"
+                         class="card-img-top card-img-top-custom" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+           <div class="col-xl-3 col-sm-6">
+                <div class="card custom-card mx-auto h-100">
+                    <img src="{% static 'e5_app/frontend/images/news_default.png' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This card has supporting text below as a natural lead-in to additional
+                            content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+           <div class="col-xl-3 col-sm-6">
+                <div class="card custom-card mx-auto h-100">
+                    <img src="{% static 'e5_app/frontend/images/news_default.png' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This card has even longer content than the first to show that equal
+                            height
+                            action.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+           <div class="col-xl-3 col-sm-6">
+                <div class="card custom-card mx-auto h-100">
+                    <img src="{% static 'e5_app/frontend/images/news_default.png' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This card has even longer content than the first to show that equal
+                            height
+                            action.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-
-
-
-</div>
+    </div>
 
 </main>
 
 
-
-
-
-    <footer class="bg-light-subtle text-center text-white" data-bs-theme="dark">
-        <div class="container">
-                <!-- Vk -->
-                <a class="btn btn-outline-dark btn-floating m-1" href="https://vk.com/kafedra_e5" role="button">
-                    <img src="{% static 'e5_app/frontend/images/vk_icon.png' %}" alt="Вконтакте" style="width:40px;height:40px;">
-                </a>
-                <!-- Youtube-->
-                <a class="btn btn-outline-dark btn-floating m-1 btn-social-icon" href="https://www.youtube.com/channel/UC2zKy154i-Z01BJgu_bMPBQ" role="button">
-                    <img src="{% static 'e5_app/frontend/images/youtube_icon.png' %}" alt="Ютуб" style="width:40px;height:40px;color:white;">
-                </a>
-        </div>
-        <!-- Copyright -->
-        <div class="text-end pe-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            105005, Москва, 2-я Бауманская ул., 5. МГТУ им. Н.Э.Баумана
-        </div>
-        <div class="text-end pe-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            8 (499) 263-62-64
-        </div>
-        <div class="text-start ps-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            Авторские права © 2024 Кафедра Э-5 Все права защищены.
-        </div>
-    </footer>
+<footer class="bg-light-subtle text-center text-white" data-bs-theme="dark">
+    <div class="container">
+        <!-- Vk -->
+        <a class="btn btn-outline-dark btn-floating m-1" href="https://vk.com/kafedra_e5" role="button">
+            <img src="{% static 'e5_app/frontend/images/vk_icon.png' %}" alt="Вконтакте"
+                 style="width:40px;height:40px;">
+        </a>
+        <!-- Youtube-->
+        <a class="btn btn-outline-dark btn-floating m-1 btn-social-icon"
+           href="https://www.youtube.com/channel/UC2zKy154i-Z01BJgu_bMPBQ" role="button">
+            <img src="{% static 'e5_app/frontend/images/youtube_icon.png' %}" alt="Ютуб"
+                 style="width:40px;height:40px;color:white;">
+        </a>
+    </div>
+    <!-- Copyright -->
+    <div class="text-end pe-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        105005, Москва, 2-я Бауманская ул., 5. МГТУ им. Н.Э.Баумана
+    </div>
+    <div class="text-end pe-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        8 (499) 263-62-64
+    </div>
+    <div class="text-start ps-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        Авторские права © 2024 Кафедра Э-5 Все права защищены.
+    </div>
+</footer>
 
 </body>
