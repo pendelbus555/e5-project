@@ -115,22 +115,19 @@
 <header>
     <div class="position-relative custom-background">
         <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.6)"></div>
-  <div class="position-absolute top-50 start-50 translate-middle text-white text-center">
-         <h1>Кафедра Э-5 «Вакуумная и компрессорная техника»</h1>
-        <p>Кафедра ведет подготовку универсальных специалистов в области создания систем для повышения давления и
-            транспорта воздуха и газов, а также уникальных специалистов по разработке вакуумной техники.</p>
-  </div>
-</div>
+        <div class="position-absolute top-50 start-50 translate-middle text-white text-center">
+            <h1>Кафедра Э-5 «Вакуумная и компрессорная техника»</h1>
+            <p>Кафедра ведет подготовку универсальных специалистов в области создания систем для повышения давления и
+                транспорта воздуха и газов, а также уникальных специалистов по разработке вакуумной техники.</p>
+        </div>
+    </div>
 </header>
 
 <main>
     <div class="container-fluid text-center">
-
         <h1>Новости</h1>
-
-
         <div class="row g-4">
-           <div class="col-xl-3 col-sm-6">
+            <div class="col-xl-3 col-sm-6">
                 <div class="card custom-card mx-auto h-100">
                     <img src="{% static 'e5_app/frontend/images/news_default.png' %}"
                          class="card-img-top card-img-top-custom" alt="...">
@@ -146,7 +143,7 @@
                     </div>
                 </div>
             </div>
-           <div class="col-xl-3 col-sm-6">
+            <div class="col-xl-3 col-sm-6">
                 <div class="card custom-card mx-auto h-100">
                     <img src="{% static 'e5_app/frontend/images/news_default.png' %}" class="card-img-top" alt="...">
                     <div class="card-body">
@@ -160,7 +157,7 @@
                     </div>
                 </div>
             </div>
-           <div class="col-xl-3 col-sm-6">
+            <div class="col-xl-3 col-sm-6">
                 <div class="card custom-card mx-auto h-100">
                     <img src="{% static 'e5_app/frontend/images/news_default.png' %}" class="card-img-top" alt="...">
                     <div class="card-body">
@@ -176,7 +173,7 @@
                     </div>
                 </div>
             </div>
-           <div class="col-xl-3 col-sm-6">
+            <div class="col-xl-3 col-sm-6">
                 <div class="card custom-card mx-auto h-100">
                     <img src="{% static 'e5_app/frontend/images/news_default.png' %}" class="card-img-top" alt="...">
                     <div class="card-body">
@@ -193,9 +190,27 @@
                 </div>
             </div>
         </div>
-
-
     </div>
+
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
 
 </main>
 
