@@ -122,8 +122,13 @@
             {% for news in news_pg.object_list %}
             <div class="col-xl-3 col-sm-6">
                 <div class="card custom-card mx-auto h-100">
-                    <img src="{% static 'e5_app/frontend/images/news_default.png' %}"
+                    {% if not news.picture %}
+                     <img src="{% static 'e5_app/frontend/images/news_default.png' %}"
                          class="card-img-top card-img-top-custom" alt="...">
+                    {% else %}
+                    <img src="{{ news.picture.url }}"
+                         class="card-img-top card-img-top-custom" alt="...">
+                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ news.name }}</h5>
                         <p class="card-text">{{ news.description|truncatewords:17  }}</p>
