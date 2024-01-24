@@ -141,68 +141,31 @@
                 </div>
             </div>
             {% endfor %}
-           <!-- <div class="col-xl-3 col-sm-6">
-                <div class="card custom-card mx-auto h-100">
-                    <img src="{% static 'e5_app/frontend/images/news_default.png' %}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This card has supporting text below as a natural lead-in to additional
-                            content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-body-secondary">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6">
-                <div class="card custom-card mx-auto h-100">
-                    <img src="{% static 'e5_app/frontend/images/news_default.png' %}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This card has even longer content than the first to show that equal
-                            height
-                            action.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-body-secondary">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6">
-                <div class="card custom-card mx-auto h-100">
-                    <img src="{% static 'e5_app/frontend/images/news_default.png' %}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This card has even longer content than the first to show that equal
-                            height
-                            action.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-body-secondary">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </div>-->
         </div>
     </div>
 
+    <script>
+
+    </script>
 
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             {% if news_pg.has_previous %}
-            <li class="page-item"><a class="page-link" href="#" aria-label="Previous">&laquo;</a></li>
+            <li class="page-item"><a class="page-link" href="{% url 'index' %}" aria-label="Previous">&laquo;</a></li>
             {% else %}
             <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous">&laquo;</a></li>
             {% endif %}
+
+
             <li class="page-item"><a class="page-link" href="#">1</a></li>
+
             <li class="page-item"><a class="page-link" href="#">2</a></li>
+
             <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+
             {% if news_pg.has_next %}
-            <li class="page-item"><a class="page-link" href="#" aria-label="Next">&raquo;</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ news_pg.paginator.num_pages|safe }}" aria-label="Next">&raquo;</a></li>
             {% else %}
             <li class="page-item disabled"><a class="page-link" href="#" aria-label="Next">&raquo;</a></li>
             {% endif %}
