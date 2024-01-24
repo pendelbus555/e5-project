@@ -7,7 +7,6 @@ class News(models.Model):
     picture = models.ImageField(null=True, blank=True, upload_to='photos/news/%Y/%m')
     description = models.TextField(max_length=500, )
     created_at = models.DateTimeField(auto_now_add=True, )
-    updated_at = models.DateTimeField(auto_now=True, )
     def __repr__(self):
         return self.name
 
