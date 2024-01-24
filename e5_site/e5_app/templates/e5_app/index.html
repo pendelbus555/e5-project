@@ -144,9 +144,32 @@
         </div>
     </div>
 
-    <script>
 
-    </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function ajax_function(page) {
+    $.ajax({
+        url: '/site',
+        type: "get",
+        data: {
+            'page': page,
+        },
+        dataType: 'json',
+        success: function (data) {
+            alert(data);
+            console.log(data);
+             $('#id-of-your-choice').empty();
+             for (i = 0; i < data.result.length; i++) {
+             $('#id-of-your-choice').append(i);
+            }
+        }
+    });
+}
+</script>
+
+<button onclick="ajax_function('2')">2</button>
+
+
 
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
