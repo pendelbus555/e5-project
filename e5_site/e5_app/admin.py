@@ -6,25 +6,28 @@ from django.conf import settings
 
 # Register your models here.
 
-admin.site.site_header = 'Administration e5'
-
+admin.site.site_title = 'Сайт админа'
+admin.site.site_header = 'Администрирование Э5'
 
 @admin.register(News)
 class AdminSite(admin.ModelAdmin):
-    list_display = ['name', 'get_description', 'created_at', 'get_image']
+    list_display = ['name', 'get_description', 'get_image', 'created_at',]
     search_fields = ['name', ]
     date_hierarchy = 'created_at'
     list_filter = [
         ('created_at', DateRangeQuickSelectListFilterBuilder()),
     ]
 
+    @admin.display(description='Описание')
     def get_description(self, obj):
         if len(obj.description) > 30:
             return obj.description[:30] + '...'
         return obj.description
 
+    @admin.display(description='Картинка')
     def get_image(self, obj):
         if obj.picture:
             return mark_safe(f'<img src = "{obj.picture.url}" width = "50"/>')
         else:
             return mark_safe(f'<img src="{settings.STATIC_URL}e5_app/frontend/images/news_default.png" width="50"/>')
+
