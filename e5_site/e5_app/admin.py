@@ -11,12 +11,15 @@ admin.site.site_header = 'Администрирование Э5'
 
 @admin.register(News)
 class AdminSite(admin.ModelAdmin):
-    list_display = ['name', 'get_description', 'get_image', 'created_at',]
+    list_display = ['name', 'get_description', 'get_image', 'slug_url', 'created_at',]
     search_fields = ['name', ]
     date_hierarchy = 'created_at'
+
     list_filter = [
         ('created_at', DateRangeQuickSelectListFilterBuilder()),
     ]
+
+    prepopulated_fields = {"slug_url": ["name"]}
 
     @admin.display(description='Описание')
     def get_description(self, obj):
