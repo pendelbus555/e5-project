@@ -12,7 +12,7 @@ def index(request):
         starting_number = (page - 1) * 4
         ending_number = page * 4
         result = News.objects.all()[starting_number:ending_number]
-        result = list(result.values())
+        result = list(result.values('name', 'picture', 'description', 'created_at',))
         data = {'data_news' : result}
         return JsonResponse(data)
     else:
