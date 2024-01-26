@@ -107,7 +107,6 @@
     </div>
 </nav>
 
-
 <header>
     <div class="position-relative custom-background">
         <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.6)"></div>
@@ -124,16 +123,16 @@
         <h1>Новости</h1>
         <div class="row g-4">
 
-            {% for news in news_pg.object_list %}
+<!--            цикл-->
             <div class="col-xl-3 col-sm-6">
                 <div class="card custom-card mx-auto h-100">
-                    {% if not news.picture %}
+<!--                    если есть картинка-->
                     <img src="{% static 'e5_app/frontend/images/news_default.png' %}"
                          class="card-img-top card-img-top-custom" alt="...">
-                    {% else %}
+<!--                    в другом случае-->
                     <img src="{{ news.picture.url }}"
                          class="card-img-top card-img-top-custom" alt="...">
-                    {% endif %}
+<!--                    конец условия-->
                     <div class="card-body">
                         <h5 class="card-title">{{ news.name }}</h5>
                         <p class="card-text">{{ news.description|truncatewords:17 }}</p>
@@ -145,22 +144,15 @@
                     </div>
                 </div>
             </div>
-            {% endfor %}
+<!--            конец цикла-->
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
 
-    </script>
-
-    <button id="my_button">2</button>
-
-    <p id="my_id">hello</p>
 
 
     <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center custom-pagination">
             <li class="page-item">
                 <button class="page-link" aria-label="Previous" id="news_left">&laquo;</button>
             </li>

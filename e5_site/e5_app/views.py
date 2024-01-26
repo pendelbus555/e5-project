@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.core.paginator import Paginator
 from .models import News
 from django.core import serializers
-
+import math
 
 # Create your views here.
 
@@ -13,7 +13,7 @@ def index(request):
         starting_number = (page - 1) * 4
         ending_number = page * 4
         news = News.objects.all()
-        total_pages = news.count()
+        total_pages = math.ceil(news.count()/4)
         result = serializers.serialize('json', news[starting_number:ending_number],
                                        fields=['picture', 'name', 'description', 'created_at', 'slug_url', ])
         return JsonResponse({'data_news': result, 'total_pages': total_pages})

@@ -5,7 +5,7 @@
   position: relative;
   background-size: cover;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-repeat: no-repeat;
 }
 .custom-description p {
@@ -15,7 +15,7 @@
 .custom-card{
     max-width: 300px;
 }
-/*.card-img-top-custom{
-    max-width:300px;
-    max-height:300px;
+.custom-pagination > li > button:focus {
+  outline: none;
+  box-shadow: none;
 }
