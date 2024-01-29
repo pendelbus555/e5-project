@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import News
+from .models import News, Rubric
 from rangefilter.filters import DateRangeQuickSelectListFilterBuilder
 from django.utils.html import mark_safe
 from django.conf import settings
@@ -9,9 +9,10 @@ from django.conf import settings
 admin.site.site_title = 'Сайт админа'
 admin.site.site_header = 'Администрирование Э5'
 
+
 @admin.register(News)
-class AdminSite(admin.ModelAdmin):
-    list_display = ['name', 'get_description', 'get_image', 'slug_url', 'created_at',]
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ['name', 'get_description', 'get_image', 'slug_url', 'created_at', ]
     search_fields = ['name', ]
     date_hierarchy = 'created_at'
 
@@ -34,3 +35,5 @@ class AdminSite(admin.ModelAdmin):
         else:
             return mark_safe(f'<img src="{settings.STATIC_URL}e5_app/frontend/images/news_default.png" width="50"/>')
 
+
+admin.site.register(Rubric)
