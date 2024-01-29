@@ -36,7 +36,8 @@ def index(request):
         return render(request, 'e5_app/index.html')
 
 def news(request, rubric=0):
-    return HttpResponse('news')
+    return render(request, 'e5_app/news.html')
+
 
 def news_single(request, slug):
     return HttpResponse('news_single')
