@@ -122,29 +122,6 @@
     <div class="container-fluid text-center">
         <h1>Новости</h1>
         <div class="row g-4">
-
-<!--            цикл-->
-            <div class="col-xl-3 col-sm-6">
-                <div class="card custom-card mx-auto h-100">
-<!--                    если есть картинка-->
-                    <img src="{% static 'e5_app/frontend/images/news_default.png' %}"
-                         class="card-img-top card-img-top-custom" alt="...">
-<!--                    в другом случае-->
-                    <img src="{{ news.picture.url }}"
-                         class="card-img-top card-img-top-custom" alt="...">
-<!--                    конец условия-->
-                    <div class="card-body">
-                        <h5 class="card-title">{{ news.name }}</h5>
-                        <p class="card-text">{{ news.description|truncatewords:17 }}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-body-secondary">{{ news.created_at }}</small>
-                    </div>
-                </div>
-            </div>
-<!--            конец цикла-->
         </div>
     </div>
 

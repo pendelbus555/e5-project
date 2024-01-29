@@ -4,8 +4,6 @@ $(document).ready(function () {
 
 
     // Дополнительная логика пагинации, если нужно
-    console.log('pag_page', page);
-    console.log('pag_total', totalPage);
     if (page == 1) {
       $('#news_1').text(page);
       $('#news_2').text(page + 1);
@@ -30,8 +28,6 @@ $(document).ready(function () {
 
 
   function updateCards(data) {
-    var data_news = JSON.parse(data['data_news']);
-
     // Находим элемент "row g-4" для добавления карточек
     var rowElement = $('.row.g-4');
 
@@ -39,19 +35,19 @@ $(document).ready(function () {
     rowElement.empty();
 
     // Проходим по каждой новости и создаем карточку
-    $.each(data_news, function (index, news) {
+    $.each(data.data_news, function (index, news) {
       // Создаем HTML для карточки
       var cardInnerHtml = `
             <div class="col-xl-3 col-sm-6">
                 <div class="card custom-card mx-auto h-100">
-                    <img src="${news.fields.picture ? news.fields.picture.url : '{% static "e5_app/frontend/images/news_default.png" %}'}" class="card-img-top card-img-top-custom" alt="...">
+                    <img src="${news.picture_url}" class="card-img-top card-img-top-custom" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">${news.fields.name}</h5>
-                        <p class="card-text">${news.fields.description}</p>
+                        <h5 class="card-title">${news.name}</h5>
+                        <p class="card-text">${news.description}</p>
                         <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
                     <div class="card-footer">
-                        <small class="text-body-secondary">${news.fields.created_at}</small>
+                        <small class="text-body-secondary">${news.created_at}</small>
                     </div>
                 </div>
             </div>
@@ -65,7 +61,6 @@ $(document).ready(function () {
 
 
   function ajax_function(pageIn) {
-    console.log('start', pageIn);
     $.ajax({
       url: '/site',
       type: "get",
@@ -75,16 +70,12 @@ $(document).ready(function () {
       dataType: 'json',
       success: function (data) {
         console.log('succes', pageIn);
-        //console.log(data);
-        //console.log(data.total_pages);
-        totalPage = parseInt(data.total_pages);
-        page = parseInt(pageIn);
-        //console.log(data_news[0].fields.name);
+        totalPage = data.total_pages;
+        page = pageIn;
         updateCards(data);
         updatePagination(page, totalPage);
       }
     });
-    console.log('end', pageIn);
 
   }
 
