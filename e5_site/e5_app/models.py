@@ -14,6 +14,9 @@ class News(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return f'/site/news/{self.slug_url}'
+
     class Meta:
         verbose_name = 'Новости'
         verbose_name_plural = 'Новости'

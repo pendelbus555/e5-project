@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 from .models import News
 from django.core import serializers
 import math
@@ -33,3 +34,9 @@ def index(request):
 
     else:
         return render(request, 'e5_app/index.html')
+
+def news(request, rubric=0):
+    return HttpResponse('news')
+
+def news_single(request, slug):
+    return HttpResponse('news_single')
