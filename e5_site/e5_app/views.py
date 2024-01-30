@@ -7,15 +7,18 @@ from django.core import serializers
 import math
 from django.db.models import F
 from django.templatetags.static import static
+
+
 # Create your views here.
 
 def index(request):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         page = int(request.GET.get('page'))
-        starting_number = (page - 1) * 4
-        ending_number = page * 4
+        per_page = 4
+        starting_number = (page - 1) * per_page
+        ending_number = page * per_page
         news = News.objects.all()[starting_number:ending_number]
-        total_pages = math.ceil(News.objects.count()/4)
+        total_pages = math.ceil(News.objects.count() / per_page)
         serialized_news = []
         for n in news:
             news_data = {
@@ -35,11 +38,34 @@ def index(request):
     else:
         return render(request, 'e5_app/index.html')
 
+
 def news(request, rubric=0):
-    rubrics = Rubric.objects.all()
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        page = int(request.GET.get('page'))
+        segment = request.GET.get('segment')
+        per_page = 2
+        starting_number = (page - 1) * per_page
+        ending_number = page * per_page
+        if segment == 'news':
+            news = News.objects.all()[starting_number:ending_number]
+            total_pages = math.ceil(News.objects.count() / per_page)
+        else:
+            news = News.objects.all().filter(rubrics__pk=int(segment))[starting_number:ending_number]
+            total_pages = math.ceil(News.objects.filter(rubrics__pk=int(segment)).count() / per_page)
 
+        serialized_news = []
+        for n in news:
+            news_data = {
+                'name': n.name,
+                'created_at': n.created_at,
+                'slug_url': n.slug_url
+            }
+            serialized_news.append(news_data)
 
-    return render(request, 'e5_app/news.html', {'rubrics' : rubrics})
+        return JsonResponse({'data_news': serialized_news, 'total_pages': total_pages})
+    else:
+        rubrics = Rubric.objects.all()
+        return render(request, 'e5_app/news.html', {'rubrics': rubrics, 'selected': rubric})
 
 
 def news_single(request, slug):

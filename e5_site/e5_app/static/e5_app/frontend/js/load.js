@@ -1,50 +1,43 @@
 $(document).ready(function () {
 
-  function updateCards(data) {
-    // Находим элемент "row g-4" для добавления карточек
-    var rowElement = $('.row.g-4');
-
-    // Очищаем содержимое элемента, чтобы избежать дублирования карточек
-    rowElement.empty();
-
-    // Проходим по каждой новости и создаем карточку
+  function updateList(data) {
+    console.log(data);
+    var ulElement = $("ul.list-group.list-group-flush");
     $.each(data.data_news, function (index, news) {
-      // Создаем HTML для карточки
       var cardInnerHtml = `
-            <div class="col-xl-3 col-sm-6">
-                <div class="card custom-card mx-auto h-100">
-                    <img src="${news.picture_url}" class="card-img-top card-img-top-custom" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">${news.name}</h5>
-                        <p class="card-text">${news.description}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-body-secondary">${news.created_at}</small>
-                    </div>
-                </div>
-            </div>
+  <li class="list-group-item">
+      <h5><a href="${news.slug_url}">${news.name}</a></h5>
+      <small>${news.created_at}</small>
+  </li>
         `;
-
       // Добавляем карточку в родительский элемент
-      rowElement.append(cardInnerHtml);
+      ulElement.append(cardInnerHtml);
     });
   }
 
+function buttonCheck(page, totalPage) {
+console.log(page);
+  if (page >= totalPage) {
+    if ($("#More").length) { // Проверить, существует ли кнопка с id="More"
+      $("#More").remove(); // Удалить кнопку с id="More" из формы
+    }
+  }
+}
 
-
-  function ajax_function(pageIn) {
+  function ajax_function(pageIn, lastSegIn) {
     $.ajax({
-      url: '/site/',
+      url: '/site/news/',
       type: "get",
       data: {
         'page': pageIn,
+        'segment': lastSegIn,
       },
       dataType: 'json',
       success: function (data) {
         totalPage = data.total_pages;
         page = pageIn;
-        updateCards(data);
+        updateList(data);
+        buttonCheck(page, totalPage);
       }
     });
 
@@ -52,11 +45,14 @@ $(document).ready(function () {
 
   var page = 1;
   var totalPage = 1;
-  ajax_function(1);
+var url = window.location.href.replace(/\/$/, '');
+ var lastSeg = url.substr(url.lastIndexOf('/') + 1);
+ console.log(lastSeg);
+  ajax_function(1, lastSeg);
 
 
   $('#More').on('click', function () {
-    ajax_function(1);
+    ajax_function(page+1, lastSeg);
   });
 
 });
