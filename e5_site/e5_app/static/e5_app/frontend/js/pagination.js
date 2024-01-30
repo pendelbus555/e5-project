@@ -62,14 +62,13 @@ $(document).ready(function () {
 
   function ajax_function(pageIn) {
     $.ajax({
-      url: '/site',
+      url: '/site/',
       type: "get",
       data: {
         'page': pageIn,
       },
       dataType: 'json',
       success: function (data) {
-        console.log('succes', pageIn);
         totalPage = data.total_pages;
         page = pageIn;
         updateCards(data);

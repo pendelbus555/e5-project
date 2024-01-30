@@ -1,3 +1,60 @@
 {% extends './base.html' %}
-{% block title %}Новости - Кафедра Э-5{% endblock %}
-{% block content %}news{% endblock %}
+{% block head %}
+<!-- Vkontakte Widget -->
+<script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
+{% endblock %}
+{% block title %}
+Новости - Кафедра Э-5
+{% endblock %}
+{% block content %}
+<header>
+<ul class="nav nav-pills">
+  {% url 'news' as news_url %}
+  <li class="nav-item px-3">
+    <a class="nav-link {% if request.path ==  news_url  %}active{% endif %}" aria-current="page" href="{% url 'news' %}">Все</a>
+  </li>
+   {% for rubric in rubrics %}
+  <li class="nav-item px-3">
+    {% url 'news_rubric' rubric.pk as news_rubric_url %}
+    <a class="nav-link {% if request.path ==  news_rubric_url  %}active{% endif %}" href="{% url 'news_rubric' rubric.pk %}">{{ rubric.name }}</a>
+  </li>
+  {% endfor %}
+</ul>
+</header>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+
+
+
+  <ul class="list-group list-group-flush">
+  <li class="list-group-item">
+      <h5><a href="#">List group item heading</a></h5>
+      <small>01.20.3032</small>
+  </li>
+  <li class="list-group-item">A second item</li>
+  <li class="list-group-item">A third item</li>
+  <li class="list-group-item">A fourth item</li>
+  <li class="list-group-item">And a fifth one</li>
+</ul>
+
+
+
+      </div>
+      <div class="col-md-4">
+         <!-- Put this div tag to the place, where the Group block will be -->
+<div id="vk_groups"></div>
+<script type="text/javascript">
+  VK.Widgets.Group("vk_groups", {mode: 1, height: 400, color1: "ffffff", color2: "000000", color3: "212529"}, 78712884);
+</script>
+        <p>archive</p>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</main>
+{% endblock %}
