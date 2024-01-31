@@ -1,22 +1,21 @@
 $(document).ready(function () {
 
   function updateList(data) {
-    console.log(data);
     var ulElement = $("ul.list-group.list-group-flush");
     $.each(data.data_news, function (index, news) {
-      var cardInnerHtml = `
+      var innerUrl = site_news_url + news.slug_url + '/';
+      var InnerHtml = `
   <li class="list-group-item">
-      <h5><a href="${news.slug_url}">${news.name}</a></h5>
+      <h5><a href="${innerUrl}">${news.name}</a></h5>
       <small>${news.created_at}</small>
   </li>
         `;
       // Добавляем карточку в родительский элемент
-      ulElement.append(cardInnerHtml);
+      ulElement.append(InnerHtml);
     });
   }
 
 function buttonCheck(page, totalPage) {
-console.log(page);
   if (page >= totalPage) {
     if ($("#More").length) { // Проверить, существует ли кнопка с id="More"
       $("#More").remove(); // Удалить кнопку с id="More" из формы
@@ -26,7 +25,7 @@ console.log(page);
 
   function ajax_function(pageIn, lastSegIn) {
     $.ajax({
-      url: '/site/news/',
+      url: site_news_url,
       type: "get",
       data: {
         'page': pageIn,
@@ -47,9 +46,7 @@ console.log(page);
   var totalPage = 1;
 var url = window.location.href.replace(/\/$/, '');
  var lastSeg = url.substr(url.lastIndexOf('/') + 1);
- console.log(lastSeg);
   ajax_function(1, lastSeg);
-
 
   $('#More').on('click', function () {
     ajax_function(page+1, lastSeg);

@@ -44,7 +44,7 @@ $(document).ready(function () {
                     <div class="card-body">
                         <h5 class="card-title">${news.name}</h5>
                         <p class="card-text">${news.description}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <a href="#" class="btn btn-primary stretched-link">Go somewhere</a>
                     </div>
                     <div class="card-footer">
                         <small class="text-body-secondary">${news.created_at}</small>

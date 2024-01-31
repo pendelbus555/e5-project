@@ -1,0 +1,12 @@
+.custom-nav{
+    border-radius: 30px !important;
+    border: 2px solid transparent; !important
+}
+
+.custom-nav.active {
+    background-color: #7d7d7d3b !important;
+}
+.custom-nav:hover {
+   border: 2px solid #7d7d7d3b; !important
+   border-color: #7d7d7d3b !important;
+}
