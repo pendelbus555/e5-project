@@ -1,12 +1,26 @@
-.custom-nav{
+.custom-nav {
     border-radius: 30px !important;
-    border: 2px solid transparent; !important
+    border: 2px solid transparent;
 }
 
 .custom-nav.active {
-    background-color: #7d7d7d3b !important;
+    background-color: var(--bs-gray-500) !important;
 }
+
 .custom-nav:hover {
-   border: 2px solid #7d7d7d3b; !important
-   border-color: #7d7d7d3b !important;
+    border: 2px solid #7d7d7d3b;
+    border-color: var(--bs-gray-600) !important;
+}
+.custom-link {
+    text-decoration: none;
+}
+.custom-link:hover{
+    color: var(--bs-blue) !important;
+}
+.custom-btn{
+    color: black !important;
+    border-color: var(--bs-gray-600) !important;
+}
+.custom-btn:hover{
+    background-color: var(--bs-gray-500) !important;
 }

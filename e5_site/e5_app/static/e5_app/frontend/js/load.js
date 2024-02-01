@@ -5,9 +5,9 @@ $(document).ready(function () {
     $.each(data.data_news, function (index, news) {
       var innerUrl = site_news_url + news.slug_url + '/';
       var InnerHtml = `
-  <li class="list-group-item">
-      <h5><a href="${innerUrl}">${news.name}</a></h5>
-      <small>${news.created_at}</small>
+  <li class="list-group-item py-3">
+      <h5><a class='text-break stretched-link text-black custom-link' href="${innerUrl}">${news.name}</a></h5>
+      <small class='text-black'>${news.created_at}</small>
   </li>
         `;
       // Добавляем карточку в родительский элемент
@@ -15,13 +15,13 @@ $(document).ready(function () {
     });
   }
 
-function buttonCheck(page, totalPage) {
-  if (page >= totalPage) {
-    if ($("#More").length) { // Проверить, существует ли кнопка с id="More"
-      $("#More").remove(); // Удалить кнопку с id="More" из формы
+  function buttonCheck(page, totalPage) {
+    if (page >= totalPage) {
+      if ($("#More").length) { // Проверить, существует ли кнопка с id="More"
+        $("#More").remove(); // Удалить кнопку с id="More" из формы
+      }
     }
   }
-}
 
   function ajax_function(pageIn, lastSegIn) {
     $.ajax({
@@ -44,12 +44,12 @@ function buttonCheck(page, totalPage) {
 
   var page = 1;
   var totalPage = 1;
-var url = window.location.href.replace(/\/$/, '');
- var lastSeg = url.substr(url.lastIndexOf('/') + 1);
+  var url = window.location.href.replace(/\/$/, '');
+  var lastSeg = url.substr(url.lastIndexOf('/') + 1);
   ajax_function(1, lastSeg);
 
   $('#More').on('click', function () {
-    ajax_function(page+1, lastSeg);
+    ajax_function(page + 1, lastSeg);
   });
 
 });

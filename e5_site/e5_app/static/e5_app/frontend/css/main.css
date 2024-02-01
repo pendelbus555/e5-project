@@ -1,4 +1,4 @@
-.custom-background{
+.custom-background {
   background-image: url('../images/background_9.png');
   background-attachment: fixed;
   background-position: center;
@@ -8,14 +8,17 @@
   height: 100vh;
   background-repeat: no-repeat;
 }
+
 .custom-description p {
-	font-size: 1.3rem;
-	line-height: 1.5;
+  font-size: 1.3rem;
+  line-height: 1.5;
 }
-.custom-card{
-    max-width: 300px;
+
+.custom-card {
+  max-width: 300px;
 }
-.custom-pagination > li > button:focus {
+
+.custom-pagination>li>button:focus {
   outline: none;
   box-shadow: none;
 }

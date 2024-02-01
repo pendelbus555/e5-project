@@ -2,8 +2,8 @@
 {% block head %}
 {% load static %}
 <script>
-        {% url 'news' as news_url %}
-        var site_news_url = '{{ news_url }}';
+  {% url 'news' as news_url %}
+  var site_news_url = '{{ news_url }}';
 </script>
 
 
@@ -17,31 +17,36 @@
 {% endblock %}
 {% block content %}
 <header>
-<ul class="nav nav-pills">
-  <li class="nav-item">
-    <a class="shadow-sm nav-link text-black custom-nav {% if selected == 0 %}active{% endif %}" aria-current="page" href="{% url 'news' %}">Все</a>
-  </li>
-   {% for rubric in rubrics %}
-  <li class="nav-item">
-    <a class="shadow-sm nav-link text-black custom-nav {% if selected == rubric.pk %}active{% endif %}" href="{% url 'news_rubric' rubric.pk %}">{{ rubric.name }}</a>
-  </li>
-  {% endfor %}
-</ul>
+  <ul class="nav nav-pills m-3">
+    <li class="nav-item mx-1">
+      <a class="shadow-sm nav-link text-black custom-nav {% if selected == 0 %}active{% endif %}" aria-current="page"
+        href="{% url 'news' %}">Все</a>
+    </li>
+    {% for rubric in rubrics %}
+    <li class="nav-item mx-1">
+      <a class="shadow-sm nav-link text-black custom-nav {% if selected == rubric.pk %}active{% endif %}"
+        href="{% url 'news_rubric' rubric.pk %}">{{ rubric.name }}</a>
+    </li>
+    {% endfor %}
+  </ul>
 </header>
 <main>
   <div class="container">
-    <div class="row">
+    <div class="row row-gap-3">
       <div class="col-md-8 d-flex flex-column">
-            <ul class="list-group list-group-flush overflow-x-auto">
-            </ul>
-          <button type="button" class="btn btn-outline-secondary align-self-center" id="More">Показать еще</button>
+        <ul class="list-group list-group-flush">
+        </ul>
+        <button type="button" class="btn btn-outline-secondary align-self-center custom-btn my-1" id="More">Показать еще</button>
       </div>
+        <hr class="m-0 p-0 d-md-none">
       <div class="col-md-4 d-flex flex-column align-items-center">
-            <div id="vk_groups"></div>
-            <script type="text/javascript">
-                 VK.Widgets.Group("vk_groups", {mode: 1, height: 400, color1: "ffffff", color2: "000000", color3: "212529"}, 78712884);
-                </script>
-          <div><p>archive</p> </div>
+        <div id="vk_groups"></div>
+        <script type="text/javascript">
+          VK.Widgets.Group("vk_groups", { mode: 1, height: 400, color1: "ffffff", color2: "000000", color3: "212529" }, 78712884);
+        </script>
+        <div>
+          <p>archive</p>
+        </div>
 
       </div>
     </div>
