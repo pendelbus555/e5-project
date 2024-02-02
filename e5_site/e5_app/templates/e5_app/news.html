@@ -33,19 +33,28 @@
 <main>
   <div class="container">
     <div class="row row-gap-3">
-      <div class="col-md-8 d-flex flex-column">
+      <div class="col-lg-8 d-flex flex-column">
         <ul class="list-group list-group-flush">
         </ul>
-        <button type="button" class="btn btn-outline-secondary align-self-center custom-btn my-1" id="More">Показать еще</button>
+        <button type="button" class="btn btn-outline-secondary align-self-center custom-btn mt-1" id="More">Показать еще</button>
       </div>
-        <hr class="m-0 p-0 d-md-none">
-      <div class="col-md-4 d-flex flex-column align-items-center">
+      <div class="col-lg-4 d-flex flex-column align-items-center">
         <div id="vk_groups"></div>
         <script type="text/javascript">
           VK.Widgets.Group("vk_groups", { mode: 1, height: 400, color1: "ffffff", color2: "000000", color3: "212529" }, 78712884);
         </script>
         <div>
-          <p>archive</p>
+          <p>Поиск</p>
+
+          {{ form.media }}
+          <form action="/news/filter/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+          </form>
+
+
+
         </div>
 
       </div>

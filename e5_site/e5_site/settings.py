@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rangefilter',
     'django_cleanup.apps.CleanupConfig',
+    'bootstrap_datepicker_plus',
 ]
 
 MIDDLEWARE = [

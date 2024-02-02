@@ -7,6 +7,7 @@ from django.core import serializers
 import math
 from django.db.models import F
 from django.templatetags.static import static
+from .forms import NewsFilterForm
 
 
 # Create your views here.
@@ -65,7 +66,15 @@ def news(request, rubric=0):
         return JsonResponse({'data_news': serialized_news, 'total_pages': total_pages})
     else:
         rubrics = Rubric.objects.all()
-        return render(request, 'e5_app/news.html', {'rubrics': rubrics, 'selected': rubric})
+        form = NewsFilterForm()
+        return render(request, 'e5_app/news.html', {'rubrics': rubrics, 'selected': rubric, 'form': form})
+
+
+def news_filter(request):
+    if request.method == 'POST':
+        form = NewsFilterForm(request.POST)
+        if form.is_valid():
+            return HttpResponse('good_form')
 
 
 def news_single(request, slug):
