@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'rangefilter',
     'django_cleanup.apps.CleanupConfig',
     'bootstrap_datepicker_plus',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +136,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'media/'
 MEDIA_URL = '/media/'
+
+#Crispy forms
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+BOOTSTRAP_DATEPICKER_PLUS = {
+    "template_name": "e5_app/custom-input.html",
+}

@@ -24,3 +24,7 @@
 .custom-btn:hover{
     background-color: var(--bs-gray-500) !important;
 }
+.custom-date{
+    flex: 0 0 6em !important;
+    text-align: center;
+}
