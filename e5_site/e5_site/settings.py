@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
+from django.contrib.staticfiles import finders
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -26,7 +26,6 @@ SECRET_KEY = 'django-insecure-mc3e!le4q@*mpo11mjaoa29+458l9e9)+&lkkp&)fs+k6hdm^!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -75,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'e5_site.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -89,7 +87,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -109,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -121,12 +117,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -137,12 +131,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / 'media/'
 MEDIA_URL = '/media/'
 
-#Crispy forms
+# Crispy forms
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
-
 BOOTSTRAP_DATEPICKER_PLUS = {
-    "template_name": "e5_app/custom-input.html",
+    "template_name":  "e5_app/custom-input.html",
+    "datetimepicker_js_url":  '/static/e5_app/bootstrap_datepicker_plus/js/bootstrap-datetimepicker.min.js',
+    "datetimepicker_css_url":  '/static/e5_app/bootstrap_datepicker_plus/css/bootstrap-datetimepicker.min.css',
+    "momentjs_url":  '/static/e5_app/bootstrap_datepicker_plus/moment.js',
+    "bootstrap_icon_css_url":  '/static/e5_app/bootstrap_datepicker_plus/bootstrap-icons.css',
+    "app_static_url":  "/static/bootstrap_datepicker_plus/"
 }
