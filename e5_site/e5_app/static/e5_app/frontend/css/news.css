@@ -28,3 +28,18 @@
     flex: 0 0 6em !important;
     text-align: center;
 }
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom:before {
+    all:initial;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom:after {
+    all:initial;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu.top:before {
+    all:initial;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu.top:after {
+    all:initial;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu{
+    inset: auto auto 40px auto !important;
+}
