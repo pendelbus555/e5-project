@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'crispy_forms',
     'crispy_bootstrap5',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'e5_site.urls'
@@ -120,7 +122,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -135,6 +137,7 @@ MEDIA_URL = '/media/'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
+# Datepicker
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 BOOTSTRAP_DATEPICKER_PLUS = {
     "template_name":  "e5_app/custom-input.html",
@@ -143,4 +146,12 @@ BOOTSTRAP_DATEPICKER_PLUS = {
     "momentjs_url":  '/static/e5_app/bootstrap_datepicker_plus/moment.js',
     "bootstrap_icon_css_url":  '/static/e5_app/bootstrap_datepicker_plus/bootstrap-icons.css',
     "app_static_url":  "/static/bootstrap_datepicker_plus/"
+}
+
+# For Debug Toolbar
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: True,
 }
