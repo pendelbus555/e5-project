@@ -10,6 +10,7 @@ from django.templatetags.static import static
 from .forms import NewsFilterForm
 from django.db.models import Min, Max
 
+
 # Create your views here.
 
 def index(request):
@@ -64,6 +65,15 @@ def news(request, rubric=0):
             serialized_news.append(news_data)
 
         return JsonResponse({'data_news': serialized_news, 'total_pages': total_pages})
+
+    if request.method == 'POST':
+        print(request.POST)
+        form = NewsFilterForm(request.POST)
+        print(form.errors)
+        print(form.is_valid())
+        if form.is_valid():
+            return HttpResponse(form.cleaned_data.items())
+
     else:
         rubrics = Rubric.objects.all()
         if rubric == 0:
@@ -78,11 +88,16 @@ def news(request, rubric=0):
         return render(request, 'e5_app/news.html', {'rubrics': rubrics, 'selected': rubric, 'form': form})
 
 
+
+
 def news_filter(request):
     if request.method == 'POST':
         form = NewsFilterForm(request.POST)
+        print(form.errors)
+        print(form.is_valid())
+        request.session.flush()
         if form.is_valid():
-            return HttpResponse('good_form')
+            return HttpResponse(form.cleaned_data.items())
 
 
 def news_single(request, slug):

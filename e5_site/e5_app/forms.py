@@ -1,30 +1,31 @@
-from bootstrap_datepicker_plus.widgets import DatePickerInput
+from bootstrap_datepicker_plus.widgets import DatePickerInput, MonthPickerInput
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Field, HTML
+from django.urls import reverse
 
 
 class NewsFilterForm(forms.Form):
 
-
     def __init__(self, *args, **kwargs):
         minDate = kwargs.pop('minDate', None)
         maxDate = kwargs.pop('maxDate', None)
-        print(minDate,maxDate)
         super().__init__(*args, **kwargs)
 
         self.fields['start_date'] = forms.DateField(
             label='From',
-            widget=DatePickerInput(options={'format': 'MM/YYYY', 'minDate': minDate, 'maxDate': maxDate})
+            input_formats=['%Y-%m-%d', '%Y-%m', ],
+            widget=MonthPickerInput( options={'format':'YYYY-MM','minDate': minDate, 'maxDate': maxDate, 'useStrict':True}),
         )
 
         self.fields['end_date'] = forms.DateField(
             label='To',
-            widget=DatePickerInput(options={'format': 'MM/YYYY', 'minDate': minDate, 'maxDate': maxDate})
+            widget=MonthPickerInput( options={'format':'YYYY-MM','minDate': minDate, 'maxDate': maxDate, }),
+            input_formats=['%Y-%m-%d', '%Y-%m', ],
         )
 
         self.helper = FormHelper()
-        self.helper.form_action = '/news/filter/'
+        #self.helper.form_action = reverse('news_filter')
         self.helper.form_method = 'post'
         self.helper.form_class = 'd-flex flex-column align-items-center text-center'
         self.helper.form_show_labels = False
