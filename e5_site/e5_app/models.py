@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 class Rubric(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -15,10 +16,10 @@ class Rubric(models.Model):
 
 
 class News(models.Model):
-    name = models.CharField(max_length=150, blank=True, verbose_name='Имя')
+    name = models.CharField(max_length=150, verbose_name='Имя')
     picture = models.ImageField(null=True, blank=True, upload_to='photos/news/%Y/%m', verbose_name='Картинка')
     description = models.TextField(max_length=500, verbose_name='Описание')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    created_at = models.DateTimeField(verbose_name='Дата создания', default=datetime.now(), blank=True)
     slug_url = models.SlugField(unique=True, verbose_name='Ссылка')
     rubrics = models.ManyToManyField(Rubric)
 

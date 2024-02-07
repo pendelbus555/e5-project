@@ -8,7 +8,7 @@ import math
 from django.db.models import F
 from django.templatetags.static import static
 from .forms import NewsFilterForm
-
+from django.db.models import Min, Max
 
 # Create your views here.
 
@@ -66,7 +66,15 @@ def news(request, rubric=0):
         return JsonResponse({'data_news': serialized_news, 'total_pages': total_pages})
     else:
         rubrics = Rubric.objects.all()
-        form = NewsFilterForm()
+        if rubric == 0:
+            minDate = News.objects.aggregate(Min('created_at'))['created_at__min']
+            maxDate = News.objects.aggregate(Max('created_at'))['created_at__max']
+        else:
+            minDate = News.objects.filter(rubrics__pk=rubric).aggregate(Min('created_at'))['created_at__min']
+            maxDate = News.objects.filter(rubrics__pk=rubric).aggregate(Max('created_at'))['created_at__max']
+
+        minDate = minDate.replace(day=1)
+        form = NewsFilterForm(minDate=minDate.strftime('%Y-%m-%d'), maxDate=maxDate.strftime('%Y-%m-%d'))
         return render(request, 'e5_app/news.html', {'rubrics': rubrics, 'selected': rubric, 'form': form})
 
 
