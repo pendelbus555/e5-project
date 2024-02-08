@@ -7,7 +7,6 @@
 </script>
 <!-- My -->
 <link href="{% static 'e5_app/frontend/css/news.css' %}" rel="stylesheet">
-<script src="{% static 'e5_app/frontend/js/load.js' %}" type="text/javascript"></script>
 <!-- Vkontakte Widget -->
 <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
 {% endblock %}
@@ -16,7 +15,7 @@
 {% endblock %}
 {% block content %}
 <header>
-    <h1>Все новости с {{  }} по {{  }}</h1>
+    <h2 class="m-3">Выборка новостей с {{ start_date }} по {{ end_date }}</h2>
 </header>
 <main>
   <div class="container">
@@ -25,8 +24,8 @@
         <ul class="list-group list-group-flush">
             {% for news in filtered_news %}
              <li class="list-group-item py-3">
-      <h5><a class='text-break stretched-link text-black custom-link' href="${innerUrl}">${news.name}</a></h5>
-      <small class='text-black'>${news.created_at}</small>
+      <h5><a class='text-break stretched-link text-black custom-link' href="{% url 'news_single' news.slug_url %}">{{ news.name }}</a></h5>
+      <small class='text-black'>{{ news.created_at }}</small>
              </li>
             {% endfor %}
         </ul>
@@ -42,4 +41,5 @@
       </div>
     </div>
   </div>
-
+</main>
+  {% endblock %}

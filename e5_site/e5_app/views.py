@@ -1,7 +1,7 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import News, Rubric
 from django.core import serializers
 import math
@@ -9,6 +9,8 @@ from django.db.models import F
 from django.templatetags.static import static
 from .forms import NewsFilterForm
 from django.db.models import Min, Max
+from datetime import datetime
+import calendar
 
 
 # Create your views here.
@@ -66,38 +68,41 @@ def news(request, rubric=0):
 
         return JsonResponse({'data_news': serialized_news, 'total_pages': total_pages})
 
-    if request.method == 'POST':
-        print(request.POST)
-        form = NewsFilterForm(request.POST)
-        print(form.errors)
-        print(form.is_valid())
-        if form.is_valid():
-            return HttpResponse(form.cleaned_data.items())
-
     else:
         rubrics = Rubric.objects.all()
-        if rubric == 0:
-            minDate = News.objects.aggregate(Min('created_at'))['created_at__min']
-            maxDate = News.objects.aggregate(Max('created_at'))['created_at__max']
-        else:
-            minDate = News.objects.filter(rubrics__pk=rubric).aggregate(Min('created_at'))['created_at__min']
-            maxDate = News.objects.filter(rubrics__pk=rubric).aggregate(Max('created_at'))['created_at__max']
-
-        minDate = minDate.replace(day=1)
-        form = NewsFilterForm(minDate=minDate.strftime('%Y-%m-%d'), maxDate=maxDate.strftime('%Y-%m-%d'))
+        min_date = News.objects.aggregate(Min('created_at'))['created_at__min']
+        max_date = News.objects.aggregate(Max('created_at'))['created_at__max']
+        min_date = min_date.replace(day=1)
+        max_date = max_date.replace(day=1)
+        form = NewsFilterForm(min_date=min_date.strftime('%Y-%m-%d'), max_date=max_date.strftime('%Y-%m-%d'))
         return render(request, 'e5_app/news.html', {'rubrics': rubrics, 'selected': rubric, 'form': form})
-
-
 
 
 def news_filter(request):
     if request.method == 'POST':
-        form = NewsFilterForm(request.POST)
-        print(form.errors)
-        print(form.is_valid())
-        request.session.flush()
+        print(request.POST)
+        min_date = News.objects.aggregate(Min('created_at'))['created_at__min']
+        max_date = News.objects.aggregate(Max('created_at'))['created_at__max']
+        min_date = min_date.replace(day=1)
+        max_date = max_date.replace(day=1)
+        form = NewsFilterForm(request.POST, min_date=min_date.strftime('%Y-%m-%d'),
+                              max_date=max_date.strftime('%Y-%m-%d'))
         if form.is_valid():
-            return HttpResponse(form.cleaned_data.items())
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
+
+            if end_date < start_date:
+                start_date, end_date = end_date, start_date
+
+            start_date = start_date.replace(day=1)
+            end_date = end_date.replace(day=calendar.monthrange(end_date.year, end_date.month)[1])
+
+            filtered_news = News.objects.filter(created_at__range=[start_date, end_date])
+
+            return render(request, 'e5_app/news_filter.html',
+                          {'form': form, 'start_date': start_date, 'end_date': end_date, 'filtered_news': filtered_news})
+    else:
+        return redirect('news')
 
 
 def news_single(request, slug):
