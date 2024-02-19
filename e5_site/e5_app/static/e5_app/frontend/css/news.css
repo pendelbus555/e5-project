@@ -43,3 +43,6 @@
 .bootstrap-datetimepicker-widget.dropdown-menu{
     inset: auto auto 40px auto !important;
 }
+.custom-iframe{
+    max-width: 100%;
+}

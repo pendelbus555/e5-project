@@ -100,10 +100,13 @@ def news_filter(request):
             filtered_news = News.objects.filter(created_at__range=[start_date, end_date])
 
             return render(request, 'e5_app/news_filter.html',
-                          {'form': form, 'start_date': start_date, 'end_date': end_date, 'filtered_news': filtered_news})
+                          {'form': form, 'start_date': start_date, 'end_date': end_date, 'filtered_news': filtered_news, })
     else:
         return redirect('news')
 
 
 def news_single(request, slug):
-    return HttpResponse('news_single')
+    rubrics = Rubric.objects.all()
+    news_single = News.objects.get(slug_url=slug)
+    last_news = News.objects.all()[:5]
+    return render(request, 'e5_app/news_single.html', {'rubrics': rubrics, 'news_single': news_single, 'last_news': last_news})
