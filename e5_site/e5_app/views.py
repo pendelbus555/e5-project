@@ -108,5 +108,9 @@ def news_filter(request):
 def news_single(request, slug):
     rubrics = Rubric.objects.all()
     news_single = News.objects.get(slug_url=slug)
+    news_before = News.objects.filter(created_at__lt=news_single.created_at).order_by('-created_at').first()
+    news_after = News.objects.filter(created_at__gt=news_single.created_at).order_by('created_at').first()
     last_news = News.objects.all()[:5]
-    return render(request, 'e5_app/news_single.html', {'rubrics': rubrics, 'news_single': news_single, 'last_news': last_news})
+    print(news_before, news_after)
+    return render(request, 'e5_app/news_single.html', {'rubrics': rubrics, 'news_single': news_single, 'last_news': last_news,
+                                                       'news_before':news_before, 'news_after':news_after})
