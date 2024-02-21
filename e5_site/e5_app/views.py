@@ -11,6 +11,7 @@ from .forms import NewsFilterForm
 from django.db.models import Min, Max
 from datetime import datetime
 import calendar
+from django.views.generic.base import TemplateView
 
 
 # Create your views here.
@@ -114,3 +115,6 @@ def news_single(request, slug):
     print(news_before, news_after)
     return render(request, 'e5_app/news_single.html', {'rubrics': rubrics, 'news_single': news_single, 'last_news': last_news,
                                                        'news_before':news_before, 'news_after':news_after})
+
+class HistoryView(TemplateView):
+    template_name = 'e5_app/history.html'

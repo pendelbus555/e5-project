@@ -1,0 +1,4 @@
+.carousel-inner-custom > .carousel-item >img {
+    margin: 0 auto;
+    width: auto;
+}
