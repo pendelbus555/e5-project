@@ -138,3 +138,6 @@ class PlanView(TemplateView):
 
 def schedule(request):
     return render(request, 'e5_app/schedule.html')
+
+class ContactsView(TemplateView):
+    template_name = 'e5_app/contacts.html'
