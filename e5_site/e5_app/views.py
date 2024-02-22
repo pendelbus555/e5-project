@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
@@ -12,6 +12,8 @@ from django.db.models import Min, Max
 from datetime import datetime
 import calendar
 from django.views.generic.base import TemplateView
+import os
+from django.templatetags.static import static
 
 
 # Create your views here.
@@ -126,5 +128,10 @@ class HistoryView(TemplateView):
 class DirectionsView(TemplateView):
     template_name = 'e5_app/directions.html'
 
+
 class ProgramsView(TemplateView):
     template_name = 'e5_app/programs.html'
+
+
+class PlanView(TemplateView):
+    template_name = 'e5_app/plan.html'
