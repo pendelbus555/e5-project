@@ -9,4 +9,5 @@ urlpatterns = [
     path('news/<slug:slug>/', views.news_single, name='news_single'),
     path('history/', views.HistoryView.as_view(), name='history'),
     path('directions/',views.DirectionsView.as_view(), name='directions'),
+    path('programs/',views.ProgramsView.as_view(), name='programs'),
 ]
