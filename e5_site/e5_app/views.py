@@ -101,7 +101,8 @@ def news_filter(request):
             filtered_news = News.objects.filter(created_at__range=[start_date, end_date])
 
             return render(request, 'e5_app/news_filter.html',
-                          {'form': form, 'start_date': start_date, 'end_date': end_date, 'filtered_news': filtered_news, })
+                          {'form': form, 'start_date': start_date, 'end_date': end_date,
+                           'filtered_news': filtered_news, })
     else:
         return redirect('news')
 
@@ -113,8 +114,14 @@ def news_single(request, slug):
     news_after = News.objects.filter(created_at__gt=news_single.created_at).order_by('created_at').first()
     last_news = News.objects.all()[:5]
     print(news_before, news_after)
-    return render(request, 'e5_app/news_single.html', {'rubrics': rubrics, 'news_single': news_single, 'last_news': last_news,
-                                                       'news_before':news_before, 'news_after':news_after})
+    return render(request, 'e5_app/news_single.html',
+                  {'rubrics': rubrics, 'news_single': news_single, 'last_news': last_news,
+                   'news_before': news_before, 'news_after': news_after})
+
 
 class HistoryView(TemplateView):
     template_name = 'e5_app/history.html'
+
+
+class DirectionsView(TemplateView):
+    template_name = 'e5_app/directions.html'
