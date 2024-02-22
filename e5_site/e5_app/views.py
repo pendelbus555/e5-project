@@ -135,3 +135,6 @@ class ProgramsView(TemplateView):
 
 class PlanView(TemplateView):
     template_name = 'e5_app/plan.html'
+
+def schedule(request):
+    return render(request, 'e5_app/schedule.html')
