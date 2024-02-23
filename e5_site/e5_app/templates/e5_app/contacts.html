@@ -1,45 +1,65 @@
 {% extends './base.html' %}
 {% block head %}
 {% load static %}
+<!-- Popovers initialization -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl);
+        });
+    });
+</script>
 {% endblock %}
 {% block title %}
 Контакты - Кафедра Э-5
 {% endblock %}
 {% block content %}
+
+
 <div class="container">
     <h1 class="entry-title text-center my-3">Контакты</h1>
 
+    <div class="text-center text-md-start" style="">
+
+     <h5 class="fw-bolder">Заведующий кафедрой Э-5</h5>
+    <button type="button" class="btn btn-dark mb-3" data-bs-trigger='focus' data-bs-toggle="popover" data-bs-placement="bottom" data-bs-title="Чернышев Андрей Владимирович" data-bs-html="true" data-bs-content="
+   <p><img class='me-1' src='{% static 'e5_app/frontend/contacts/phone_icon.png' %}' width='23' height='23'>Телефон: <a href='tel:+74992636743'>+7(499)263-67-43</a></p>
+    <p><img class='me-1' src='{% static 'e5_app/frontend/contacts/mail_icon.png' %}' width='23' height='23'>Почта: <a href='mailto:chernyshev@bmstu.ru'>chernyshev@bmstu.ru</a></p>
+
+">Посмотреть</button>
 
 
-            <p style="margin-top: 0.5em; margin-bottom: 0.5em;"><strong>Заведующий кафедрой Э-5 </strong>Чернышев Андрей Владимирович:</p>
-    <p style="margin-top: 0.5em; margin-bottom: 0.5em;"><img class="" src="https://e5.bmstu.ru/wp-content/uploads/2021/04/phone-150x150.png" alt="" width="23" height="23" align="left">&nbsp;Контактный телефон: <a href="tel:+74992636743">+7(499)263-67-43</a></p>
-    <p style="margin-top: 0.5em; margin-bottom: 1em;"><img loading="lazy" class="" src="https://e5.bmstu.ru/wp-content/uploads/2021/04/new-mail.png" alt="" width="23" height="23" align="left">&nbsp;E-mail: <a href="mailto:chernyshev@bmstu.ru">chernyshev@bmstu.ru</a></p>
-    <p style="margin-top: 0.5em; margin-bottom: 0.5em;"><strong>Заместитель заведующего кафедрой Э-5</strong>&nbsp;Калинкин Дмитрий Анатольевич:</p>
-    <p style="margin-top: 0.5em; margin-bottom: 0.5em;"><img class="" src="https://e5.bmstu.ru/wp-content/uploads/2021/04/phone-150x150.png" alt="" width="23" height="23" align="left">&nbsp;Контактный телефон: <a href="tel:+74992636331">+7(499)263-63-31</a></p>
-    <p style="margin-top: 0.5em; margin-bottom: 1em;"><img loading="lazy" class="" src="https://e5.bmstu.ru/wp-content/uploads/2021/04/new-mail.png" alt="" width="23" height="23" align="left">&nbsp;E-mail: <a href="mailto:dakalinkin@bmstu.ru">dakalinkin@bmstu.ru</a></p>
-    <p style="margin-top: 0.5em; margin-bottom: 0.5em;"><strong>Секретарь кафедры Э-5</strong>&nbsp;Крестовских Елена Владимировна:</p>
-    <p style="margin-top: 0.5em; margin-bottom: 0.5em;"><img class="" src="https://e5.bmstu.ru/wp-content/uploads/2021/04/phone-150x150.png" alt="" width="23" height="23" align="left">&nbsp;Контактный телефон: <a href="tel:+74992636264">+7(499)263-62-64</a> (внутренний <strong>6264</strong>)</p>
-    <p style="margin-top: 0.5em; margin-bottom: 1em;"><img loading="lazy" class="" src="https://e5.bmstu.ru/wp-content/uploads/2021/04/new-mail.png" alt="" width="23" height="23" align="left">&nbsp;E-mail: <a href="mailto:kev@bmstu.ru">kev@bmstu.ru</a></p>
-    <p style="margin-top: 2em; margin-bottom: 1em;"><img loading="lazy" src="https://e5.bmstu.ru/wp-content/uploads/2021/04/local-map.png" alt="" width="30" height="30" align="left"><strong>Адрес:</strong> 105005, г. Москва, 2-я Бауманская ул., 5</p>
-    <p style="margin-top: 2em; margin-bottom: 1em;"><img loading="lazy" src="https://e5.bmstu.ru/wp-content/uploads/2021/04/love-chat.png" alt="" width="30" height="30" align="left"> <strong>Мы в социальных сетях:</strong></p>
-    <p style="margin-top: 1em; margin-bottom: 1.5em;"><a href="https://vk.com/kafedra_e5" target="_blank" rel="noopener noreferrer"><img loading="lazy" class="" src="https://e5.bmstu.ru/wp-content/uploads/socialmedia/vk.png" width="30" height="30" align="left"></a> <a href="https://vk.com/kafedra_e5" target="_blank" rel="noopener noreferrer">vk.com/kafedra_e5</a></p>
-    <p style="margin-top: 1em; margin-bottom: 1.5em;"><a href="https://www.youtube.com/channel/UC2zKy154i-Z01BJgu_bMPBQ" target="_blank" rel="noopener"><img loading="lazy" class="alignnone" src="/wp-content/uploads/2022/06/YouTube_Logo.png" alt="" width="113" height="25" align="left"></a></p>
-    <h3 style="text-align: center;" align="center"><strong><span style="font-family: 'Verdana','sans-serif'; color: black;">Схема расположения кафедры Э-5<br>
-    «Вакуумная и компрессорная техника»</span></strong></h3>
-    <p><span style="font-family: georgia, palatino, serif;">Со стороны 2-ой Бауманской улицы, находится 1-ая проходная (бюро пропусков).&nbsp;<span style="color: #000000; text-align: center;">Вход на кафедру расположен во внутреннем дворе главного здания Университета.</span></span></p>
-    <p><span style="font-family: georgia, palatino, serif;"><span style="color: #000000; text-align: center;"><a href="https://e5.bmstu.ru/wp-content/uploads/2022/10/bmstu-map-e5.jpg" target="_blank" rel="noopener"><img loading="lazy" class="aligncenter wp-image-5463" src="https://e5.bmstu.ru/wp-content/uploads/2022/10/bmstu-map-e5-1024x599.jpg" alt="" width="900" height="526" srcset="https://e5.bmstu.ru/wp-content/uploads/2022/10/bmstu-map-e5-1024x599.jpg 1024w, https://e5.bmstu.ru/wp-content/uploads/2022/10/bmstu-map-e5-300x175.jpg 300w, https://e5.bmstu.ru/wp-content/uploads/2022/10/bmstu-map-e5-768x449.jpg 768w, https://e5.bmstu.ru/wp-content/uploads/2022/10/bmstu-map-e5-1536x898.jpg 1536w, https://e5.bmstu.ru/wp-content/uploads/2022/10/bmstu-map-e5-2048x1197.jpg 2048w" sizes="(max-width: 900px) 100vw, 900px"></a></span></span></p>
-    <p><strong>Через главное здание: </strong> Пройдите памятник Н.Э Бауману по направлению ко входу в здание, расположенному правее арки. Поднимитесь вверх по&nbsp;лестнице&nbsp;на 2 этаж, с лестницы поверните направо, пройдите по длинному коридору до конца. Поверните налево, пройдя мимо читального зала библиотеки, еще один поворот налево и по небольшому проходу выходите на лестницу, на первый этаж и далее во внутренний двор.&nbsp; Ориентируйтесь на стрелу подъемного крана, рядом с ним вход на кафедру.</p>
-    <p><strong>Вокруг главного здания:&nbsp;</strong>Пройдите памятник Н.Э Бауману, далее мимо 2-ой проходной. На углу здания поверните налево. Через 100 метров пройдите через арку, затем налево небольшой подъем. Ориентируйтесь на стрелу подъемного крана, рядом с ним вход на кафедру.</p>
-    <p><a href="https://e5.bmstu.ru/wp-content/uploads/2017/04/kontakts_02.png" target="_blank" rel="noopener"><img loading="lazy" class="aligncenter wp-image-98" src="https://e5.bmstu.ru/wp-content/uploads/2017/04/kontakts_02.png" alt="" width="510" height="542" srcset="https://e5.bmstu.ru/wp-content/uploads/2017/04/kontakts_02.png 940w, https://e5.bmstu.ru/wp-content/uploads/2017/04/kontakts_02-282x300.png 282w, https://e5.bmstu.ru/wp-content/uploads/2017/04/kontakts_02-768x817.png 768w" sizes="(max-width: 510px) 100vw, 510px"></a></p>
-    <h3 style="text-align: center;"><strong>Как пройти пешком от метро «Бауманская»</strong></h3>
-    <p><strong>Вариант&nbsp; 1:&nbsp;</strong>При выходе из метро держитесь левее.&nbsp; Пройдите в сторону улицы Фридриха Энгельса. Перейдите дорогу и двигайтесь по пешеходной улице&nbsp;Ладожская&nbsp; мимо «Макдональдс» к Волховскому переулку. Поверните направо и двигаетесь&nbsp; прямо до конца улицы (пересечение со Старокирочным перулком и 2-ой Бауманской улицей). Пересеките перекресток, далее двигаетесь по левой стороне 2-ой Бауманской улицы порядка 250 метров до 1-ой проходной.<br>
-    <iframe loading="lazy" src="https://yandex.ru/map-widget/v1/?um=constructor%3A5a82c199a0298ad921e1509731d76fc30270b7b8c93b1c8c3a2a5fea1a700aa4&amp;source=constructor" width="100%" height="400" frameborder="0"></iframe></p>
-    <p><strong>Вариант 2:&nbsp;</strong>При выходе из метро поверните направо, через 10 метров будет улица с трамвайными путями (Бауманская улица).&nbsp;По ней налево около 420 метров до Старокирочного переулка. Поверните налево в переулок и двигайтесь до пересечения с Волховским переулком и 2-ой Бауманской улицей. Пересеките перекресток, далее двигаетесь по левой стороне 2-ой Бауманской улицы порядка 250 метров до 1-ой проходной.</p>
-    <div id="attachment_100" style="width: 660px" class="wp-caption aligncenter"><img aria-describedby="caption-attachment-100" loading="lazy" class="wp-image-100" src="https://e5.bmstu.ru/wp-content/uploads/2017/04/kontakts_03.png" alt="" width="650" height="494" srcset="https://e5.bmstu.ru/wp-content/uploads/2017/04/kontakts_03.png 940w, https://e5.bmstu.ru/wp-content/uploads/2017/04/kontakts_03-300x228.png 300w, https://e5.bmstu.ru/wp-content/uploads/2017/04/kontakts_03-768x584.png 768w" sizes="(max-width: 650px) 100vw, 650px"><p id="caption-attachment-100" class="wp-caption-text">Схема расположения учебных корпусов</p></div>
-    <p>&nbsp;</p>
+        <h5 class="fw-bolder">Заместитель заведующего кафедрой Э-5</h5>
+        <button type="button" class="btn btn-dark mb-3" data-bs-trigger='focus' data-bs-toggle="popover" data-bs-placement="bottom" data-bs-title="Калинкин Дмитрий Анатольевич" data-bs-html="true" data-bs-content="
+   <p><img class='me-1' src='{% static 'e5_app/frontend/contacts/phone_icon.png' %}' width='23' height='23'>Телефон: <a href='tel:+74992636331'>+7(499)263-63-31</a></p>
+    <p><img class='me-1' src='{% static 'e5_app/frontend/contacts/mail_icon.png' %}' width='23' height='23'>Почта: <a href='mailto:dakalinkin@bmstu.ru'>dakalinkin@bmstu.ru</a></p>
+
+">Посмотреть</button>
 
 
+        <h5 class="fw-bolder">Секретарь кафедры Э-5</h5>
+        <button type="button" class="btn btn-dark mb-3" data-bs-trigger='focus' data-bs-toggle="popover" data-bs-placement="bottom" data-bs-title="Крестовских Елена Владимировна" data-bs-html="true" data-bs-content="
+   <p><img class='me-1' src='{% static 'e5_app/frontend/contacts/phone_icon.png' %}' width='23' height='23'>Телефон: <a href='tel:+74992636264'>+7(499)263-62-64</a> (внут. 6264)</p>
+    <p><img class='me-1' src='{% static 'e5_app/frontend/contacts/mail_icon.png' %}' width='23' height='23'>Почта: <a href='mailto:kev@bmstu.ru'>kev@bmstu.ru</a></p>
+
+">Посмотреть</button>
+
+    </div>
 
 
+    <p><img class='me-1' src="{% static 'e5_app/frontend/contacts/adress_icon.png' %}" width='23' height='23'>Адрес: <a>105005, г. Москва, 2-я Бауманская ул., 5</a></p>
+    <p><img class='me-1' src="{% static 'e5_app/frontend/contacts/vk_icon.png' %}" width='23' height='23'>Вконтакте: <a href="https://vk.com/kafedra_e5" target="_blank">vk.com/kafedra_e5</a></p>
+    <p><img class='me-1' src="{% static 'e5_app/frontend/contacts/youtube_icon.png' %}" width='23' height='23'>Ютуб: <a href="https://www.youtube.com/@kafedra_e5" target="_blank">youtube.com/@kafedra_e5</a></p>
+
+    <h4>Схема расположения кафедры Э-5</h4>
+    <p>Со стороны 2-ой Бауманской улицы, находится 1-ая проходная (бюро пропусков). Вход на кафедру расположен во внутреннем дворе главного здания Университета.</p>
+    <div class="text-center"><img src="{% static 'e5_app/frontend/contacts/map.png' %}" class="img-fluid my-1"></div>
+    <h4>Путь до кафедры</h4>
+    <p>От памятника следуйте прямо к главному зданию и заходите в двери расположенные в центре. В длинном коридоре идти прямо и выйти во внутренний двор. Во внутреннем дворе идете вниз по лестнице на право и следуйте в проход на улице в другое крыло. После держитесь правее и идете между двумя зданиями, пока не увидите у правого здания вход на кафедру.<p>
+    <div class="text-center"><img src="{% static 'e5_app/frontend/contacts/way.jpg' %}" class="img-fluid my-1"></div>
+    <h4>Путь от м.Бауманская до МГТУ</h4>
+    <p>При выходе из метро держитесь левее. Пройдите в сторону улицы Фридриха Энгельса. Перейдите дорогу и двигайтесь по пешеходной улицеЛадожская мимо «Макдональдс» к Волховскому переулку. Поверните направо и двигаетесь прямо до конца улицы (пересечение со Старокирочным перулком и 2-ой Бауманской улицей). Пересеките перекресток, далее двигаетесь по левой стороне 2-ой Бауманской улицы порядка 250 метров до 1-ой проходной.</p>
+    <iframe loading="lazy" src="https://yandex.ru/map-widget/v1/?um=constructor%3A5a82c199a0298ad921e1509731d76fc30270b7b8c93b1c8c3a2a5fea1a700aa4&amp;source=constructor" width="100%" height="400" class="my-1"></iframe>
 </div>
 {% endblock %}

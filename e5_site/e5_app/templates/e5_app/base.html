@@ -14,7 +14,6 @@
     <link href="{% static 'e5_app/frontend/css/main.css' %}" rel="stylesheet">
     <link rel="shortcut icon" href="{% static 'e5_app/frontend/images/main_icon.png' %}" type="image/x-icon">
     {% block head %}{% endblock %}
-
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -25,7 +24,7 @@
     <div style="min-height: calc(100vh - 134px);">
 
 
-        <nav class="navbar sticky-top navbar-expand-lg bg-light-subtle" data-bs-theme="dark">
+        <nav class="navbar sticky-top navbar-expand-lg bg-light-subtle" style="z-index:1071;" data-bs-theme="dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{% url 'index' %}">
                     <img src="{% static 'e5_app/frontend/images/main_icon.png' %}" alt="Кафедра Э-5" width="40"
