@@ -2,7 +2,7 @@ from django.http import JsonResponse, FileResponse
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import News, Rubric, Employee
+from .models import News, Rubric, Employee, Work
 from django.core import serializers
 import math
 from django.db.models import F
@@ -148,3 +148,8 @@ class EmployeesListView(ListView):
     model = Employee
     context_object_name = "employees_list"
     template_name = "e5_app/employees.html"
+
+class WorkListView(ListView):
+    model = Work
+    context_object_name = 'work_list'
+    template_name = 'e5_app/works.html'

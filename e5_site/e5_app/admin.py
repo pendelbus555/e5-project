@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import News, Rubric, Employee
+from .models import News, Rubric, Employee, Work, Component, WorkComponent
 from rangefilter.filters import DateRangeQuickSelectListFilterBuilder
 from django.utils.html import mark_safe
 from django.conf import settings
@@ -36,5 +36,20 @@ class NewsAdmin(admin.ModelAdmin):
             return mark_safe(f'<img src="{settings.STATIC_URL}e5_app/frontend/images/news_default.png" width="50"/>')
 
 
+class WorkComponentInline(admin.TabularInline):
+    model = WorkComponent
+    extra = 1
+    verbose_name = 'Разработка-Свойство'
+    verbose_name_plural = 'Разработка-Свойство'
+
+
+@admin.register(Work)
+class WorkAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+    inlines = [WorkComponentInline]
+
+
 admin.site.register(Rubric)
 admin.site.register(Employee)
+admin.site.register(Component)
