@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import News, Rubric
+from .models import News, Rubric, Employee
 from rangefilter.filters import DateRangeQuickSelectListFilterBuilder
 from django.utils.html import mark_safe
 from django.conf import settings
@@ -37,3 +37,4 @@ class NewsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Rubric)
+admin.site.register(Employee)

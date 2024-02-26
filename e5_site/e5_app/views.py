@@ -2,7 +2,7 @@ from django.http import JsonResponse, FileResponse
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import News, Rubric
+from .models import News, Rubric, Employee
 from django.core import serializers
 import math
 from django.db.models import F
@@ -11,6 +11,7 @@ from .forms import NewsFilterForm
 from django.db.models import Min, Max
 from datetime import datetime
 import calendar
+from django.views.generic import ListView
 from django.views.generic.base import TemplateView
 import os
 from django.templatetags.static import static
@@ -141,3 +142,9 @@ def schedule(request):
 
 class ContactsView(TemplateView):
     template_name = 'e5_app/contacts.html'
+
+
+class EmployeesListView(ListView):
+    model = Employee
+    context_object_name = "employees_list"
+    template_name = "e5_app/employees.html"

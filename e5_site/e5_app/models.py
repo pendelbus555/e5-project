@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 
+
 class Rubric(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
 
@@ -9,6 +10,7 @@ class Rubric(models.Model):
 
     def __str__(self):
         return self.name
+
     class Meta:
         verbose_name = 'Рубрика'
         verbose_name_plural = 'Рубрики'
@@ -38,3 +40,19 @@ class News(models.Model):
         ordering = ['-created_at']
 
 
+class Employee(models.Model):
+    photo = models.ImageField(upload_to='photos/employee/', verbose_name='Фото')
+    name = models.CharField(max_length=150, verbose_name='Имя')
+    description = models.TextField(null=True,blank=True,max_length=500, verbose_name='Информация')
+    email_first = models.EmailField(null=True, blank=True, max_length=50, verbose_name='Первая почта')
+    email_second = models.EmailField(null=True, blank=True, max_length=50, verbose_name='Вторая почта')
+
+    def __repr__(self):
+        return self.name
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Работник'
+        verbose_name_plural = 'Работники'
