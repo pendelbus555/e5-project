@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import News, Rubric, Employee, Work, Component, WorkComponent
+from .models import News, Rubric, Employee, VComponent, WComponent, Work, WorkComponent, Vacancy, VacancyComponent
 from rangefilter.filters import DateRangeQuickSelectListFilterBuilder
 from django.utils.html import mark_safe
 from django.conf import settings
@@ -46,10 +46,30 @@ class WorkComponentInline(admin.TabularInline):
 @admin.register(Work)
 class WorkAdmin(admin.ModelAdmin):
     list_display = ('name',)
-
     inlines = [WorkComponentInline]
 
 
+# class VComponentInline(admin.TabularInline):
+#     model = VComponent
+#     extra = 1
+#     verbose_name = 'Свойство'
+#     verbose_name_plural = 'Свойство'
+
+
+class VacancyComponentInline(admin.TabularInline):
+    model = VacancyComponent
+    extra = 1
+    verbose_name = 'Вакансия-Свойство'
+    verbose_name_plural = 'Вакансия-Свойство'
+
+
+@admin.register(Vacancy)
+class VacancyAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    inlines = [ VacancyComponentInline]
+
+
+admin.site.register(VComponent)
+admin.site.register(WComponent)
 admin.site.register(Rubric)
 admin.site.register(Employee)
-admin.site.register(Component)
