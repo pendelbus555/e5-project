@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from ckeditor_uploader.fields import RichTextUploadingField
 
 from django.db.models import UniqueConstraint
 
@@ -101,6 +102,7 @@ class Vacancy(Common):
     experience = models.CharField(null=True, blank=True, max_length=100, verbose_name='Опыт работы')
     schedule = models.CharField(null=True, blank=True, max_length=100, verbose_name='График труда')
     slug_url = models.SlugField(unique=True, verbose_name='Ссылка')
+    content = RichTextUploadingField(null=True, blank=True,verbose_name='Дополнительная информация')
     components = models.ManyToManyField(VComponent, through='VacancyComponent',
                                         through_fields=('vacancy', 'component',))
 

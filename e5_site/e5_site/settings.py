@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from django.contrib.staticfiles import finders
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'debug_toolbar',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -124,6 +127,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -131,8 +136,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Images
 
-MEDIA_ROOT = BASE_DIR / 'media/'
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media/'
 
 # Crispy forms
 
@@ -141,12 +146,12 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 # Datepicker
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 BOOTSTRAP_DATEPICKER_PLUS = {
-    "template_name":  "e5_app/custom-input.html",
-    "datetimepicker_js_url":  '/static/e5_app/bootstrap_datepicker_plus/js/bootstrap-datetimepicker.min.js',
-    "datetimepicker_css_url":  '/static/e5_app/bootstrap_datepicker_plus/css/bootstrap-datetimepicker.min.css',
-    "momentjs_url":  '/static/e5_app/bootstrap_datepicker_plus/moment.js',
-    "bootstrap_icon_css_url":  '/static/e5_app/bootstrap_datepicker_plus/bootstrap-icons.css',
-    "app_static_url":  "/static/bootstrap_datepicker_plus/"
+    "template_name": "e5_app/custom-input.html",
+    "datetimepicker_js_url": '/static/e5_app/bootstrap_datepicker_plus/js/bootstrap-datetimepicker.min.js',
+    "datetimepicker_css_url": '/static/e5_app/bootstrap_datepicker_plus/css/bootstrap-datetimepicker.min.css',
+    "momentjs_url": '/static/e5_app/bootstrap_datepicker_plus/moment.js',
+    "bootstrap_icon_css_url": '/static/e5_app/bootstrap_datepicker_plus/bootstrap-icons.css',
+    "app_static_url": "/static/bootstrap_datepicker_plus/"
 }
 
 # For Debug Toolbar
@@ -156,3 +161,8 @@ INTERNAL_IPS = [
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda request: True,
 }
+
+# For CKEditor
+SILENCED_SYSTEM_CHECKS = ["ckeditor.W001"]
+
+CKEDITOR_UPLOAD_PATH = "ckeditor/"
