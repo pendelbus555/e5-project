@@ -1,23 +1,14 @@
-from django.http import JsonResponse, FileResponse
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.core.paginator import Paginator
-from django.http import HttpResponse, HttpResponseRedirect
 from .models import News, Rubric, Employee, Work
-from django.core import serializers
 import math
-from django.db.models import F
-from django.templatetags.static import static
 from .forms import NewsFilterForm
 from django.db.models import Min, Max
-from datetime import datetime
 import calendar
 from django.views.generic import ListView
 from django.views.generic.base import TemplateView
-import os
 from django.templatetags.static import static
 
-
-# Create your views here.
 
 def index(request):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
@@ -137,8 +128,10 @@ class ProgramsView(TemplateView):
 class PlanView(TemplateView):
     template_name = 'e5_app/plan.html'
 
+
 def schedule(request):
     return render(request, 'e5_app/schedule.html')
+
 
 class ContactsView(TemplateView):
     template_name = 'e5_app/contacts.html'
@@ -148,6 +141,7 @@ class EmployeesListView(ListView):
     model = Employee
     context_object_name = "employees_list"
     template_name = "e5_app/employees.html"
+
 
 class WorkListView(ListView):
     model = Work

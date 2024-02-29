@@ -1,33 +1,40 @@
 {% extends './base.html' %}
+
 {% block head %}
+
 {% load static %}
+
 <script>
   {% url 'news' as news_url %}
   var site_news_url = '{{ news_url }}';
 </script>
+
 <!-- My -->
 <link href="{% static 'e5_app/frontend/css/news.css' %}" rel="stylesheet">
+
 <!-- Vkontakte Widget -->
 <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
+
 {% endblock %}
-{% block title %}
-Новости - Кафедра Э-5
-{% endblock %}
+
+{% block title %}Новости - Кафедра Э-5{% endblock %}
+
 {% block content %}
 <header>
-    <h2 class="m-3">Выборка новостей с {{ start_date }} по {{ end_date }}</h2>
+  <h2 class="m-3">Выборка новостей с {{ start_date }} по {{ end_date }}</h2>
 </header>
 <main>
   <div class="container">
     <div class="row row-gap-3">
       <div class="col-lg-8 d-flex flex-column">
         <ul class="list-group list-group-flush">
-            {% for news in filtered_news %}
-             <li class="list-group-item py-3">
-      <h5><a class='text-break stretched-link text-black custom-link' href="{% url 'news_single' news.slug_url %}">{{ news.name }}</a></h5>
-      <small class='text-black'>{{ news.created_at }}</small>
-             </li>
-            {% endfor %}
+          {% for news in filtered_news %}
+          <li class="list-group-item py-3">
+            <h5><a class='text-break stretched-link text-black custom-link'
+                href="{% url 'news_single' news.slug_url %}">{{ news.name }}</a></h5>
+            <small class='text-black'>{{ news.created_at }}</small>
+          </li>
+          {% endfor %}
         </ul>
       </div>
       <div class="col-lg-4 d-flex flex-column align-items-center">
@@ -35,11 +42,11 @@
         <script type="text/javascript">
           VK.Widgets.Group("vk_groups", { mode: 1, height: 400, color1: "ffffff", color2: "000000", color3: "212529" }, 78712884);
         </script>
-          {% load crispy_forms_tags %}
-          {% csrf_token %}
-          {% crispy form %}
+        {% load crispy_forms_tags %}
+        {% csrf_token %}
+        {% crispy form %}
       </div>
     </div>
   </div>
 </main>
-  {% endblock %}
+{% endblock %}

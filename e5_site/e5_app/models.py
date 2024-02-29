@@ -5,6 +5,7 @@ from django.db.models import UniqueConstraint
 
 
 class Common(models.Model):
+    name = models.CharField(max_length=150, verbose_name='Название')
 
     def __repr__(self):
         return self.name
@@ -66,6 +67,7 @@ class Work(Common):
 
 class WComponent(Common):
     name = models.CharField(max_length=150, verbose_name='Название')
+
     class Meta:
         verbose_name = 'Свойство разработок'
         verbose_name_plural = 'Свойства разработок'
@@ -82,14 +84,10 @@ class WorkComponent(models.Model):
     def __repr__(self):
         return 'Разработка-Свойство'
 
-    class Meta:
-        constraints = [
-            UniqueConstraint(fields=['work', 'component'], name='unique_work_component')
-        ]
-
 
 class VComponent(Common):
     name = models.CharField(max_length=150, verbose_name='Название')
+
     class Meta:
         verbose_name = 'Свойство вакансий'
         verbose_name_plural = 'Свойства вакансий'

@@ -31,7 +31,6 @@ class NewsFilterForm(forms.Form):
                          'maxDate': max_date, })
             self.fields['end_date'].initial = max_date
 
-
         self.helper = FormHelper()
         self.helper.form_action = reverse('news_filter')
         self.helper.form_method = 'post'

@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
   function updateList(data) {
     var ulElement = $("ul.list-group.list-group-flush");
     $.each(data.data_news, function (index, news) {
@@ -10,15 +9,14 @@ $(document).ready(function () {
       <small class='text-black'>${news.created_at}</small>
   </li>
         `;
-      // Добавляем карточку в родительский элемент
       ulElement.append(InnerHtml);
     });
   }
 
   function buttonCheck(page, totalPage) {
     if (page >= totalPage) {
-      if ($("#More").length) { // Проверить, существует ли кнопка с id="More"
-        $("#More").remove(); // Удалить кнопку с id="More" из формы
+      if ($("#More").length) {
+        $("#More").remove();
       }
     }
   }
@@ -39,7 +37,6 @@ $(document).ready(function () {
         buttonCheck(page, totalPage);
       }
     });
-
   }
 
   var page = 1;
@@ -51,5 +48,4 @@ $(document).ready(function () {
   $('#More').on('click', function () {
     ajax_function(page + 1, lastSeg);
   });
-
 });

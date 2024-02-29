@@ -11,46 +11,56 @@
     border: 2px solid #7d7d7d3b;
     border-color: var(--bs-gray-600) !important;
 }
+
 .custom-link {
     text-decoration: none;
 }
-.custom-link:hover{
+
+.custom-link:hover {
     color: var(--bs-blue) !important;
 }
-.custom-btn{
+
+.custom-btn {
     color: black !important;
     border-color: var(--bs-gray-600) !important;
 }
-.custom-btn:hover{
+
+.custom-btn:hover {
     background-color: var(--bs-gray-500) !important;
 }
-.custom-date{
+
+.custom-date {
     flex: 0 0 6em !important;
     text-align: center;
 }
+
 .bootstrap-datetimepicker-widget.dropdown-menu.bottom:before {
-    all:initial;
+    all: initial;
 }
+
 .bootstrap-datetimepicker-widget.dropdown-menu.bottom:after {
-    all:initial;
+    all: initial;
 }
+
 .bootstrap-datetimepicker-widget.dropdown-menu.top:before {
-    all:initial;
+    all: initial;
 }
+
 .bootstrap-datetimepicker-widget.dropdown-menu.top:after {
-    all:initial;
+    all: initial;
 }
-.bootstrap-datetimepicker-widget.dropdown-menu{
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
     inset: auto auto 40px auto !important;
 }
-.custom-iframe{
+
+.custom-iframe {
     max-width: 100%;
 }
-.custom-image{
+
+.custom-image {
     flex-shrink: 0 !important;
     width: 200px;
     max-width: 100%;
     height: 200px;
-}
-.custom-p{
 }

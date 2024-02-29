@@ -49,13 +49,6 @@ class WorkAdmin(admin.ModelAdmin):
     inlines = [WorkComponentInline]
 
 
-# class VComponentInline(admin.TabularInline):
-#     model = VComponent
-#     extra = 1
-#     verbose_name = 'Свойство'
-#     verbose_name_plural = 'Свойство'
-
-
 class VacancyComponentInline(admin.TabularInline):
     model = VacancyComponent
     extra = 1
@@ -66,7 +59,7 @@ class VacancyComponentInline(admin.TabularInline):
 @admin.register(Vacancy)
 class VacancyAdmin(admin.ModelAdmin):
     list_display = ('name',)
-    inlines = [ VacancyComponentInline]
+    inlines = [VacancyComponentInline]
 
 
 admin.site.register(VComponent)
