@@ -1,11 +1,11 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from .models import News, Rubric, Employee, Work
+from .models import News, Rubric, Employee, Work, Vacancy
 import math
 from .forms import NewsFilterForm
 from django.db.models import Min, Max
 import calendar
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.base import TemplateView
 from django.templatetags.static import static
 
@@ -147,3 +147,14 @@ class WorkListView(ListView):
     model = Work
     context_object_name = 'work_list'
     template_name = 'e5_app/works.html'
+
+
+class VacancyListView(ListView):
+    model = Vacancy
+    context_object_name = 'vacancy_list'
+    template_name = 'e5_app/vacancy.html'
+
+
+class VacancyDetailView(DetailView):
+    model = Vacancy
+    context_object_name = 'vacancy'

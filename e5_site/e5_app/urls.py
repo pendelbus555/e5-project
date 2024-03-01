@@ -15,4 +15,6 @@ urlpatterns = [
     path('contacts/', views.ContactsView.as_view(), name='contacts'),
     path('employees/', views.EmployeesListView.as_view(), name='employees'),
     path('works/', views.WorkListView.as_view(), name='works'),
+    path('vacancy/', views.VacancyListView.as_view(), name='vacancy'),
+    path('vacancy/<slug:slug>/', views.VacancyDetailView.as_view(), name='vacancy_single'),
 ]

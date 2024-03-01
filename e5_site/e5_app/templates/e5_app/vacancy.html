@@ -1,0 +1,33 @@
+{% extends './base.html' %}
+
+{% block head %}
+
+{% load static %}
+
+{% endblock %}
+
+{% block title %}Вакансии - Кафедра Э-5{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="entry-title text-center my-3">Вакансии</h1>
+    <div class="card" style="width: 18rem;">
+        <ul class="list-group list-group-flush">
+            {% for vacancy in vacancy_list %}
+            <li class="list-group-item">
+                <div class="card text-center">
+                    <div class="card-header">
+                        {{ vacancy.name }} namenamename
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

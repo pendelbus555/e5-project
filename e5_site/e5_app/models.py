@@ -100,6 +100,7 @@ class Vacancy(Common):
     salary = models.CharField(null=True, blank=True, max_length=100, verbose_name='Заработная плата')
     experience = models.CharField(null=True, blank=True, max_length=100, verbose_name='Опыт работы')
     schedule = models.CharField(null=True, blank=True, max_length=100, verbose_name='График труда')
+    slug_url = models.SlugField(unique=True, verbose_name='Ссылка')
     components = models.ManyToManyField(VComponent, through='VacancyComponent',
                                         through_fields=('vacancy', 'component',))
 

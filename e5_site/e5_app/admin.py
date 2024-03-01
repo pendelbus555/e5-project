@@ -60,6 +60,7 @@ class VacancyComponentInline(admin.TabularInline):
 class VacancyAdmin(admin.ModelAdmin):
     list_display = ('name',)
     inlines = [VacancyComponentInline]
+    prepopulated_fields = {"slug_url": ["name"]}
 
 
 admin.site.register(VComponent)
