@@ -56,22 +56,24 @@ class Employee(Common):
         verbose_name_plural = 'Работники'
 
 
-class Work(Common):
-    photo = models.ImageField(upload_to='photos/works/', verbose_name='Фото')
-    name = models.CharField(max_length=150, verbose_name='Название')
-    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Описание')
-
-    class Meta:
-        verbose_name = 'Разработка'
-        verbose_name_plural = 'Разработки'
-
-
 class WComponent(Common):
     name = models.CharField(max_length=150, verbose_name='Название')
 
     class Meta:
         verbose_name = 'Свойство разработок'
         verbose_name_plural = 'Свойства разработок'
+
+
+class Work(Common):
+    photo = models.ImageField(upload_to='photos/works/', verbose_name='Фото')
+    name = models.CharField(max_length=150, verbose_name='Название')
+    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Описание')
+    components = models.ManyToManyField(WComponent, through='WorkComponent',
+                                        through_fields=('work', 'component',))
+
+    class Meta:
+        verbose_name = 'Разработка'
+        verbose_name_plural = 'Разработки'
 
 
 class WorkComponent(models.Model):
@@ -86,6 +88,17 @@ class WorkComponent(models.Model):
         return 'Разработка-Свойство'
 
 
+class Company(Common):
+    name = models.CharField(max_length=100, verbose_name='Название')
+    photo = models.ImageField(upload_to='photos/companies/', verbose_name='Фото')
+    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Описание')
+
+    class Meta:
+        verbose_name = 'Компания'
+        verbose_name_plural = 'Компании'
+        ordering = ['name']
+
+
 class VComponent(Common):
     name = models.CharField(max_length=150, verbose_name='Название')
 
@@ -95,14 +108,13 @@ class VComponent(Common):
 
 
 class Vacancy(Common):
-    photo = models.ImageField(upload_to='photos/works/', verbose_name='Фото')
     name = models.CharField(max_length=150, verbose_name='Название')
-    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Описание')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     salary = models.CharField(null=True, blank=True, max_length=100, verbose_name='Заработная плата')
     experience = models.CharField(null=True, blank=True, max_length=100, verbose_name='Опыт работы')
     schedule = models.CharField(null=True, blank=True, max_length=100, verbose_name='График труда')
     slug_url = models.SlugField(unique=True, verbose_name='Ссылка')
-    content = RichTextUploadingField(null=True, blank=True,verbose_name='Дополнительная информация')
+    content = RichTextUploadingField(null=True, blank=True, verbose_name='Дополнительная информация')
     components = models.ManyToManyField(VComponent, through='VacancyComponent',
                                         through_fields=('vacancy', 'component',))
 

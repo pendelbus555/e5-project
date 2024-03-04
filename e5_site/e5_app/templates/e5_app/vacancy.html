@@ -11,23 +11,28 @@
 {% block content %}
 <div class="container">
     <h1 class="entry-title text-center my-3">Вакансии</h1>
-    <div class="card" style="width: 18rem;">
-        <ul class="list-group list-group-flush">
-            {% for vacancy in vacancy_list %}
-            <li class="list-group-item">
-                <div class="card text-center">
-                    <div class="card-header">
-                        {{ vacancy.name }} namenamename
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
+    <div class="row justify-content-center g-1">
+        {% for vacancy in vacancy_list %}
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="border-start border-primary border-3 border-opacity-75">
+                <div class="ms-1">
+                    <h4><a href="{% url 'vacancy_single' vacancy.slug_url %}" class="text-decoration-none fw-bold">{{ vacancy.name }}</a>
+                    {% if vacancy.salary %}<br><div class="fs-3">{{ vacancy.salary }}</div>{% endif %}</h4>
+                    <p class="mb-1">{{ vacancy.company.name}}</p>
+                    {% if vacancy.experience %}
+                    <p class="mb-1"><img class='me-1' src="{% static 'e5_app/frontend/vacancy/experience_icon.png' %}" width='18' height='18'>
+                        {{ vacancy.experience }}
+                    </p>
+                    {% endif %}
+                    {% if vacancy.schedule %}
+                    <p class="mb-1"><img class='me-1' src="{% static 'e5_app/frontend/vacancy/schedule_icon.png' %}" width='18' height='18'>
+                        {{ vacancy.schedule }}
+                    </p>
+                    {% endif %}
                 </div>
-            </li>
-            {% endfor %}
-        </ul>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

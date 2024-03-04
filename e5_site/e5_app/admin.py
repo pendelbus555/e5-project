@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import News, Rubric, Employee, VComponent, WComponent, Work, WorkComponent, Vacancy, VacancyComponent
+from .models import News, Rubric, Employee, VComponent, WComponent, Work, WorkComponent, Vacancy, VacancyComponent, Company
 from rangefilter.filters import DateRangeQuickSelectListFilterBuilder
 from django.utils.html import mark_safe
 from django.conf import settings
@@ -66,4 +66,5 @@ class VacancyAdmin(admin.ModelAdmin):
 admin.site.register(VComponent)
 admin.site.register(WComponent)
 admin.site.register(Rubric)
+admin.site.register(Company)
 admin.site.register(Employee)
