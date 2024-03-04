@@ -7,7 +7,6 @@
 {% endblock %}
 
 {% block title %}Вакансии - Кафедра Э-5{% endblock %}
-
 {% block content %}
 <div class="container">
     <h1 class="entry-title text-center my-3">Вакансии</h1>
@@ -29,6 +28,7 @@
                         {{ vacancy.schedule }}
                     </p>
                     {% endif %}
+                    <a href="{% url 'vacancy_single' vacancy.slug_url %}" class="btn btn-primary">Подробнее</a>
                 </div>
             </div>
         </div>

@@ -107,7 +107,6 @@ def news_single(request, slug):
     news_before = News.objects.filter(created_at__lt=news_single.created_at).order_by('-created_at').first()
     news_after = News.objects.filter(created_at__gt=news_single.created_at).order_by('created_at').first()
     last_news = News.objects.all()[:5]
-    print(news_before, news_after)
     return render(request, 'e5_app/news_single.html',
                   {'rubrics': rubrics, 'news_single': news_single, 'last_news': last_news,
                    'news_before': news_before, 'news_after': news_after})
@@ -157,4 +156,21 @@ class VacancyListView(ListView):
 
 class VacancyDetailView(DetailView):
     model = Vacancy
+    slug_field = 'slug_url'
     context_object_name = 'vacancy'
+    template_name = 'e5_app/vacancy_single.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        vacancy = self.get_object()
+        try:
+            vacancy_before = Vacancy.objects.get(pk=vacancy.pk-1)
+        except Vacancy.DoesNotExist:
+            vacancy_before = None
+        try:
+            vacancy_after = Vacancy.objects.get(pk=vacancy.pk+1)
+        except Vacancy.DoesNotExist:
+            vacancy_after = None
+        context['vacancy_before'] = vacancy_before
+        context['vacancy_after'] = vacancy_after
+        return context

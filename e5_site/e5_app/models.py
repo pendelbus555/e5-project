@@ -118,6 +118,10 @@ class Vacancy(Common):
     components = models.ManyToManyField(VComponent, through='VacancyComponent',
                                         through_fields=('vacancy', 'component',))
 
+    def get_absolute_url(self):
+        return f'/site/vacancy/{self.slug_url}'
+
+
     class Meta:
         verbose_name = 'Вакансия'
         verbose_name_plural = 'Вакансии'

@@ -4,12 +4,67 @@
 
 {% load static %}
 
+{% load e5_app_extras %}
+
+<!-- My -->
+<link href="{% static 'e5_app/frontend/css/vacancy.css' %}" rel="stylesheet">
+
 {% endblock %}
 
 {% block title %}Вакансии - Кафедра Э-5{% endblock %}
 
 {% block content %}
-<div class="container">
-    {{ vacancy.name }}
-</div>
+<main>
+    <div class="container">
+        <h2>{{ vacancy.name }}
+            {% if vacancy.salary %}
+            <br>
+            <div class="fs-3">{{ vacancy.salary }}</div>
+            {% endif %}
+        </h2>
+        <h6>
+            {% if vacancy.experience %}
+            Требуемый опыт работы: {{ vacancy.experience }}
+            {% endif %}
+            {% if vacancy.schedule %}
+            <br>
+            {{ vacancy.schedule }}
+            {% endif %}
+        </h6>
+
+        <div class="d-flex flex-column flex-md-row align-items-center">
+            <img src="{{ vacancy.company.photo.url }}" class="rounded custom-image flex-fill" alt="...">
+            <p class="text-break align-self-center flex-fill custom-p">
+                {{ vacancy.company.name }}
+                <br>
+                {{ vacancy.company.description }}
+            </p>
+        </div>
+        <div>
+            {{ vacancy.content|safe }}
+        </div>
+
+
+        {% for vacancy_component in vacancy.vacancycomponent_set.all %}
+        <h5>{{ vacancy_component.component.name }}</h5>
+        <!-- custom templatetag -->
+        {% show_list vacancy_component.filling %}
+        {% endfor %}
+
+
+        <hr>
+        <ul class="nav justify-content-center">
+            {% if vacancy_before %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'vacancy_single' vacancy_before.slug_url %}">&larr;{{ vacancy_before.name }}</a>
+            </li>
+            {% endif %}
+            {% if vacancy_after %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'vacancy_single' vacancy_after.slug_url %}">{{ vacancy_after.name }}&rarr;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</main>
 {% endblock %}
