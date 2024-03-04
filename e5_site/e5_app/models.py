@@ -32,6 +32,7 @@ class News(Common):
     picture = models.ImageField(null=True, blank=True, upload_to='photos/news/%Y/%m', verbose_name='Картинка')
     description = models.TextField(max_length=500, verbose_name='Описание')
     created_at = models.DateTimeField(verbose_name='Дата создания', blank=True)
+    content = RichTextUploadingField(null=True, blank=True, verbose_name='Дополнительная информация')
     slug_url = models.SlugField(unique=True, verbose_name='Ссылка')
     rubrics = models.ManyToManyField(Rubric)
 
@@ -120,7 +121,6 @@ class Vacancy(Common):
 
     def get_absolute_url(self):
         return f'/site/vacancy/{self.slug_url}'
-
 
     class Meta:
         verbose_name = 'Вакансия'

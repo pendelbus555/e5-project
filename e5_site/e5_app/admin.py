@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import News, Rubric, Employee, VComponent, WComponent, Work, WorkComponent, Vacancy, VacancyComponent, Company
+from .models import News, Rubric, Employee, VComponent, WComponent, Work, WorkComponent, Vacancy, VacancyComponent, \
+    Company
 from rangefilter.filters import DateRangeQuickSelectListFilterBuilder
 from django.utils.html import mark_safe
 from django.conf import settings
@@ -12,7 +13,7 @@ admin.site.site_header = 'Администрирование Э5'
 
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ['name', 'get_description', 'get_image', 'slug_url', 'created_at', ]
+    list_display = ['name', 'get_description', 'get_image', 'content', 'slug_url', 'created_at', ]
     search_fields = ['name', ]
     date_hierarchy = 'created_at'
 

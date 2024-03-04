@@ -50,8 +50,9 @@
             alt="...">
           {% endif %}
         </div>
-        <h3>Дополнительная информация</h3>
-        CMS
+        <div>
+          {{ news_single.content|safe }}
+        </div>
         <hr>
         <ul class="nav justify-content-center">
           {% if news_before %}
