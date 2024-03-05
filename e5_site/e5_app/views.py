@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from .models import News, Rubric, Employee, Work, Vacancy
+from .models import News, Rubric, Employee, Work, Vacancy, Partner
 import math
 from .forms import NewsFilterForm
 from django.db.models import Min, Max
@@ -12,30 +12,48 @@ from django.templatetags.static import static
 
 def index(request):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        page = int(request.GET.get('page'))
-        per_page = 4
-        starting_number = (page - 1) * per_page
-        ending_number = page * per_page
-        news = News.objects.all()[starting_number:ending_number]
-        total_pages = math.ceil(News.objects.count() / per_page)
-        serialized_news = []
-        for n in news:
-            news_data = {
-                'name': n.name,
-                'description': n.description,
-                'created_at': n.created_at,
-                'slug_url': n.slug_url
-            }
-            if n.picture:
-                news_data['picture_url'] = n.picture.url
-            else:
-                news_data['picture_url'] = static('e5_app/frontend/images/news_default.png')
-            serialized_news.append(news_data)
+        if request.GET.get('from') == 'news':
+            page = int(request.GET.get('page'))
+            per_page = 4
+            starting_number = (page - 1) * per_page
+            ending_number = page * per_page
+            news = News.objects.all()[starting_number:ending_number]
+            total_pages = math.ceil(News.objects.count() / per_page)
+            serialized_news = []
+            for n in news:
+                news_data = {
+                    'name': n.name,
+                    'description': n.description,
+                    'created_at': n.created_at,
+                    'slug_url': n.slug_url
+                }
+                if n.picture:
+                    news_data['picture_url'] = n.picture.url
+                else:
+                    news_data['picture_url'] = static('e5_app/frontend/images/news_default.png')
+                serialized_news.append(news_data)
 
-        return JsonResponse({'data_news': serialized_news, 'total_pages': total_pages})
-
+            return JsonResponse({'data_news': serialized_news, 'total_pages': total_pages})
+        elif request.GET.get('from') == 'vacancy':
+            page = int(request.GET.get('page'))
+            per_page = 4
+            starting_number = (page - 1) * per_page
+            ending_number = page * per_page
+            vacancy = Vacancy.objects.all()[starting_number:ending_number]
+            total_pages = math.ceil(Vacancy.objects.count() / per_page)
+            serialized_news = []
+            for v in vacancy:
+                vacancy_data = {
+                    'name': v.name,
+                    'salary': v.salary,
+                    'company_name': v.company.name,
+                    'slug_url': v.slug_url
+                }
+                serialized_news.append(vacancy_data)
+            return JsonResponse({'data_vacancy': serialized_news, 'total_pages': total_pages})
     else:
-        return render(request, 'e5_app/index.html')
+        partners = Partner.objects.all()
+        return render(request, 'e5_app/index.html', {'partners': partners, }, )
 
 
 def news(request, rubric=0):
@@ -164,11 +182,11 @@ class VacancyDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         vacancy = self.get_object()
         try:
-            vacancy_before = Vacancy.objects.get(pk=vacancy.pk-1)
+            vacancy_before = Vacancy.objects.get(pk=vacancy.pk - 1)
         except Vacancy.DoesNotExist:
             vacancy_before = None
         try:
-            vacancy_after = Vacancy.objects.get(pk=vacancy.pk+1)
+            vacancy_after = Vacancy.objects.get(pk=vacancy.pk + 1)
         except Vacancy.DoesNotExist:
             vacancy_after = None
         context['vacancy_before'] = vacancy_before

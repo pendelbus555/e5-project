@@ -137,3 +137,11 @@ class VacancyComponent(models.Model):
 
     def __repr__(self):
         return 'Вакансия-Свойство'
+
+
+class Partner(Common):
+    photo = models.ImageField(upload_to='photos/partners/', verbose_name='Фото', )
+
+    class Meta:
+        verbose_name = 'Партнер'
+        verbose_name_plural = 'Партнеры'
