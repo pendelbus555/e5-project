@@ -1,12 +1,12 @@
 from django.db import models
-from datetime import datetime
+from colorfield.fields import ColorField
+from django.contrib.postgres.fields import ArrayField
 from ckeditor_uploader.fields import RichTextUploadingField
-
-from django.db.models import UniqueConstraint
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Common(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Название')
+    name = models.CharField(max_length=150, verbose_name='Название', )
 
     def __repr__(self):
         return self.name
@@ -19,7 +19,7 @@ class Common(models.Model):
 
 
 class Rubric(Common):
-    name = models.CharField(max_length=100, verbose_name='Название')
+    name = models.CharField(max_length=100, verbose_name='Название', )
 
     class Meta:
         verbose_name = 'Рубрика'
@@ -29,12 +29,12 @@ class Rubric(Common):
 
 class News(Common):
     name = models.CharField(max_length=150, verbose_name='Имя')
-    picture = models.ImageField(null=True, blank=True, upload_to='photos/news/%Y/%m', verbose_name='Картинка')
-    description = models.TextField(max_length=500, verbose_name='Описание')
-    created_at = models.DateTimeField(verbose_name='Дата создания', blank=True)
-    content = RichTextUploadingField(null=True, blank=True, verbose_name='Дополнительная информация')
-    slug_url = models.SlugField(unique=True, verbose_name='Ссылка')
-    rubrics = models.ManyToManyField(Rubric)
+    picture = models.ImageField(null=True, blank=True, upload_to='photos/news/%Y/%m', verbose_name='Картинка', )
+    description = models.TextField(max_length=500, verbose_name='Описание', )
+    created_at = models.DateTimeField(verbose_name='Дата создания', blank=True, )
+    content = RichTextUploadingField(null=True, blank=True, verbose_name='Дополнительная информация', )
+    slug_url = models.SlugField(unique=True, verbose_name='Ссылка', )
+    rubrics = models.ManyToManyField(Rubric, )
 
     def get_absolute_url(self):
         return f'/site/news/{self.slug_url}'
@@ -46,11 +46,11 @@ class News(Common):
 
 
 class Employee(Common):
-    photo = models.ImageField(upload_to='photos/employee/', verbose_name='Фото')
-    name = models.CharField(max_length=150, verbose_name='Имя')
-    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Информация')
-    email_first = models.EmailField(null=True, blank=True, max_length=50, verbose_name='Первая почта')
-    email_second = models.EmailField(null=True, blank=True, max_length=50, verbose_name='Вторая почта')
+    photo = models.ImageField(upload_to='photos/employee/', verbose_name='Фото', )
+    name = models.CharField(max_length=150, verbose_name='Имя', )
+    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Информация', )
+    email_first = models.EmailField(null=True, blank=True, max_length=50, verbose_name='Первая почта', )
+    email_second = models.EmailField(null=True, blank=True, max_length=50, verbose_name='Вторая почта', )
 
     class Meta:
         verbose_name = 'Работник'
@@ -58,7 +58,7 @@ class Employee(Common):
 
 
 class WComponent(Common):
-    name = models.CharField(max_length=150, verbose_name='Название')
+    name = models.CharField(max_length=150, verbose_name='Название', )
 
     class Meta:
         verbose_name = 'Свойство разработок'
@@ -66,11 +66,11 @@ class WComponent(Common):
 
 
 class Work(Common):
-    photo = models.ImageField(upload_to='photos/works/', verbose_name='Фото')
-    name = models.CharField(max_length=150, verbose_name='Название')
-    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Описание')
+    photo = models.ImageField(upload_to='photos/works/', verbose_name='Фото', )
+    name = models.CharField(max_length=150, verbose_name='Название', )
+    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Описание', )
     components = models.ManyToManyField(WComponent, through='WorkComponent',
-                                        through_fields=('work', 'component',))
+                                        through_fields=('work', 'component',), )
 
     class Meta:
         verbose_name = 'Разработка'
@@ -90,9 +90,9 @@ class WorkComponent(models.Model):
 
 
 class Company(Common):
-    name = models.CharField(max_length=100, verbose_name='Название')
-    photo = models.ImageField(upload_to='photos/companies/', verbose_name='Фото')
-    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Описание')
+    name = models.CharField(max_length=100, verbose_name='Название', )
+    photo = models.ImageField(upload_to='photos/companies/', verbose_name='Фото', )
+    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Описание', )
 
     class Meta:
         verbose_name = 'Компания'
@@ -101,7 +101,7 @@ class Company(Common):
 
 
 class VComponent(Common):
-    name = models.CharField(max_length=150, verbose_name='Название')
+    name = models.CharField(max_length=150, verbose_name='Название', )
 
     class Meta:
         verbose_name = 'Свойство вакансий'
@@ -109,15 +109,15 @@ class VComponent(Common):
 
 
 class Vacancy(Common):
-    name = models.CharField(max_length=150, verbose_name='Название')
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    salary = models.CharField(null=True, blank=True, max_length=100, verbose_name='Заработная плата')
-    experience = models.CharField(null=True, blank=True, max_length=100, verbose_name='Опыт работы')
-    schedule = models.CharField(null=True, blank=True, max_length=100, verbose_name='График труда')
-    slug_url = models.SlugField(unique=True, verbose_name='Ссылка')
-    content = RichTextUploadingField(null=True, blank=True, verbose_name='Дополнительная информация')
+    name = models.CharField(max_length=150, verbose_name='Название', )
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, )
+    salary = models.CharField(null=True, blank=True, max_length=100, verbose_name='Заработная плата', )
+    experience = models.CharField(null=True, blank=True, max_length=100, verbose_name='Опыт работы', )
+    schedule = models.CharField(null=True, blank=True, max_length=100, verbose_name='График труда', )
+    slug_url = models.SlugField(unique=True, verbose_name='Ссылка', )
+    content = RichTextUploadingField(null=True, blank=True, verbose_name='Дополнительная информация', )
     components = models.ManyToManyField(VComponent, through='VacancyComponent',
-                                        through_fields=('vacancy', 'component',))
+                                        through_fields=('vacancy', 'component',), )
 
     def get_absolute_url(self):
         return f'/site/vacancy/{self.slug_url}'
@@ -145,3 +145,37 @@ class Partner(Common):
     class Meta:
         verbose_name = 'Партнер'
         verbose_name_plural = 'Партнеры'
+
+
+class EventType(Common):
+    color = ColorField(unique=True, verbose_name='Цвет отображения', )
+
+    class Meta:
+        verbose_name = 'Тип мероприятия'
+        verbose_name_plural = 'Типы мероприятий'
+
+
+class Event(Common):
+    date = models.DateField(verbose_name='Дата', )
+    info = models.TextField(null=True, blank=True, max_length=500, verbose_name='Дополнительно', )
+    event_type = models.ForeignKey(EventType, on_delete=models.CASCADE, )
+    schedule = ArrayField(models.CharField(max_length=30, ), verbose_name='Время[ - место]', )
+
+    class Meta:
+        verbose_name = 'Партнер'
+        verbose_name_plural = 'Партнеры'
+
+
+class Visitor(Common):
+    STAND_CHOICES = {
+        'ab': 'Абитуриент',
+        '11': '11 класс',
+        '10': '10 класс',
+        'dr': 'Другое',
+    }
+    choice = models.PositiveSmallIntegerField()
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, )
+    name = models.CharField(max_length=100, )
+    mail = models.EmailField()
+    phone = PhoneNumberField()
+    stand = models.CharField(choices=STAND_CHOICES, )

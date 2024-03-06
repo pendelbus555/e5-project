@@ -64,9 +64,4 @@ class VacancyAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug_url": ["name"]}
 
 
-admin.site.register(VComponent)
-admin.site.register(WComponent)
-admin.site.register(Rubric)
-admin.site.register(Company)
-admin.site.register(Employee)
-admin.site.register(Partner)
+admin.site.register([VComponent, WComponent, Rubric, Company, Employee, Partner, ])

@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from .models import News, Rubric, Employee, Work, Vacancy, Partner
+from .models import News, Rubric, Employee, Work, Vacancy, Partner, Event
 import math
 from .forms import NewsFilterForm
 from django.db.models import Min, Max
@@ -192,3 +192,9 @@ class VacancyDetailView(DetailView):
         context['vacancy_before'] = vacancy_before
         context['vacancy_after'] = vacancy_after
         return context
+
+
+class EventListView(ListView):
+    model = Event
+    context_object_name = 'event_list'
+    template_name = 'e5_app/events.html'
