@@ -198,3 +198,4 @@ class EventListView(ListView):
     model = Event
     context_object_name = 'event_list'
     template_name = 'e5_app/events.html'
+

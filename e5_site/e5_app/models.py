@@ -1,9 +1,8 @@
 from django.db import models
 from colorfield.fields import ColorField
-from django.contrib.postgres.fields import ArrayField
 from ckeditor_uploader.fields import RichTextUploadingField
 from phonenumber_field.modelfields import PhoneNumberField
-
+from datetime import datetime
 
 class Common(models.Model):
     name = models.CharField(max_length=150, verbose_name='Название', )
@@ -158,12 +157,30 @@ class EventType(Common):
 class Event(Common):
     date = models.DateField(verbose_name='Дата', )
     info = models.TextField(null=True, blank=True, max_length=500, verbose_name='Дополнительно', )
-    event_type = models.ForeignKey(EventType, on_delete=models.CASCADE, )
-    schedule = ArrayField(models.CharField(max_length=30, ), verbose_name='Время[ - место]', )
+    event_type = models.ForeignKey(EventType, on_delete=models.CASCADE, verbose_name='Тип мероприятия', )
 
     class Meta:
-        verbose_name = 'Партнер'
-        verbose_name_plural = 'Партнеры'
+        verbose_name = 'Мероприятие'
+        verbose_name_plural = 'Мероприятия'
+        ordering = ['date']
+
+
+class EventSchedule(Common):
+    name = None
+    start = models.TimeField(verbose_name='Время начала', )
+    end = models.TimeField(null=True, blank=True, verbose_name='Время конца', )
+    place = models.CharField(max_length=100, null=True, blank=True, verbose_name='Место проведения', )
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Расписание'
+        verbose_name_plural = 'Расписания'
+
+    def __str__(self):
+        return str(self.start)
+
+    def __repr__(self):
+        return str(self.start)
 
 
 class Visitor(Common):
@@ -173,9 +190,12 @@ class Visitor(Common):
         '10': '10 класс',
         'dr': 'Другое',
     }
-    choice = models.PositiveSmallIntegerField()
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, )
+    event = models.ForeignKey(EventSchedule, on_delete=models.CASCADE, )
     name = models.CharField(max_length=100, )
     mail = models.EmailField()
     phone = PhoneNumberField()
     stand = models.CharField(choices=STAND_CHOICES, )
+
+    class Meta:
+        verbose_name = 'Посетитель'
+        verbose_name_plural = 'Посетители'

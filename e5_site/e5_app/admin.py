@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import News, Rubric, Employee, VComponent, WComponent, Work, WorkComponent, Vacancy, VacancyComponent, \
-    Company, Partner
+    Company, Partner, EventType, Event, EventSchedule, Visitor
 from rangefilter.filters import DateRangeQuickSelectListFilterBuilder
 from django.utils.html import mark_safe
 from django.conf import settings
@@ -64,4 +64,15 @@ class VacancyAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug_url": ["name"]}
 
 
-admin.site.register([VComponent, WComponent, Rubric, Company, Employee, Partner, ])
+class ScheduleInline(admin.TabularInline):
+    model = EventSchedule
+    extra = 1
+
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    inlines = [ScheduleInline]
+
+
+admin.site.register(
+    [VComponent, WComponent, Rubric, Company, Employee, Partner, EventType, Visitor, EventSchedule])

@@ -11,81 +11,74 @@
 {% block content %}
 <h1 class="entry-title text-center my-3">Мероприятия</h1>
 <main>
-  <div class="container">
-      <p>Наши мероприятия — это уникальная возможность узнать больше о специальности, деятельности кафедры, специфике работы выпускников, получить ответы на все вопросы. Вы сможете своими глазами увидеть, где вам предстоит учиться после поступления на кафедру Э5. Также мы дадим развернутую информацию по вступительным экзаменам и поможем к ним подготовиться.</p>
-    <div class="row row-gap-3">
-      <div class="col-lg-9">
-          <p><strong>Регистрация закрывается за 24 часа до начала мероприятия.<br>
-Количество мест ограничено!</strong></p>
+    <div class="container">
+        <p>Наши мероприятия — это уникальная возможность узнать больше о специальности, деятельности кафедры, специфике
+            работы выпускников, получить ответы на все вопросы. Вы сможете своими глазами увидеть, где вам предстоит
+            учиться после поступления на кафедру Э5. Также мы дадим развернутую информацию по вступительным экзаменам и
+            поможем к ним подготовиться.</p>
+        <div class="row row-gap-3">
+            <div class="col-lg-9 mb-3">
+                <p><strong>Регистрация закрывается за 24 часа до начала мероприятия.<br>
+                    Количество мест ограничено!</strong></p>
 
-          <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown button
-          </button>
-          <ul class="dropdown-menu dropdown-menu-dark">
-              <li>
-                  <a class="dropdown-item active" href="#">Actasdfasdfadion<span class="badge text-bg-primary rounded-pill">14</span></a>
-              </li>
-              <li>
-                  <a class="dropdown-item active" href="#">Action<span class="badge text-bg-primary rounded-pill">14</span></a>
-              </li>
-            <li>
-                <a class="dropdown-item active" href="#">Action<span class="badge text-bg-primary rounded-pill">14</span></a>
-            </li>
-          </ul>
+                <div class="dropdown mb-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        Тип мероприятия
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li>
+                            <a class="dropdown-item active" href="#">Все
+                            </a>
+                        </li>
+                        {% regroup event_list by event_type as event_types %}
+                        {% for event_type in event_types %}
+                        <li>
+
+                            <a class="dropdown-item" href="#">{{ event_type.grouper.name }}
+                                <span class="badge text-bg-warning rounded-pill ms-1"
+                                      style="background-color: {{ event_type.grouper.color }} !important;">{{ event_type.list|length }}</span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+
+                <div class="accordion" id="accordionExample">
+                    {% for event in event_list %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse{{ event.pk }}" aria-expanded="false"
+                                    aria-controls="collapse{{ event.pk }}"
+                                    style="background-color: {{ event.event_type.color }};">
+                                {{ event.date }}
+                            </button>
+                        </h2>
+                        <div id="collapse{{ event.pk }}" class="accordion-collapse collapse"
+                             data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                {% if event.info %}
+                                <p>{{ event.info }}</p>
+                                {% endif %}
+                                <button class="btn btn-primary">Записаться</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+
+            </div>
+            <div class="col-lg-3 d-flex flex-column align-items-center mb-3 text-center">
+                <p>
+                    <strong> Хочешь быть в курсе и не пропустить полезные события, подписывайся на рассылку:</strong>
+                </p>
+                <button type="button" class="btn btn-warning mb-3">Хочу быть в курсе</button>
+                <p>Calendar</p>
+            </div>
         </div>
-
-
-
-          <div class="accordion" id="accordionExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Accordion Item #1
-              </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-              </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Accordion Item #2
-              </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-              </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Accordion Item #3
-              </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-      </div>
-      <div class="col-lg-3 d-flex flex-column align-items-center">
-
-          <button type="button" class="btn btn-warning">Warning</button>
-          <p>Calendar</p>
-
-      </div>
     </div>
-  </div>
 </main>
 {% endblock %}
