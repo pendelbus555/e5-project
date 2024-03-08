@@ -4,6 +4,13 @@
 
 {% load static %}
 
+<!-- Подключение скриптов FullCalendar -->
+<script src="{% static 'e5_app/fullcalendar/dist/index.global.min.js' %}"></script>
+<script src="{% static 'e5_app/fullcalendar/packages/core/locales/ru.global.min.js' %}"></script>
+<script src="{% static 'e5_app/fullcalendar/packages/bootstrap5/index.global.min.js' %}"></script>
+
+<link href="{% static 'e5_app/frontend/css/events.css' %}" rel="stylesheet">
+
 {% endblock %}
 
 {% block title %}Мероприятия - Кафедра Э-5{% endblock %}
@@ -22,7 +29,7 @@
                     Количество мест ограничено!</strong></p>
 
                 <div class="dropdown mb-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                         Тип мероприятия
                     </button>
@@ -76,7 +83,57 @@
                     <strong> Хочешь быть в курсе и не пропустить полезные события, подписывайся на рассылку:</strong>
                 </p>
                 <button type="button" class="btn btn-warning mb-3">Хочу быть в курсе</button>
-                <p>Calendar</p>
+
+                <div id="calendar">
+
+                    <script defer data-current_date="{% now 'Y-m-d' %}">
+                      const data = document.currentScript.dataset;
+
+                      var calendarEl = document.getElementById('calendar');
+                      var calendar = new FullCalendar.Calendar(calendarEl, {
+                        themeSystem: 'bootstrap5',
+                        buttonIcons: false,
+                        height: 'auto',
+                        buttonText: {
+                            prev:    '<',
+                            next:    '>',
+                        },
+                        headerToolbar: {
+                          left: '',
+                          center: 'title',
+                          right: '',
+                        },
+                        footerToolbar: {
+                          left: 'prev',
+                          center: 'today',
+                          right: 'next'
+                        },
+                        initialDate: data.current_date,
+                        locale: 'ru',
+                        events: [
+                          {% for event in event_list %}
+                          {
+                            start: '{{ event.date|date:"Y-m-d" }}',
+                            end: '{{ event.date|date:"Y-m-d" }}',
+                            display: 'background',
+                            color: '{{ event.event_type.color }}',
+                          },
+                          {% endfor %}
+                          {
+                            start: '2024-02-11T10:00:00',
+                            end: '2024-02-11T16:00:00',
+                            display: 'background',
+                            color: '#ff9f89'
+                          },
+                        ]
+                      });
+
+                      calendar.render();
+                    </script>
+
+
+                </div>
+
             </div>
         </div>
     </div>
