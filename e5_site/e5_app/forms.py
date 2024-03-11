@@ -1,7 +1,8 @@
-from bootstrap_datepicker_plus.widgets import DatePickerInput, MonthPickerInput
+from bootstrap_datepicker_plus.widgets import MonthPickerInput
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Field, HTML
+from crispy_forms.bootstrap import PrependedText
 from django.urls import reverse
 from datetime import datetime
 
@@ -42,3 +43,16 @@ class NewsFilterForm(forms.Form):
             Field('end_date', css_class='custom-date', ),
             Submit('submit', 'Submit', css_class='btn btn-dark my-1')
         )
+
+
+class MailingForm(forms.Form):
+    mail = forms.EmailField(max_length=100)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'events'
+        self.helper.layout = Layout(PrependedText('mail', 'Почта', placeholder="example@mail.ru"))
+        self.helper.add_input(Submit('submit', 'Оформить подписку', css_class='btn btn-warning', ))

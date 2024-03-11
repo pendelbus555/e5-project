@@ -27,7 +27,6 @@
             <div class="col-lg-9 mb-3">
                 <p><strong>Регистрация закрывается за 24 часа до начала мероприятия.<br>
                     Количество мест ограничено!</strong></p>
-
                 <div class="dropdown mb-3">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -41,7 +40,6 @@
                         {% regroup event_list by event_type as event_types %}
                         {% for event_type in event_types %}
                         <li>
-
                             <a class="dropdown-item" href="#">{{ event_type.grouper.name }}
                                 <span class="badge text-bg-warning rounded-pill ms-1"
                                       style="background-color: {{ event_type.grouper.color }} !important;">{{ event_type.list|length }}</span>
@@ -50,8 +48,6 @@
                         {% endfor %}
                     </ul>
                 </div>
-
-
                 <div class="accordion" id="accordionExample">
                     {% for event in event_list %}
                     <div class="accordion-item">
@@ -75,17 +71,49 @@
                     </div>
                     {% endfor %}
                 </div>
-
-
             </div>
             <div class="col-lg-3 d-flex flex-column align-items-center mb-3 text-center">
-                <p>
-                    <strong> Хочешь быть в курсе и не пропустить полезные события, подписывайся на рассылку:</strong>
-                </p>
-                <button type="button" class="btn btn-warning mb-3">Хочу быть в курсе</button>
+                <p> <strong> Хочешь быть в курсе и не пропустить полезные события, подписывайся на рассылку:</strong> </p>
+
+                <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Подписка на анонсы мероприятий</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+
+                                {% load crispy_forms_tags %}
+                                {% csrf_token %}
+                                {% crispy mailing_form %}
+
+                      </div>
+<!--                      <div class="modal-footer">-->
+<!--                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>-->
+<!--                      </div>-->
+                    </div>
+                  </div>
+                </div>
+<!--                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">-->
+<!--                  <div class="modal-dialog modal-dialog-centered">-->
+<!--                    <div class="modal-content">-->
+<!--                      <div class="modal-header">-->
+<!--                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Подписка на анонсы мероприятий</h1>-->
+<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                      </div>-->
+<!--                      <div class="modal-body">-->
+<!--                        Hide this modal and show the first with the button below.-->
+<!--                      </div>-->
+<!--                      <div class="modal-footer">-->
+<!--                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+                <button type="button" class="btn btn-warning mb-3" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">Хочу быть в курсе</button>
 
                 <div id="calendar">
-
                     <script defer data-current_date="{% now 'Y-m-d' %}">
                       const data = document.currentScript.dataset;
 
@@ -130,10 +158,7 @@
 
                       calendar.render();
                     </script>
-
-
                 </div>
-
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .models import News, Rubric, Employee, Work, Vacancy, Partner, Event
 import math
-from .forms import NewsFilterForm
+from .forms import NewsFilterForm, MailingForm
 from django.db.models import Min, Max
 import calendar
 from django.views.generic import ListView, DetailView
@@ -198,4 +198,14 @@ class EventListView(ListView):
     model = Event
     context_object_name = 'event_list'
     template_name = 'e5_app/events.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = MailingForm()
+        context['mailing_form'] = form
+        return context
+
+
+
+
 

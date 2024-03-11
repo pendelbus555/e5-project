@@ -4,6 +4,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from phonenumber_field.modelfields import PhoneNumberField
 from datetime import datetime
 
+
 class Common(models.Model):
     name = models.CharField(max_length=150, verbose_name='Название', )
 
@@ -199,3 +200,11 @@ class Visitor(Common):
     class Meta:
         verbose_name = 'Посетитель'
         verbose_name_plural = 'Посетители'
+
+
+class Mailing(Common):
+    mail = models.EmailField()
+
+    class Meta:
+        verbose_name = 'Рассылка'
+        verbose_name_plural = 'Рассылки'

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 import os
 from django.contrib.staticfiles import finders
 
@@ -168,3 +169,11 @@ DEBUG_TOOLBAR_CONFIG = {
 SILENCED_SYSTEM_CHECKS = ["ckeditor.W001"]
 
 CKEDITOR_UPLOAD_PATH = "ckeditor/"
+
+#For SMTP
+load_dotenv()
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mrusipusi@gmail.com'
+EMAIL_HOST_PASSWORD = os.getenv('SMTP_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
