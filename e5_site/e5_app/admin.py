@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import News, Rubric, Employee, VComponent, WComponent, Work, WorkComponent, Vacancy, VacancyComponent, \
-    Company, Partner, EventType, Event, EventSchedule, Visitor
+    Company, Partner, EventType, Event, EventSchedule, Visitor, Mailing
 from rangefilter.filters import DateRangeQuickSelectListFilterBuilder
 from django.utils.html import mark_safe
 from django.conf import settings
@@ -75,4 +75,4 @@ class EventAdmin(admin.ModelAdmin):
 
 
 admin.site.register(
-    [VComponent, WComponent, Rubric, Company, Employee, Partner, EventType, Visitor, EventSchedule])
+    [VComponent, WComponent, Rubric, Company, Employee, Partner, EventType, Visitor, EventSchedule, Mailing])

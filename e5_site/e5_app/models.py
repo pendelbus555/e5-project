@@ -202,9 +202,15 @@ class Visitor(Common):
         verbose_name_plural = 'Посетители'
 
 
-class Mailing(Common):
-    mail = models.EmailField()
+class Mailing(models.Model):
+    mail = models.EmailField(unique=True, verbose_name='Почта')
 
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
+
+    def __str__(self):
+        return self.mail
+
+    def __repr__(self):
+        return self.mail

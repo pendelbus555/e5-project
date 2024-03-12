@@ -1,6 +1,7 @@
-from django.http import JsonResponse
+import django.db
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
-from .models import News, Rubric, Employee, Work, Vacancy, Partner, Event
+from .models import News, Rubric, Employee, Work, Vacancy, Partner, Event, Mailing
 import math
 from .forms import NewsFilterForm, MailingForm
 from django.db.models import Min, Max
@@ -205,7 +206,18 @@ class EventListView(ListView):
         context['mailing_form'] = form
         return context
 
-
-
-
-
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        if request.headers.get('Hx-Boosted') == 'true':
+            if 'submit_mailing' in request.POST:
+                form = MailingForm(request.POST)
+                if form.is_valid():
+                    data = form.cleaned_data
+                    try:
+                        Mailing.objects.create(mail=data['mail'])
+                        return HttpResponse('''<div class="text-success">
+                                              Подписка успешно оформлена!</div>''')
+                    except django.db.IntegrityError:
+                        return HttpResponse('''<div class="text-warning">
+                                              Данная почта уже подписана на рассылку</div>''')
+        return response
