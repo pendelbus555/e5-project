@@ -11,6 +11,8 @@ django-crispy-forms==2.1
 django-debug-toolbar==4.3.0
 django-js-asset==2.2.0
 django-phonenumber-field==7.3.0
+django-ranged-response==0.2.0
+django-simple-captcha==0.6.0
 icalendar==5.0.11
 phonenumberslite==8.13.31
 Pillow==10.1.0

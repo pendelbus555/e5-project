@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'colorfield',
     'phonenumber_field',
+    'captcha',
 ]
 
 MIDDLEWARE = [

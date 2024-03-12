@@ -3,6 +3,7 @@ from colorfield.fields import ColorField
 from ckeditor_uploader.fields import RichTextUploadingField
 from phonenumber_field.modelfields import PhoneNumberField
 from datetime import datetime
+from django.core.mail import send_mail
 
 
 class Common(models.Model):
@@ -159,6 +160,12 @@ class Event(Common):
     date = models.DateField(verbose_name='Дата', )
     info = models.TextField(null=True, blank=True, max_length=500, verbose_name='Дополнительно', )
     event_type = models.ForeignKey(EventType, on_delete=models.CASCADE, verbose_name='Тип мероприятия', )
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        mails = Mailing.objects.all()
+        send_mail(f'Новое мероприятие Э5 {self.date}', f'{self.event_type.name}, {self.info}',
+                  'mrusipusi@gmail.com', list(mails))
 
     class Meta:
         verbose_name = 'Мероприятие'
