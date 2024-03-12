@@ -54,6 +54,6 @@ class MailingForm(forms.Form):
         self.helper.form_show_labels = False
         self.helper.form_method = 'post'
         self.helper.form_action = 'events'
-        self.helper.attrs = {'hx_boost': 'true', 'hx-target':'this'}
+        self.helper.attrs = {'hx_boost': 'true', 'hx-target': 'this'}
         self.helper.layout = Layout(PrependedText('mail', 'Почта', placeholder="example@mail.ru"))
         self.helper.add_input(Submit('submit_mailing', 'Оформить подписку', css_class='btn btn-warning', ))

@@ -11,6 +11,7 @@
 
 <link href="{% static 'e5_app/frontend/css/events.css' %}" rel="stylesheet">
 <script src="{% static 'e5_app/htmx/htmx.min.js' %}"></script>
+<script src="{% static 'e5_app/frontend/js/events.js' %}"></script>
 
 
 {% endblock %}
@@ -36,23 +37,25 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
                         <li>
-                            <a class="dropdown-item active" href="#">Все
-                            </a>
+                            <button class="dropdown-item active" data-type='all'>Все
+                                <span class="badge text-bg-warning rounded-pill ms-1"
+                                      style="background-color: white !important;">{{ event_list|length }}</span>
+                            </button>
                         </li>
                         {% regroup event_list by event_type as event_types %}
                         {% for event_type in event_types %}
                         <li>
-                            <a class="dropdown-item" href="#">{{ event_type.grouper.name }}
+                            <button class="dropdown-item" data-type='{{ event_type.grouper.pk }}'>{{ event_type.grouper.name }}
                                 <span class="badge text-bg-warning rounded-pill ms-1"
                                       style="background-color: {{ event_type.grouper.color }} !important;">{{ event_type.list|length }}</span>
-                            </a>
+                            </button>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
                 <div class="accordion" id="accordionExample">
                     {% for event in event_list %}
-                    <div class="accordion-item">
+                    <div class="accordion-item" data-type="{{ event.event_type.pk }}">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse{{ event.pk }}" aria-expanded="false"
