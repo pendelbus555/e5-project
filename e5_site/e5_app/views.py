@@ -1,14 +1,16 @@
 import django.db
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
-from .models import News, Rubric, Employee, Work, Vacancy, Partner, Event, Mailing
+from .models import News, Rubric, Employee, Work, Vacancy, Partner, Event, Mailing, EventSchedule
 import math
-from .forms import NewsFilterForm, MailingForm
+from .forms import NewsFilterForm, MailingForm, VisitorForm
 from django.db.models import Min, Max
 import calendar
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import TemplateView
 from django.templatetags.static import static
+from crispy_forms.utils import render_crispy_form
+from django.template.context_processors import csrf
 
 
 def index(request):
@@ -208,16 +210,25 @@ class EventListView(ListView):
 
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
-        if request.headers.get('Hx-Boosted') == 'true':
-            if 'submit_mailing' in request.POST:
-                form = MailingForm(request.POST)
-                if form.is_valid():
-                    data = form.cleaned_data
-                    try:
-                        Mailing.objects.create(mail=data['mail'])
-                        return HttpResponse('''<div class="text-success">
-                                              Подписка успешно оформлена!</div>''')
-                    except django.db.IntegrityError:
-                        return HttpResponse('''<div class="text-warning">
-                                              Данная почта уже подписана на рассылку</div>''')
+        if request.headers.get('HX-Request') == 'true':
+            if request.headers.get('HX-Boosted') == 'true':
+                if 'submit_mailing' in request.POST:
+                    form = MailingForm(request.POST)
+                    if form.is_valid():
+                        data = form.cleaned_data
+                        try:
+                            Mailing.objects.create(mail=data['mail'])
+                            return HttpResponse('''<div class="text-success">
+                                                  Подписка успешно оформлена!</div>''')
+                        except django.db.IntegrityError:
+                            return HttpResponse('''<div class="text-warning">
+                                                  Данная почта уже подписана на рассылку</div>''')
+            elif request.headers.get('Event'):
+                event_pk = int(request.headers.get('Event'))
+                form = VisitorForm(event_pk=event_pk)
+                ctx = {}
+                ctx.update(csrf(request))
+                form_html = render_crispy_form(form, context=ctx)
+                return HttpResponse(form_html)
+
         return response

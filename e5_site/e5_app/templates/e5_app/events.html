@@ -35,7 +35,7 @@
                             aria-expanded="false">
                         Тип мероприятия
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-dark">
+                    <ul class="dropdown-menu dropdown-menu">
                         <li>
                             <button class="dropdown-item active" data-type='all'>Все
                                 <span class="badge text-bg-warning rounded-pill ms-1"
@@ -45,7 +45,8 @@
                         {% regroup event_list by event_type as event_types %}
                         {% for event_type in event_types %}
                         <li>
-                            <button class="dropdown-item" data-type='{{ event_type.grouper.pk }}'>{{ event_type.grouper.name }}
+                            <button class="dropdown-item" data-type='{{ event_type.grouper.pk }}'>{{
+                                event_type.grouper.name }}
                                 <span class="badge text-bg-warning rounded-pill ms-1"
                                       style="background-color: {{ event_type.grouper.color }} !important;">{{ event_type.list|length }}</span>
                             </button>
@@ -53,6 +54,34 @@
                         {% endfor %}
                     </ul>
                 </div>
+
+
+                <div class="modal fade" id="ModalToggle" aria-hidden="true"
+                     aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="ModalToggleLabel">Запись на мероприятие</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="form-container">
+
+                                </div>
+
+                            </div>
+                            <div class="modal-footer justify-content-start">
+                            <p class="lh-lg"> По всем вопросам:<br>
+                               <img class='me-1' src='/static/e5_app/frontend/contacts/phone_icon.png' width='23' height='23'>Телефон: <a href='tel:+79254354722,'>+7(925)435-47-22,</a><br>
+                                <img class='me-1' src='/static/e5_app/frontend/contacts/mail_icon.png' width='23' height='23'>Почта: <a href='mailto:e5@bmstu.ru'>e5@bmstu.ru</a><br>
+                           </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="accordion" id="accordionExample">
                     {% for event in event_list %}
                     <div class="accordion-item" data-type="{{ event.event_type.pk }}">
@@ -61,7 +90,7 @@
                                     data-bs-target="#collapse{{ event.pk }}" aria-expanded="false"
                                     aria-controls="collapse{{ event.pk }}"
                                     style="background-color: {{ event.event_type.color }};">
-                                {{ event.date }}
+                                {{ event.date }} {{ event.name }}
                             </button>
                         </h2>
                         <div id="collapse{{ event.pk }}" class="accordion-collapse collapse"
@@ -70,7 +99,11 @@
                                 {% if event.info %}
                                 <p>{{ event.info }}</p>
                                 {% endif %}
-                                <button class="btn btn-primary">Записаться</button>
+                                <button class="btn btn-primary" value="{{ event }}" hx-get="{% url 'events' %}"
+                                        hx-headers='{"event": "{{ event.pk }}"}' data-bs-toggle="modal"
+                                        data-bs-target="#ModalToggle"
+                                        hx-target="#form-container">Записаться
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -78,71 +111,76 @@
                 </div>
             </div>
             <div class="col-lg-3 d-flex flex-column align-items-center mb-3 text-center">
-                <p> <strong> Хочешь быть в курсе и не пропустить полезные события, подписывайся на рассылку:</strong> </p>
+                <p><strong> Хочешь быть в курсе и не пропустить полезные события, подписывайся на рассылку:</strong></p>
 
-                <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Подписка на анонсы мероприятий</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
+                <div class="modal fade" id="exampleModalToggle" aria-hidden="true"
+                     aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Подписка на анонсы
+                                    мероприятий</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
 
                                 {% load crispy_forms_tags %}
                                 {% csrf_token %}
                                 {% crispy mailing_form %}
 
-                      </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-                <button type="button" class="btn btn-warning mb-3" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">Хочу быть в курсе</button>
+                <button type="button" class="btn btn-warning mb-3" data-bs-toggle="modal"
+                        data-bs-target="#exampleModalToggle">Хочу быть в курсе
+                </button>
 
                 <div id="calendar">
                     <script defer data-current_date="{% now 'Y-m-d' %}">
-                      const data = document.currentScript.dataset;
+                        const data = document.currentScript.dataset;
 
-                      var calendarEl = document.getElementById('calendar');
-                      var calendar = new FullCalendar.Calendar(calendarEl, {
-                        themeSystem: 'bootstrap5',
-                        buttonIcons: false,
-                        height: 'auto',
-                        buttonText: {
-                            prev:    '<',
-                            next:    '>',
-                        },
-                        headerToolbar: {
-                          left: '',
-                          center: 'title',
-                          right: '',
-                        },
-                        footerToolbar: {
-                          left: 'prev',
-                          center: 'today',
-                          right: 'next'
-                        },
-                        initialDate: data.current_date,
-                        locale: 'ru',
-                        events: [
-                          {% for event in event_list %}
-                          {
-                            start: '{{ event.date|date:"Y-m-d" }}',
-                            end: '{{ event.date|date:"Y-m-d" }}',
-                            display: 'background',
-                            color: '{{ event.event_type.color }}',
+                        var calendarEl = document.getElementById('calendar');
+                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                          themeSystem: 'bootstrap5',
+                          buttonIcons: false,
+                          height: 'auto',
+                          buttonText: {
+                              prev:    '<',
+                              next:    '>',
                           },
-                          {% endfor %}
-                          {
-                            start: '2024-02-11T10:00:00',
-                            end: '2024-02-11T16:00:00',
-                            display: 'background',
-                            color: '#ff9f89'
+                          headerToolbar: {
+                            left: '',
+                            center: 'title',
+                            right: '',
                           },
-                        ]
-                      });
+                          footerToolbar: {
+                            left: 'prev',
+                            center: 'today',
+                            right: 'next'
+                          },
+                          initialDate: data.current_date,
+                          locale: 'ru',
+                          events: [
+                            {% for event in event_list %}
+                            {
+                              start: '{{ event.date|date:"Y-m-d" }}',
+                              end: '{{ event.date|date:"Y-m-d" }}',
+                              display: 'background',
+                              color: '{{ event.event_type.color }}',
+                            },
+                            {% endfor %}
+                            {
+                              start: '2024-02-11T10:00:00',
+                              end: '2024-02-11T16:00:00',
+                              display: 'background',
+                              color: '#ff9f89'
+                            },
+                          ]
+                        });
 
-                      calendar.render();
+                        calendar.render();
                     </script>
                 </div>
             </div>

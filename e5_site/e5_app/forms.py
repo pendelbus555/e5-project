@@ -2,9 +2,11 @@ from bootstrap_datepicker_plus.widgets import MonthPickerInput
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Field, HTML
-from crispy_forms.bootstrap import PrependedText
+from crispy_forms.bootstrap import PrependedText, InlineRadios
 from django.urls import reverse
+from .models import EventSchedule
 from datetime import datetime
+from phonenumber_field.formfields import PhoneNumberField
 
 
 class NewsFilterForm(forms.Form):
@@ -57,3 +59,37 @@ class MailingForm(forms.Form):
         self.helper.attrs = {'hx_boost': 'true', 'hx-target': 'this'}
         self.helper.layout = Layout(PrependedText('mail', 'Почта', placeholder="example@mail.ru"))
         self.helper.add_input(Submit('submit_mailing', 'Оформить подписку', css_class='btn btn-warning', ))
+
+
+class VisitorForm(forms.Form):
+    STAND_CHOICES = [
+        ('ab', 'Абитуриент'),
+        ('11', '11 класс'),
+        ('10', '10 класс'),
+        ('dr', 'Другое'),
+    ]
+    event = forms.ModelChoiceField(empty_label=None, queryset=EventSchedule.objects.none())
+    name = forms.CharField(max_length=100, )
+    mail = forms.EmailField()
+    phone = PhoneNumberField()
+    stand = forms.ChoiceField(widget=forms.RadioSelect, choices=STAND_CHOICES, label='')
+
+    def __init__(self, *args, **kwargs):
+        event_pk = kwargs.pop('event_pk', None)
+        super().__init__(*args, **kwargs)
+        event_schedule = EventSchedule.objects.filter(event__pk=event_pk)
+        self.fields['event'].queryset = event_schedule
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'events'
+        self.helper.attrs = {'hx_boost': 'true', 'hx-target': 'this'}
+        self.helper.layout = Layout(
+            HTML(f"<p class='text-center'>{event_schedule[0].event.date} {event_schedule[0].event.name}</p>"),
+            PrependedText('event', 'Время'),
+            PrependedText('name', 'ФИО', placeholder="Иванов Иван Иванович"),
+            PrependedText('mail', 'Почта', placeholder="example@mail.ru"),
+            PrependedText('phone', 'Телефон'),
+            InlineRadios('stand'),
+            Submit('submit_visitor', 'Отправить', css_class='btn btn-primary'),
+        )

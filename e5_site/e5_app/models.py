@@ -185,10 +185,20 @@ class EventSchedule(Common):
         verbose_name_plural = 'Расписания'
 
     def __str__(self):
-        return str(self.start)
+        output = str(self.start.strftime("%H:%M"))
+        if self.end:
+            output += f'-{self.end.strftime("%H:%M")}'
+        if self.place:
+            output += f' {self.place}'
+        return output
 
     def __repr__(self):
-        return str(self.start)
+        output = str(self.start.strftime("%H:%M"))
+        if self.end:
+            output += f'-{self.end.strftime("%H:%M")}'
+        if self.place:
+            output += f' {self.place}'
+        return output
 
 
 class Visitor(Common):
