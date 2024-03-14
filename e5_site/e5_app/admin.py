@@ -69,10 +69,20 @@ class ScheduleInline(admin.TabularInline):
     extra = 1
 
 
+class VisitorInline(admin.TabularInline):
+    model = Visitor
+    extra = 0
+
+
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     inlines = [ScheduleInline]
 
 
+@admin.register(EventSchedule)
+class EventScheduleAdmin(admin.ModelAdmin):
+    inlines = [VisitorInline]
+
+
 admin.site.register(
-    [VComponent, WComponent, Rubric, Company, Employee, Partner, EventType, Visitor, EventSchedule, Mailing])
+    [VComponent, WComponent, Rubric, Company, Employee, Partner, EventType, Visitor, Mailing])

@@ -45,8 +45,7 @@
                         {% regroup event_list by event_type as event_types %}
                         {% for event_type in event_types %}
                         <li>
-                            <button class="dropdown-item" data-type='{{ event_type.grouper.pk }}'>{{
-                                event_type.grouper.name }}
+                            <button class="dropdown-item" data-type='{{ event_type.grouper.pk }}'>{{ event_type.grouper.name }}
                                 <span class="badge text-bg-warning rounded-pill ms-1"
                                       style="background-color: {{ event_type.grouper.color }} !important;">{{ event_type.list|length }}</span>
                             </button>

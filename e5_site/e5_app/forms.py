@@ -1,7 +1,7 @@
 from bootstrap_datepicker_plus.widgets import MonthPickerInput
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Field, HTML
+from crispy_forms.layout import Layout, Submit, Field, HTML, Div
 from crispy_forms.bootstrap import PrependedText, InlineRadios
 from django.urls import reverse
 from .models import EventSchedule
@@ -57,7 +57,7 @@ class MailingForm(forms.Form):
         self.helper.form_method = 'post'
         self.helper.form_action = 'events'
         self.helper.attrs = {'hx_boost': 'true', 'hx-target': 'this'}
-        self.helper.layout = Layout(PrependedText('mail', 'Почта', placeholder="example@mail.ru"))
+        self.helper.layout = Layout(PrependedText('mail', 'Почта', placeholder="example@example.ru"))
         self.helper.add_input(Submit('submit_mailing', 'Оформить подписку', css_class='btn btn-warning', ))
 
 
@@ -71,7 +71,7 @@ class VisitorForm(forms.Form):
     event = forms.ModelChoiceField(empty_label=None, queryset=EventSchedule.objects.none())
     name = forms.CharField(max_length=100, )
     mail = forms.EmailField()
-    phone = PhoneNumberField()
+    phone = PhoneNumberField(region='RU')
     stand = forms.ChoiceField(widget=forms.RadioSelect, choices=STAND_CHOICES, label='')
 
     def __init__(self, *args, **kwargs):
@@ -92,4 +92,11 @@ class VisitorForm(forms.Form):
             PrependedText('phone', 'Телефон'),
             InlineRadios('stand'),
             Submit('submit_visitor', 'Отправить', css_class='btn btn-primary'),
+            Div(css_id='visitor_errors',css_class='text-danger'),
         )
+
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if len(name.split(' ')) != 3:
+            raise forms.ValidationError('Введите правильное ФИО (3 слова через пробел)')
+        return name

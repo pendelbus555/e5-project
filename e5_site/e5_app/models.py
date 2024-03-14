@@ -214,9 +214,16 @@ class Visitor(Common):
     phone = PhoneNumberField()
     stand = models.CharField(choices=STAND_CHOICES, )
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        send_mail(f'Запись на мероприятие Э5 {self.event.event}, {self.event.event.date}',
+                  f'Здравствуйте {self.name}, вы были успешно запсаны на {self.event}',
+                  'mrusipusi@gmail.com', [self.mail])
+
     class Meta:
         verbose_name = 'Посетитель'
         verbose_name_plural = 'Посетители'
+
 
 
 class Mailing(models.Model):

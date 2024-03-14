@@ -1,7 +1,7 @@
 import django.db
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
-from .models import News, Rubric, Employee, Work, Vacancy, Partner, Event, Mailing, EventSchedule
+from .models import News, Rubric, Employee, Work, Vacancy, Partner, Event, Mailing, EventSchedule, Visitor
 import math
 from .forms import NewsFilterForm, MailingForm, VisitorForm
 from django.db.models import Min, Max
@@ -96,7 +96,6 @@ def news(request, rubric=0):
 
 def news_filter(request):
     if request.method == 'POST':
-        print(request.POST)
         min_date = News.objects.aggregate(Min('created_at'))['created_at__min']
         max_date = News.objects.aggregate(Max('created_at'))['created_at__max']
         min_date = min_date.replace(day=1)
@@ -210,25 +209,39 @@ class EventListView(ListView):
 
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
-        if request.headers.get('HX-Request') == 'true':
-            if request.headers.get('HX-Boosted') == 'true':
-                if 'submit_mailing' in request.POST:
-                    form = MailingForm(request.POST)
-                    if form.is_valid():
-                        data = form.cleaned_data
-                        try:
-                            Mailing.objects.create(mail=data['mail'])
-                            return HttpResponse('''<div class="text-success">
-                                                  Подписка успешно оформлена!</div>''')
-                        except django.db.IntegrityError:
-                            return HttpResponse('''<div class="text-warning">
-                                                  Данная почта уже подписана на рассылку</div>''')
-            elif request.headers.get('Event'):
-                event_pk = int(request.headers.get('Event'))
-                form = VisitorForm(event_pk=event_pk)
-                ctx = {}
-                ctx.update(csrf(request))
-                form_html = render_crispy_form(form, context=ctx)
-                return HttpResponse(form_html)
+        if request.headers.get('HX-Boosted'):
+            if 'submit_mailing' in request.POST:
+                form = MailingForm(request.POST)
+                if form.is_valid():
+                    data = form.cleaned_data
+                    try:
+                        Mailing.objects.create(mail=data['mail'])
+                        return HttpResponse('''<div class="text-success">
+                                              Подписка успешно оформлена!</div>''')
+                    except django.db.IntegrityError:
+                        return HttpResponse('''<div class="text-warning">
+                                              Данная почта уже подписана на рассылку</div>''')
+            if 'submit_visitor' in request.POST:
+                event_schedule_pk = int(request.POST.get('event'))
+                form = VisitorForm(request.POST, event_pk=EventSchedule.objects.get(pk=event_schedule_pk).event.pk)
+                if form.is_valid():
+                    data = form.cleaned_data
+                    Visitor.objects.create(event=data['event'], name=data['name'], mail=data['mail'],
+                                           phone=data['phone'], stand=data['stand'])
+                    return HttpResponse('''<div class="text-success">
+                                                                 Запись принята!</div>''')
+                else:
+                    response = HttpResponse(str(form.errors))
+                    response["HX-Retarget"] = "#visitor_errors"
+                    return response
+
+
+        elif request.headers.get('Event'):
+            event_pk = int(request.headers.get('Event'))
+            form = VisitorForm(event_pk=event_pk)
+            ctx = {}
+            ctx.update(csrf(request))
+            form_html = render_crispy_form(form, context=ctx)
+            return HttpResponse(form_html)
 
         return response
