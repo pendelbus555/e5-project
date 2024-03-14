@@ -5,7 +5,7 @@ from .models import News, Rubric, Employee, Work, Vacancy, Partner, Event, Maili
 import math
 from .forms import NewsFilterForm, MailingForm, VisitorForm
 from django.db.models import Min, Max
-import calendar
+import calendar, datetime
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import TemplateView
 from django.templatetags.static import static
@@ -149,7 +149,10 @@ class PlanView(TemplateView):
 
 
 def schedule(request):
-    return render(request, 'e5_app/schedule.html')
+    today = datetime.date.today()
+    week = today.isocalendar()[1]
+    ctx = {'week': week - 5}
+    return render(request, 'e5_app/schedule.html', context=ctx)
 
 
 class ContactsView(TemplateView):
