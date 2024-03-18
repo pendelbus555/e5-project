@@ -1,7 +1,7 @@
 import django.db
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
-from .models import News, Rubric, Employee, Work, Vacancy, Partner, Event, Mailing, EventSchedule, Visitor
+from .models import News, Rubric, Employee, Work, Vacancy, Partner, Event, Mailing, EventSchedule, Visitor, HTMLPage
 import math
 from .forms import NewsFilterForm, MailingForm, VisitorForm
 from django.db.models import Min, Max
@@ -11,6 +11,7 @@ from django.views.generic.base import TemplateView
 from django.templatetags.static import static
 from crispy_forms.utils import render_crispy_form
 from django.template.context_processors import csrf
+from django.contrib.postgres.search import SearchVector
 
 
 def index(request):
@@ -237,8 +238,6 @@ class EventListView(ListView):
                     response = HttpResponse(str(form.errors))
                     response["HX-Retarget"] = "#visitor_errors"
                     return response
-
-
         elif request.headers.get('Event'):
             event_pk = int(request.headers.get('Event'))
             form = VisitorForm(event_pk=event_pk)
@@ -248,3 +247,26 @@ class EventListView(ListView):
             return HttpResponse(form_html)
 
         return response
+
+
+def search(request):
+    if request.method == 'POST':
+        search_text = request.POST.get('search', None)
+        news_list = News.objects.annotate(
+            search=SearchVector("name", "description", "created_at", "content"),
+        ).filter(search=search_text)
+        vacancy_list = Vacancy.objects.annotate(
+            search=SearchVector("name", "company__name", "salary", "experience", "schedule", "content"),
+        ).filter(search=search_text)
+        page_list = HTMLPage.objects.annotate(
+            search=SearchVector("content"),
+        ).filter(search=search_text)
+        works_list = Work.objects.annotate(
+            search=SearchVector("name", "description"),
+        ).filter(search=search_text)
+        if works_list and not page_list.filter(url_name='works'):
+            page_list |= HTMLPage.objects.filter(url_name='works')
+        ctx = {'search_text': search_text, 'news_list': news_list, 'vacancy_list': vacancy_list, 'page_list': page_list}
+        return render(request, 'e5_app/search.html', ctx)
+    else:
+        return redirect('index')

@@ -18,4 +18,5 @@ urlpatterns = [
     path('vacancy/', views.VacancyListView.as_view(), name='vacancy'),
     path('vacancy/<slug:slug>/', views.VacancyDetailView.as_view(), name='vacancy_single'),
     path('events/', views.EventListView.as_view(), name='events'),
+    path('search/', views.search, name='search'),
 ]

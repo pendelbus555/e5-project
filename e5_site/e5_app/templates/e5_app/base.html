@@ -84,10 +84,14 @@
                             <a class="nav-link active" aria-current="page" href="{% url 'contacts' %}">Контакты</a>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search">
+
+
+                    <form class="d-flex" role="search" action="{% url 'search' %}" method="POST">
+                        {% csrf_token %}
+                        <input class="form-control me-2" type="search" name='search' placeholder="Поиск" aria-label="Search">
                         <button class="btn btn-outline-light" type="submit">Найти</button>
                     </form>
+
                 </div>
             </div>
         </nav>
