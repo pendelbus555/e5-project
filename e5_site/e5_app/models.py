@@ -225,7 +225,6 @@ class Visitor(Common):
         verbose_name_plural = 'Посетители'
 
 
-
 class Mailing(models.Model):
     mail = models.EmailField(unique=True, verbose_name='Почта')
 
@@ -238,3 +237,25 @@ class Mailing(models.Model):
 
     def __repr__(self):
         return self.mail
+
+
+class HTMLPage(models.Model):
+    url_name = models.CharField(unique=True, verbose_name='Название пути')
+    content = models.TextField(verbose_name='Контент для поиска')
+
+    @classmethod
+    def update_or_create_page(cls, url_name, new_content):
+        obj, created = cls.objects.get_or_create(url_name=url_name)
+        obj.content = new_content
+        obj.save()
+        return obj, created
+
+    class Meta:
+        verbose_name = 'Страница HTML'
+        verbose_name_plural = 'Страницы HTML'
+
+    def __str__(self):
+        return self.url_name
+
+    def __repr__(self):
+        return self.url_name
