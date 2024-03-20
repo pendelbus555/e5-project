@@ -2,9 +2,7 @@ from django.db import models
 from colorfield.fields import ColorField
 from ckeditor_uploader.fields import RichTextUploadingField
 from phonenumber_field.modelfields import PhoneNumberField
-from datetime import datetime
 from django.core.mail import send_mail
-from django.utils.html import strip_tags
 
 
 class Common(models.Model):
