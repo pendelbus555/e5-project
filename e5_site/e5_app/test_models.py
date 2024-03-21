@@ -27,13 +27,13 @@ class NewsTest(TestCase):
 class VacancyTest(TestCase):
     def test_absolute_url(self):
         vacancy_name = 'Test vacancy name'
-        vacancy_slug_url = 'test-vacancy-name'
+        vacancy_slug_url = slugify(vacancy_name)
         company_name = 'Test company name'
         company = Company.objects.create(name=company_name)
         vacancy = Vacancy.objects.create(name=vacancy_name, slug_url=vacancy_slug_url, company=company)
         url = vacancy.get_absolute_url()
         self.assertTrue(url, 'Vacancy do not have absolute url')
-        self.assertEqual(url, f'/site/vacancy/{slugify(vacancy_name)}', 'Vacancy have wrong absolute url')
+        self.assertEqual(url, f'/site/vacancy/{vacancy_slug_url}', 'Vacancy have wrong absolute url')
 
 
 class WorkComponentTest(TestCase):
