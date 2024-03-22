@@ -141,3 +141,56 @@ class NewsTest(TestCase):
         data_news = response.json()['data_news']
         self.assertEqual(len(data_news), 1)
         self.assertEqual(data_news[0]['name'], news_2_name)
+
+
+class NewsFilterTest(TestCase):
+    def test_get(self):
+        news_created_at = timezone.now()
+        news_slug_url = 'news_1'
+        News.objects.create(created_at=news_created_at, slug_url=news_slug_url)
+        response = self.client.get(reverse('news_filter'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('news'))
+
+    def test_post(self):
+        news_1_created_at = timezone.now() - timedelta(days=2 * 365)
+        news_1_slug_url = 'news_1'
+        news_2_created_at = timezone.now() - timedelta(days=365)
+        news_2_slug_url = 'news_2'
+        news_3_created_at = timezone.now()
+        news_3_slug_url = 'news_3'
+        News.objects.create(created_at=news_1_created_at, slug_url=news_1_slug_url)
+        News.objects.create(created_at=news_2_created_at, slug_url=news_2_slug_url)
+        News.objects.create(created_at=news_3_created_at, slug_url=news_3_slug_url)
+        response_start_date = news_3_created_at.strftime('%Y-%m')
+        response_end_date = news_2_created_at.strftime('%Y-%m')
+        response = self.client.post(reverse('news_filter'), {'start_date': response_start_date,
+                                                             'end_date': response_end_date})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['content-type'], 'text/html; charset=utf-8')
+        self.assertTemplateUsed(response, 'e5_app/news_filter.html')
+
+        self.assertEqual(len(response.context['filtered_news']), 2)
+        self.assertEqual(response.context['filtered_news'][0].slug_url, 'news_3')
+        self.assertEqual(response.context['filtered_news'][1].slug_url, 'news_2')
+
+
+class NewsSingleTest(TestCase):
+    def test_get(self):
+        news_1_created_at = timezone.now() - timedelta(days=2 * 365)
+        news_1_slug_url = 'news_1'
+        news_2_created_at = timezone.now() - timedelta(days=365)
+        news_2_slug_url = 'news_2'
+        news_3_created_at = timezone.now()
+        news_3_slug_url = 'news_3'
+        News.objects.create(created_at=news_1_created_at, slug_url=news_1_slug_url)
+        News.objects.create(created_at=news_2_created_at, slug_url=news_2_slug_url)
+        News.objects.create(created_at=news_3_created_at, slug_url=news_3_slug_url)
+        response = self.client.get(reverse('news_single', kwargs={'slug': news_2_slug_url}))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['content-type'], 'text/html; charset=utf-8')
+        self.assertTemplateUsed(response, 'e5_app/news_single.html')
+        self.assertEqual(len(response.context["last_news"]), 3)
+        self.assertEqual(response.context["news_single"].slug_url, news_2_slug_url)
+        self.assertEqual(response.context["news_before"].slug_url, news_1_slug_url)
+        self.assertEqual(response.context["news_after"].slug_url, news_3_slug_url)

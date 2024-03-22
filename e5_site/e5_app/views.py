@@ -12,6 +12,8 @@ from django.templatetags.static import static
 from crispy_forms.utils import render_crispy_form
 from django.template.context_processors import csrf
 from django.contrib.postgres.search import SearchVector
+from django.utils.timezone import make_aware
+from datetime import datetime
 
 
 def index(request):
@@ -110,6 +112,12 @@ def news_filter(request):
 
             start_date = start_date.replace(day=1)
             end_date = end_date.replace(day=calendar.monthrange(end_date.year, end_date.month)[1])
+
+            start_date = datetime.combine(start_date, datetime.min.time())
+            end_date = datetime.combine(end_date, datetime.max.time())
+
+            start_date = make_aware(start_date)
+            end_date = make_aware(end_date)
 
             filtered_news = News.objects.filter(created_at__range=[start_date, end_date])
 
