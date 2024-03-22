@@ -5,6 +5,8 @@ import tempfile
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 from django.templatetags.static import static
+from datetime import timedelta
+from django.urls import reverse
 
 
 class IndexTest(TestCase):
@@ -77,3 +79,65 @@ class IndexTest(TestCase):
         self.assertEqual(data_vacancy['salary'], vacancy_salary)
         self.assertEqual(data_vacancy['company_name'], company_name)
         self.assertEqual(data_vacancy['slug_url'], vacancy_slug_url)
+
+
+class NewsTest(TestCase):
+    def test_without_ajax(self):
+        Rubric.objects.create()
+        news_1_created_at = timezone.now() - timedelta(days=2 * 365)
+        news_1_slug_url = 'news_1'
+        news_2_created_at = timezone.now() - timedelta(days=365)
+        news_2_slug_url = 'news_2'
+        news_3_created_at = timezone.now()
+        news_3_slug_url = 'news_3'
+        News.objects.create(created_at=news_1_created_at, slug_url=news_1_slug_url)
+        News.objects.create(created_at=news_2_created_at, slug_url=news_2_slug_url)
+        News.objects.create(created_at=news_3_created_at, slug_url=news_3_slug_url)
+        response = self.client.get('/site/news/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['content-type'], 'text/html; charset=utf-8')
+        self.assertTemplateUsed(response, 'e5_app/news.html')
+        self.assertEqual(response.context["selected"], 0)
+        self.assertEqual(len(response.context["rubrics"]), 1)
+        self.assertEqual(response.context["form"]['start_date'].value(),
+                         news_1_created_at.replace(day=1).strftime('%Y-%m-%d'))
+        self.assertEqual(response.context["form"]['end_date'].value(),
+                         news_3_created_at.replace(day=1).strftime('%Y-%m-%d'))
+
+    def test_with_ajax(self):
+        rubric_1_name = 'Test rubric_1 name'
+        rubric_1 = Rubric.objects.create(name=rubric_1_name)
+        rubric_2_name = 'Test rubric_2 name'
+        rubric_2 = Rubric.objects.create(name=rubric_2_name)
+        news_1_created_at = timezone.now()
+        news_2_created_at = timezone.now() - timedelta(days=365)
+        news_1_name = 'Test news_1 name'
+        news_2_name = 'Test news_2 name'
+        news_1_slug_url = 'news_1'
+        news_2_slug_url = 'news_2'
+        news_1 = News.objects.create(name=news_1_name, slug_url=news_1_slug_url, created_at=news_1_created_at)
+        news_1.rubrics.add(rubric_1)
+        news_2 = News.objects.create(name=news_2_name, slug_url=news_2_slug_url, created_at=news_2_created_at)
+        news_2.rubrics.add(rubric_2)
+
+        response = self.client.get(path='/site/news/',
+                                   headers={'X-Requested-With': 'XMLHttpRequest'},
+                                   data={'page': '1', 'segment': 'news'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['content-type'], 'application/json')
+        self.assertEqual(len(response.json()), 2)
+        self.assertEqual(response.json()['total_pages'], 1)
+        data_news = response.json()['data_news']
+        self.assertEqual(len(data_news), 2)
+        self.assertEqual(data_news[0]['name'], news_1_name)
+        self.assertEqual(parse_datetime(data_news[0]['created_at']).replace(microsecond=0),
+                         news_1_created_at.replace(microsecond=0))
+        self.assertEqual(data_news[0]['slug_url'], news_1_slug_url)
+
+        response = self.client.get(path=reverse('news_rubric', kwargs={'rubric': rubric_2.pk}),
+                                   headers={'X-Requested-With': 'XMLHttpRequest'},
+                                   data={'page': '1', 'segment': str(rubric_2.pk)})
+        self.assertEqual(response.json()['total_pages'], 1)
+        data_news = response.json()['data_news']
+        self.assertEqual(len(data_news), 1)
+        self.assertEqual(data_news[0]['name'], news_2_name)

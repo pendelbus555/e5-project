@@ -64,7 +64,7 @@ def news(request, rubric=0):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         page = int(request.GET.get('page'))
         segment = request.GET.get('segment')
-        per_page = 2
+        per_page = 10
         starting_number = (page - 1) * per_page
         ending_number = page * per_page
         if segment == 'news':
@@ -82,9 +82,7 @@ def news(request, rubric=0):
                 'slug_url': n.slug_url
             }
             serialized_news.append(news_data)
-
         return JsonResponse({'data_news': serialized_news, 'total_pages': total_pages})
-
     else:
         rubrics = Rubric.objects.all()
         min_date = News.objects.aggregate(Min('created_at'))['created_at__min']
