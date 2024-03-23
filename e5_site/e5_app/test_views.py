@@ -7,6 +7,7 @@ from django.utils.dateparse import parse_datetime
 from django.templatetags.static import static
 from datetime import timedelta
 from django.urls import reverse
+import datetime as dt
 
 
 class IndexTest(TestCase):
@@ -194,3 +195,60 @@ class NewsSingleTest(TestCase):
         self.assertEqual(response.context["news_single"].slug_url, news_2_slug_url)
         self.assertEqual(response.context["news_before"].slug_url, news_1_slug_url)
         self.assertEqual(response.context["news_after"].slug_url, news_3_slug_url)
+
+
+class ScheduleTest(TestCase):
+    def test_get(self):
+        response = self.client.get(reverse('schedule'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['content-type'], 'text/html; charset=utf-8')
+        self.assertTemplateUsed(response, 'e5_app/schedule.html')
+        self.assertIn('week', response.context)
+        self.assertEqual(response.context['week'], dt.date.today().isocalendar()[1] - 5)
+
+
+class VacancyDetailViewTest(TestCase):
+    def test_get_context_data(self):
+        vacancy_2_slug_url = 'vacancy_2'
+        company_photo = tempfile.NamedTemporaryFile(suffix=".jpg").name
+        company = Company.objects.create(photo=company_photo)
+        Vacancy.objects.create(pk=2, slug_url=vacancy_2_slug_url, company=company, )
+        response = self.client.get(reverse('vacancy_single', kwargs={'slug': vacancy_2_slug_url}))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['content-type'], 'text/html; charset=utf-8')
+        self.assertTemplateUsed(response, 'e5_app/vacancy_single.html')
+        self.assertEqual(response.context['vacancy'].slug_url, vacancy_2_slug_url)
+        self.assertEqual(response.context['vacancy_before'], None)
+        self.assertEqual(response.context['vacancy_after'], None)
+        vacancy_1_slug_url = 'vacancy_1'
+        Vacancy.objects.create(pk=1, slug_url=vacancy_1_slug_url, company=company, )
+        vacancy_3_slug_url = 'vacancy_3'
+        Vacancy.objects.create(pk=3, slug_url=vacancy_3_slug_url, company=company, )
+        response = self.client.get(reverse('vacancy_single', kwargs={'slug': vacancy_2_slug_url}))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['vacancy'].slug_url, vacancy_2_slug_url)
+        self.assertEqual(response.context['vacancy_before'].slug_url, vacancy_1_slug_url)
+        self.assertEqual(response.context['vacancy_after'].slug_url, vacancy_3_slug_url)
+
+
+class SearchTest(TestCase):
+    def test_get(self):
+        response = self.client.get(reverse('search'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('index'))
+
+    def test_post(self):
+        search = 'Test search name'
+        company = Company.objects.create()
+        news = News.objects.create(name=search, created_at=timezone.now(), slug_url='news_1')
+        vacancy = Vacancy.objects.create(name=search, company=company, slug_url='vacancy_1')
+        HTMLPage.update_or_create_page(url_name='works', new_content='')
+        Work.objects.create(name=search)
+        response = self.client.post(reverse('search'), {'search': search})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['content-type'], 'text/html; charset=utf-8')
+        self.assertTemplateUsed(response, 'e5_app/search.html')
+        self.assertEqual(response.context['search_text'], search)
+        self.assertEqual(response.context['news_list'][0], news)
+        self.assertEqual(response.context['vacancy_list'][0], vacancy)
+        self.assertEqual(response.context['page_list'][0].url_name, 'works')
