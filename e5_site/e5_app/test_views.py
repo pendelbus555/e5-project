@@ -8,6 +8,7 @@ from django.templatetags.static import static
 from datetime import timedelta
 from django.urls import reverse
 import datetime as dt
+from django.http import HttpResponse
 
 
 class IndexTest(TestCase):
@@ -252,3 +253,68 @@ class SearchTest(TestCase):
         self.assertEqual(response.context['news_list'][0], news)
         self.assertEqual(response.context['vacancy_list'][0], vacancy)
         self.assertEqual(response.context['page_list'][0].url_name, 'works')
+
+
+class EventListViewTest(TestCase):
+    def test_get_context_data(self):
+        event_type = EventType.objects.create()
+        event_date = timezone.now()
+        event = Event.objects.create(date=event_date, event_type=event_type)
+        response = self.client.get(reverse('events'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['content-type'], 'text/html; charset=utf-8')
+        self.assertTemplateUsed(response, 'e5_app/events.html')
+        self.assertEqual(response.context['event_list'][0], event)
+        self.assertIn('mailing_form', response.context)
+
+    def test_without_ajax(self):
+        event_type = EventType.objects.create()
+        event_date = timezone.now()
+        event = Event.objects.create(date=event_date, event_type=event_type, name='Test event name')
+        EventSchedule.objects.create(event=event, start=timezone.now().time())
+        response = self.client.get(reverse('events'), headers={'Event': event.pk})
+        self.assertIn('form', response.context)
+
+    def test_with_ajax_mailing(self):
+        mail = 'test@test.test'
+        response = self.client.post(reverse('events'), {'submit_mailing': True, 'mail': mail},
+                                    headers={'HX-Boosted': True})
+        self.assertIsInstance(response, HttpResponse)
+        self.assertContains(response, 'Подписка успешно оформлена!')
+        self.assertEqual(len(Mailing.objects.all()), 1)
+        response = self.client.post(reverse('events'), {'submit_mailing': True, 'mail': mail},
+                                    headers={'HX-Boosted': True})
+        self.assertIsInstance(response, HttpResponse)
+        self.assertContains(response, 'Данная почта уже подписана на рассылку')
+
+    def test_with_ajax_visitor(self):
+        event_type = EventType.objects.create()
+        event_date = timezone.now()
+        event = Event.objects.create(date=event_date, event_type=event_type, name='Test event name')
+        event_schedule = EventSchedule.objects.create(event=event, start=timezone.now().time())
+        response = self.client.post(reverse('events'),
+                                    {
+                                        'submit_visitor': True,
+                                        'event': event_schedule.pk,
+                                        'name': 'test test test',
+                                        'mail': 'test@test.test',
+                                        'phone': '+79774235467',
+                                        'stand': '11',
+                                    },
+                                    headers={'HX-Boosted': True})
+        self.assertIsInstance(response, HttpResponse)
+        self.assertContains(response, 'Запись принята!')
+        self.assertEqual(len(Visitor.objects.all()), 1)
+        response = self.client.post(reverse('events'),
+                                    {
+                                        'submit_visitor': True,
+                                        'event': event_schedule.pk,
+                                        'name': 'test test test',
+                                        'mail': 'test@test.test',
+                                        'phone': 'error phone',
+                                        'stand': '11',
+                                    },
+                                    headers={'HX-Boosted': True})
+        self.assertIsInstance(response, HttpResponse)
+        self.assertIn('HX-Retarget', response)
+
