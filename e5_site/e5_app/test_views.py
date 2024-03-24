@@ -309,12 +309,11 @@ class EventListViewTest(TestCase):
                                     {
                                         'submit_visitor': True,
                                         'event': event_schedule.pk,
-                                        'name': 'test test test',
+                                        'name': 'error name',
                                         'mail': 'test@test.test',
-                                        'phone': 'error phone',
+                                        'phone': '+79774235467',
                                         'stand': '11',
                                     },
                                     headers={'HX-Boosted': True})
         self.assertIsInstance(response, HttpResponse)
         self.assertIn('HX-Retarget', response)
-
