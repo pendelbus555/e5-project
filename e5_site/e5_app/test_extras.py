@@ -1,4 +1,4 @@
-from .models import News
+from .models import News, HTMLPage
 from .admin import NewsAdmin
 from .templatetags.e5_app_extras import show_list
 from django.test import TestCase
@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.contrib.admin.sites import AdminSite
 from django.conf import settings
 import tempfile
+from e5_app.management.commands.parse import Command
 
 
 class NewsAdminTest(TestCase):
@@ -37,3 +38,9 @@ class ExtrasTest(TestCase):
     def test_show_list(self):
         paragraph = 'tes\nparagraph'
         self.assertEqual({'lst': paragraph.split('\n')}, show_list(paragraph))
+
+
+class ParseTest(TestCase):
+    def test_parse(self):
+        Command().handle()
+        self.assertEqual(len(HTMLPage.objects.all()), 12)

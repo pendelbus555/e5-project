@@ -3,6 +3,7 @@ from django.utils.html import strip_tags
 from django.template.loader import get_template
 import re
 from e5_app.models import HTMLPage
+from bs4 import BeautifulSoup
 
 
 class Command(BaseCommand):
@@ -23,19 +24,18 @@ class Command(BaseCommand):
             'e5_app/vacancy.html': 'vacancy',
             'e5_app/events.html': 'events',
         }
+
         for template, url_name in templates.items():
             template = get_template(template)
-            with open(template.origin.name, 'r', encoding='utf-8') as file:
-                cleaned_text = strip_tags(file.read())
-                cleaned_text = re.sub(r'{%\s*.*?\s*%}', '', cleaned_text, flags=re.DOTALL)
-                cleaned_text = re.sub(r'^var\s+\w+\s*=\s*.*?;', '', cleaned_text,
-                                      flags=re.MULTILINE)
-                cleaned_text = re.sub(r'^&\w+.*?;', '', cleaned_text,
-                                      flags=re.MULTILINE)
-                cleaned_text = re.sub(r'\n\s*\n', '\n', cleaned_text)
-                cleaned_text = re.sub(r'const\s+data\s*=\s*document.currentScript.dataset;.*?render\(\);', '', cleaned_text,
-                                      flags=re.DOTALL)
-                cleaned_text = re.sub(r'{{.*?}}', '', cleaned_text)
-                cleaned_text = re.sub(r'^\s+|\s+$', '', cleaned_text, flags=re.MULTILINE)
-                cleaned_text = cleaned_text.lower()
+            with open(template.origin.name, 'r') as file:
+                template_content = file.read()
+            soup = BeautifulSoup(template_content, 'html.parser')
+            cleaned_text = ''
+            for string in soup.stripped_strings:
+                text_without_n = string.replace('\n', '')
+                text_without_tags = re.sub(r'{%.*?%}', '', text_without_n)
+                text_without_vars = re.sub(r'{{.*?}}', '', text_without_tags)
+                text_without_spaces = re.sub(r'\s+', ' ', text_without_vars)
+                if len(text_without_spaces) >= 2:
+                    cleaned_text += text_without_spaces + '\n'
             HTMLPage.update_or_create_page(url_name=url_name, new_content=cleaned_text)
