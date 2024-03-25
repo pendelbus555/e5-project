@@ -2,3 +2,4 @@ sudo -i -u postgres psql -d e5_db
 coverage run --source='.' --omit='*/migrations/*.py' manage.py test
 coverage report -m
 python manage.py parse
+python3 manage.py runserver 0.0.0.0:8000
