@@ -19,6 +19,14 @@ $(document).ready(function () {
         $("#More").remove();
       }
     }
+    else{
+       var Element = $("#newsColumn");
+     var InnerHtml = `
+      <button type="button" class="btn btn-outline-secondary align-self-center custom-btn my-1" id="More">Показать
+      еще</button>
+                    `;
+      Element.append(InnerHtml);
+    }
   }
 
   function ajax_function(pageIn, lastSegIn) {

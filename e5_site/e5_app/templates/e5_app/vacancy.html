@@ -11,6 +11,7 @@
 <div class="container">
     <h1 class="entry-title text-center my-3">Вакансии</h1>
     <div class="row justify-content-center g-1">
+          {% if message %}{{ message }}{% endif %}
         {% for vacancy in vacancy_list %}
         <div class="col-xl-3 col-lg-4 col-md-6">
             <div class="border-start border-primary border-3 border-opacity-75">

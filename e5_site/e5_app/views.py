@@ -60,7 +60,14 @@ def index(request):
             return JsonResponse({'data_vacancy': serialized_news, 'total_pages': total_pages})
     else:
         partners = Partner.objects.all()
-        return render(request, 'e5_app/index.html', {'partners': partners, }, )
+        ctx = {'partners': partners, }
+        if Partner.objects.all().count() == 0:
+            ctx.update({'message_partners': 'Партнеров нет'})
+        if News.objects.all().count() == 0:
+            ctx.update({'message_news': 'Новостей нет'})
+        if Vacancy.objects.all().count() == 0:
+            ctx.update({'message_vacancy': 'Вакансий нет'})
+        return render(request, 'e5_app/index.html', ctx)
 
 
 def news(request, rubric=0):
@@ -88,6 +95,8 @@ def news(request, rubric=0):
         return JsonResponse({'data_news': serialized_news, 'total_pages': total_pages})
     else:
         rubrics = Rubric.objects.all()
+        if News.objects.all().count() == 0:
+            return render(request, 'e5_app/news.html', {'rubrics': rubrics, 'message': 'Новостей нет'})
         min_date = News.objects.aggregate(Min('created_at'))['created_at__min']
         max_date = News.objects.aggregate(Max('created_at'))['created_at__max']
         min_date = min_date.replace(day=1)
@@ -173,17 +182,35 @@ class EmployeesListView(ListView):
     context_object_name = "employees_list"
     template_name = "e5_app/employees.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if Employee.objects.all().count() == 0:
+            context['message'] = 'Сотрудников нет'
+        return context
+
 
 class WorkListView(ListView):
     model = Work
     context_object_name = 'work_list'
     template_name = 'e5_app/works.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if Work.objects.all().count() == 0:
+            context['message'] = 'Разработок нет'
+        return context
+
 
 class VacancyListView(ListView):
     model = Vacancy
     context_object_name = 'vacancy_list'
     template_name = 'e5_app/vacancy.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if Vacancy.objects.all().count() == 0:
+            context['message'] = 'Вакансий нет'
+        return context
 
 
 class VacancyDetailView(DetailView):
@@ -217,6 +244,8 @@ class EventListView(ListView):
         context = super().get_context_data(**kwargs)
         form = MailingForm()
         context['mailing_form'] = form
+        if Event.objects.all().count() == 0:
+            context['message'] = 'Мероприятий нет'
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -279,7 +308,11 @@ def search(request):
         ).filter(search=search_text)
         if employee_list and not page_list.filter(url_name='employees'):
             page_list |= HTMLPage.objects.filter(url_name='employees')
-        ctx = {'search_text': search_text, 'news_list': news_list, 'vacancy_list': vacancy_list, 'page_list': page_list}
+        if not any([news_list, vacancy_list, page_list]):
+            ctx = {'search_text': search_text, 'message': 'Ничего не найдено'}
+        else:
+            ctx = {'search_text': search_text, 'news_list': news_list, 'vacancy_list': vacancy_list,
+                   'page_list': page_list}
         return render(request, 'e5_app/search.html', ctx)
     else:
         return redirect('index')

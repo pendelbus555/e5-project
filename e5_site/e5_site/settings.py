@@ -87,11 +87,12 @@ WSGI_APPLICATION = 'e5_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# 'NAME': 'e5_db',
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'e5_db',
+        'NAME': 'e5_db_new',
         'USER': 'django',
         'PASSWORD': 'django',
         'HOST': 'localhost',
@@ -140,12 +141,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Images
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 
 # Crispy forms
-
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
@@ -160,7 +159,7 @@ BOOTSTRAP_DATEPICKER_PLUS = {
     "app_static_url": "/static/bootstrap_datepicker_plus/"
 }
 
-# For Debug Toolbar
+# Debug Toolbar
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
@@ -168,12 +167,11 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda request: True,
 }
 
-# For CKEditor
+# CKEditor
 SILENCED_SYSTEM_CHECKS = ["ckeditor.W001"]
-
 CKEDITOR_UPLOAD_PATH = "ckeditor/"
 
-#For SMTP
+# SMTP
 load_dotenv()
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'mrusipusi@gmail.com'

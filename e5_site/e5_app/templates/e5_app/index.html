@@ -36,10 +36,8 @@
 <main>
     <div class="container text-center">
         <h1>Новости</h1>
+        {% if message_news %}{{ message_news }}{% endif %}
         <div class="row gy-2" id="news_row">
-            <p aria-hidden="true">
-                <span class="placeholder col-6 bg-secondary"></span>
-            </p>
         </div>
     </div>
     <nav>
@@ -72,10 +70,8 @@
 
     <div class="container text-center">
         <h1>Вакансии</h1>
+        {% if message_vacancy %}{{ message_vacancy }}{% endif %}
         <div class="row gy-2" id="vacancy_row">
-            <p aria-hidden="true">
-                <span class="placeholder col-6 bg-secondary"></span>
-            </p>
         </div>
     </div>
     <nav>
@@ -112,6 +108,7 @@
       <div class="offcanvas-body small">
           <div class="container-fluid">
               <div class="row align-items-center">
+                  {% if message_partners %}{{ message_partners }}{% endif %}
                   {% for partner in partners %}
                   <div class="col-4 text-center">
                       <img src="{{ partner.photo.url }}" class="img-fluid" style='max-height:300px;'>

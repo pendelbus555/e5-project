@@ -22,6 +22,7 @@
 
 {% block content %}
 <header>
+  <h1 class="entry-title text-center my-3">Новости</h1>
   <ul class="nav nav-pills m-3">
     <li class="nav-item mx-1">
       <a class="shadow-sm nav-link text-black custom-nav {% if selected == 0 %}active{% endif %}" aria-current="page"
@@ -38,20 +39,24 @@
 <main>
   <div class="container">
     <div class="row row-gap-3">
-      <div class="col-lg-8 d-flex flex-column">
+      <div id="newsColumn" class="col-lg-8 d-flex flex-column">
+        {% if message %}{{ message }}{% endif %}
         <ul class="list-group list-group-flush">
         </ul>
-        <button type="button" class="btn btn-outline-secondary align-self-center custom-btn my-1" id="More">Показать
-          еще</button>
+
       </div>
       <div class="col-lg-4 d-flex flex-column align-items-center">
         <div id="vk_groups"></div>
         <script type="text/javascript">
-          VK.Widgets.Group("vk_groups", { mode: 1, height: 400, color1: "ffffff", color2: "000000", color3: "212529" }, 78712884);
+          $(document).ready(function () {
+          VK.Widgets.Group("vk_groups", { mode: 1, height: 178, color1: "ffffff", color2: "000000", color3: "212529" }, 78712884);
+          });
         </script>
+        {% if form %}
         {% load crispy_forms_tags %}
         {% csrf_token %}
         {% crispy form %}
+        {% endif %}
       </div>
     </div>
   </div>

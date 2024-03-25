@@ -15,7 +15,7 @@
     <link href="{% static 'e5_app/frontend/css/main.css' %}" rel="stylesheet">
     <link rel="shortcut icon" href="{% static 'e5_app/frontend/images/main_icon.png' %}" type="image/x-icon">
     <script src="{% static 'e5_app/frontend/js/main_icon.js' %}" type="text/javascript"></script>
-
+    <script src="{% static 'e5_app/frontend/js/search_button.js' %}" type="text/javascript"></script>
     {% block head %}{% endblock %}
 
     <meta charset="UTF-8">
@@ -92,8 +92,8 @@
 
                     <form class="d-flex" role="search" action="{% url 'search' %}" method="POST">
                         {% csrf_token %}
-                        <input class="form-control me-2" type="search" name='search' placeholder="Поиск" aria-label="Search">
-                        <button class="btn btn-outline-light" type="submit">Найти</button>
+                        <input id="search_input" class="form-control me-2" type="search" name='search' placeholder="Поиск" aria-label="Search">
+                        <button id="search_button" class="btn btn-outline-light" type="submit" disabled>Найти</button>
                     </form>
 
                 </div>
