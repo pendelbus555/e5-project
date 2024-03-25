@@ -41,7 +41,7 @@
         <ul>
             {% for page in page_list %}
             <li>
-                <h5><a class='text-break' style="text-decoration: none;" href="{% url page.url_name %}">{{ page.url_name }}</a></h5>
+                <h5><a class='text-break' style="text-decoration: none;" href="{% url page.url_name %}">{{ page.verbose }}</a></h5>
             </li>
             {% endfor %}
         </ul>

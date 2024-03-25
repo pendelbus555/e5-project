@@ -241,11 +241,13 @@ class Mailing(models.Model):
 class HTMLPage(models.Model):
     url_name = models.CharField(unique=True, verbose_name='Название пути')
     content = models.TextField(verbose_name='Контент для поиска')
+    verbose = models.CharField(verbose_name='Название страницы')
 
     @classmethod
-    def update_or_create_page(cls, url_name, new_content):
-        obj, created = cls.objects.get_or_create(url_name=url_name)
+    def update_or_create_page(cls, name_and_url, new_content):
+        obj, created = cls.objects.get_or_create(url_name=name_and_url[1])
         obj.content = new_content
+        obj.verbose = name_and_url[0]
         obj.save()
         return obj, created
 

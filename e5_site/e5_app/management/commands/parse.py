@@ -11,21 +11,21 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         templates = {
-            'e5_app/index.html': 'index',
-            'e5_app/news.html': 'news',
-            'e5_app/history.html': 'history',
-            'e5_app/directions.html': 'directions',
-            'e5_app/programs.html': 'programs',
-            'e5_app/plan.html': 'plan',
-            'e5_app/schedule.html': 'schedule',
-            'e5_app/contacts.html': 'contacts',
-            'e5_app/employees.html': 'employees',
-            'e5_app/works.html': 'works',
-            'e5_app/vacancy.html': 'vacancy',
-            'e5_app/events.html': 'events',
+            'e5_app/index.html': ['Главная', 'index'],
+            'e5_app/news.html': ['Новости', 'news'],
+            'e5_app/history.html': ['История кафедры', 'history'],
+            'e5_app/directions.html': ['Основные направления развития', 'directions'],
+            'e5_app/programs.html': ['Учебные программы курсов', 'programs'],
+            'e5_app/plan.html': ['Рабочий учебный план', 'plan'],
+            'e5_app/schedule.html': ['Расписание', 'schedule'],
+            'e5_app/contacts.html': ['Контакты', 'contacts'],
+            'e5_app/employees.html': ['Преподаватели', 'employees'],
+            'e5_app/works.html': ['Наши разработки', 'works'],
+            'e5_app/vacancy.html': ['Вакансии', 'vacancy'],
+            'e5_app/events.html': ['Мероприятия', 'events'],
         }
 
-        for template, url_name in templates.items():
+        for template, name_and_url in templates.items():
             template = get_template(template)
             with open(template.origin.name, 'r') as file:
                 template_content = file.read()
@@ -38,4 +38,4 @@ class Command(BaseCommand):
                 text_without_spaces = re.sub(r'\s+', ' ', text_without_vars)
                 if len(text_without_spaces) >= 2:
                     cleaned_text += text_without_spaces + '\n'
-            HTMLPage.update_or_create_page(url_name=url_name, new_content=cleaned_text)
+            HTMLPage.update_or_create_page(name_and_url=name_and_url, new_content=cleaned_text)

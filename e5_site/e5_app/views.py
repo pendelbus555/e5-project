@@ -131,12 +131,13 @@ def news_filter(request):
 
 def news_single(request, slug):
     rubrics = Rubric.objects.all()
-    news_single = News.objects.get(slug_url=slug)
-    news_before = News.objects.filter(created_at__lt=news_single.created_at).order_by('-created_at').first()
-    news_after = News.objects.filter(created_at__gt=news_single.created_at).order_by('created_at').first()
+    news_single_obj = News.objects.get(slug_url=slug)
+    news_before = News.objects.filter(created_at__lt=news_single_obj.created_at).order_by('-created_at').first()
+    news_after = News.objects.filter(created_at__gt=news_single_obj.created_at).order_by('created_at').first()
     last_news = News.objects.all()[:5]
+    print(news_single_obj, news_single_obj.content, news_single_obj.slug_url)
     return render(request, 'e5_app/news_single.html',
-                  {'rubrics': rubrics, 'news_single': news_single, 'last_news': last_news,
+                  {'rubrics': rubrics, 'news_single': news_single_obj, 'last_news': last_news,
                    'news_before': news_before, 'news_after': news_after})
 
 
@@ -273,6 +274,11 @@ def search(request):
         ).filter(search=search_text)
         if works_list and not page_list.filter(url_name='works'):
             page_list |= HTMLPage.objects.filter(url_name='works')
+        employee_list = Employee.objects.annotate(
+            search=SearchVector("name", "description"),
+        ).filter(search=search_text)
+        if employee_list and not page_list.filter(url_name='employees'):
+            page_list |= HTMLPage.objects.filter(url_name='employees')
         ctx = {'search_text': search_text, 'news_list': news_list, 'vacancy_list': vacancy_list, 'page_list': page_list}
         return render(request, 'e5_app/search.html', ctx)
     else:
