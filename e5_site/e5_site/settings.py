@@ -33,7 +33,8 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'e5_app',
-    'django.contrib.admin',
+    # 'django.contrib.admin',
+    'e5_site.apps.MyAdminConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
