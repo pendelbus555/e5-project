@@ -171,6 +171,40 @@ DEBUG_TOOLBAR_CONFIG = {
 # CKEditor
 SILENCED_SYSTEM_CHECKS = ["ckeditor.W001"]
 CKEDITOR_UPLOAD_PATH = "ckeditor/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar_Custom': [
+            {'name': 'document',
+             'items': ['Undo', 'Redo', '-',
+                       'PasteText', 'PasteFromWord', 'Templates', '-',
+                       'Preview', 'Maximize', 'Find', '-',
+                       'ShowBlocks', 'Source', '-',
+                       ]},
+            '/',
+            {'name': 'insert',
+             'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Blockquote', 'Smiley', 'SpecialChar', '-',
+                       'NumberedList', 'BulletedList', '-',
+                       'CreateDiv', '-',
+                       ]},
+            '/',
+            {'name': 'text-actions',
+             'items': ['Link', 'Unlink', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                       'Outdent', 'Indent', '-',
+                       ]},
+            '/',
+            {'name': 'text-decorations',
+             'items': ['Styles', 'Format', 'Font', 'FontSize', '-',
+                       'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', '-',
+                       'TextColor', 'BGColor', '-',
+                       ]},
+        ],
+        'toolbar': 'Custom',
+        'height': 500,
+        'width': 856,
+        'contentsCss': 'p img {width:100%;}',
+    },
+}
 
 # SMTP
 load_dotenv()

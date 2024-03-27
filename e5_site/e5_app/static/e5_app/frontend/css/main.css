@@ -30,7 +30,8 @@
     top: 15px;
     left: 1px;
     animation-fill-mode: forwards;
-    animation-duration: 1s;
+    animation-duration: 400ms;
+    animation-timing-function: linear;
 }
 .custom_icon_1_in{
     animation-name: rotation_1_in;
@@ -51,7 +52,7 @@
         transform: rotate(-180deg);
     }
     to{
-        transform: rotate(-90deg);
+        transform: rotate(-270deg);
     }
 }
 
@@ -61,7 +62,8 @@
     top: 15px;
     left: 21px;
     animation-fill-mode: forwards;
-    animation-duration: 1s;
+    animation-duration: 400ms;
+    animation-timing-function: linear;
 }
 .custom_icon_2_in{
     animation-name: rotation_2_in;
@@ -82,7 +84,7 @@
         transform: rotate(90deg);
     }
     to{
-        transform: rotate(0deg);
+        transform: rotate(180deg);
     }
 }
 

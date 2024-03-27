@@ -4,7 +4,7 @@ from .models import News, Rubric, Employee, VComponent, WComponent, Work, WorkCo
 from rangefilter.filters import DateRangeQuickSelectListFilterBuilder
 from django.utils.html import mark_safe
 from django.conf import settings
-
+from django.utils.html import strip_tags
 # Register your models here.
 
 admin.site.site_title = 'Сайт админа'
@@ -13,8 +13,8 @@ admin.site.site_header = 'Администрирование Э5'
 
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ['name', 'get_description', 'get_image', 'content', 'slug_url', 'created_at', ]
-    search_fields = ['name', ]
+    list_display = ['name', 'get_description', 'get_image', 'show', 'get_content', 'slug_url', 'created_at', ]
+    search_fields = ['name', 'description', 'content', ]
     date_hierarchy = 'created_at'
 
     list_filter = [
@@ -25,9 +25,16 @@ class NewsAdmin(admin.ModelAdmin):
 
     @admin.display(description='Описание')
     def get_description(self, obj):
-        if len(obj.description) > 30:
-            return obj.description[:30] + '...'
+        if len(obj.description) > 100:
+            return obj.description[:100] + '...'
         return obj.description
+
+    @admin.display(description='Дополнительная информация')
+    def get_content(self, obj):
+        content = strip_tags(obj.content)
+        if len(content) > 100:
+            return content[:100] + '...'
+        return content
 
     @admin.display(description='Картинка')
     def get_image(self, obj):

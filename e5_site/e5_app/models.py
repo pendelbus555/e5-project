@@ -28,13 +28,20 @@ class Rubric(Common):
 
 
 class News(Common):
+    SHOW_CHOICES = {
+        'a': 'Описание и картинка',
+        'd': 'Описание',
+        'p': 'Картинка',
+        'e': 'Ничего'
+    }
     name = models.CharField(max_length=150, verbose_name='Имя')
-    picture = models.ImageField(null=True, blank=True, upload_to='photos/news/%Y/%m', verbose_name='Картинка', )
     description = models.TextField(max_length=500, verbose_name='Описание', )
-    created_at = models.DateTimeField(verbose_name='Дата создания', blank=True, )
+    picture = models.ImageField(null=True, blank=True, upload_to='photos/news/%Y/%m', verbose_name='Картинка', )
+    show = models.CharField(choices=SHOW_CHOICES, default='a', verbose_name='Отображать странице новости')
     content = RichTextUploadingField(null=True, blank=True, verbose_name='Дополнительная информация', )
+    rubrics = models.ManyToManyField(Rubric, verbose_name='Рубрики' )
+    created_at = models.DateTimeField(verbose_name='Дата создания', blank=True, )
     slug_url = models.SlugField(unique=True, verbose_name='Ссылка', )
-    rubrics = models.ManyToManyField(Rubric, )
 
     def get_absolute_url(self):
         return f'/site/news/{self.slug_url}'

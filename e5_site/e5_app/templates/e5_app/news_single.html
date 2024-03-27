@@ -37,19 +37,38 @@
       <div class="col-lg-8">
         <h2>{{ news_single.name }}</h2>
         <h6>{{ news_single.created_at }} </h6>
+        {% if news_single.show == 'a' %}
         <div class="d-flex flex-column flex-md-row">
-          <p class="text-break align-self-center flex-fill custom-p">{{ news_single.description }}aasdfasdfasdfasdfsadfsadfs asdfasdfasdfasdfsadfsadfs
-            asdfasdfasd fasdfsadfsadfs aasdfasd fasdfsadfasf sdfasdfa sdf asdfsadfsadfs asdfasdfasdfasdfsadfsadfs
-            asdfasdfasdfasdfs adfsadfs asdfasdfas dfasdfsadfsadfs sdfasdfasdfasdfsadfsadfs
+          {% if news_single.show == 'a' or news_single.show == 'd' %}
+          <p class="text-break align-self-center flex-fill custom-p">
+            {{ news_single.description }}
           </p>
-          {% if news_single.picture %}}
+          {% endif %}
+          {% if news_single.show == 'a' or news_single.show == 'p' %}
+          {% if news_single.picture %}
           <img src="{{ news_single.picture.url }}" class="rounded custom-image flex-fill" alt="...">
           {% else %}
           <img src="{% static 'e5_app/frontend/images/news_default.png' %}" class="rounded custom-image flex-fill"
             alt="...">
           {% endif %}
+          {% endif %}
         </div>
-        <div>
+       {% elif news_single.show != 'e' %}
+       {% if news_single.show == 'd' %}
+          <p class="text-break align-self-center flex-fill custom-p">
+            {{ news_single.description }}
+          </p>
+          {% endif %}
+          {% if news_single.show == 'p' %}
+            {% if news_single.picture %}
+            <img src="{{ news_single.picture.url }}" class="rounded custom-image flex-fill" alt="...">
+            {% else %}
+            <img src="{% static 'e5_app/frontend/images/news_default.png' %}" class="rounded custom-image flex-fill"
+              alt="...">
+            {% endif %}
+          {% endif %}
+       {% endif %}
+        <div class="overflow-scroll">
           {{ news_single.content|safe }}
         </div>
         <hr>
