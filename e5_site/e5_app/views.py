@@ -16,7 +16,6 @@ from django.contrib.postgres.search import SearchVector
 from django.utils.timezone import make_aware
 from datetime import datetime
 
-
 def index(request):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         if request.GET.get('from') == 'news':
@@ -31,7 +30,7 @@ def index(request):
                 news_data = {
                     'name': n.name,
                     'description': n.description,
-                    'created_at': n.created_at,
+                    'created_at': n.created_at.strftime('%d.%m.%Y'),
                     'slug_url': n.slug_url
                 }
                 if n.picture:
@@ -88,7 +87,7 @@ def news(request, rubric=0):
         for n in news:
             news_data = {
                 'name': n.name,
-                'created_at': n.created_at,
+                'created_at': n.created_at.strftime("%d.%m.%Y %H:%M"),
                 'slug_url': n.slug_url
             }
             serialized_news.append(news_data)
@@ -144,7 +143,6 @@ def news_single(request, slug):
     news_before = News.objects.filter(created_at__lt=news_single_obj.created_at).order_by('-created_at').first()
     news_after = News.objects.filter(created_at__gt=news_single_obj.created_at).order_by('created_at').first()
     last_news = News.objects.all()[:5]
-    print(news_single_obj, news_single_obj.content, news_single_obj.slug_url)
     return render(request, 'e5_app/news_single.html',
                   {'rubrics': rubrics, 'news_single': news_single_obj, 'last_news': last_news,
                    'news_before': news_before, 'news_after': news_after})
