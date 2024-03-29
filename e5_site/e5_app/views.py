@@ -51,8 +51,10 @@ def index(request):
             total_pages = math.ceil(Vacancy.objects.count() / per_page)
             serialized_news = []
             for v in vacancy:
+                if v.salary:
+                    v.salary = v.salary.lower()
                 vacancy_data = {
-                    'name': v.name,
+                    'name': v.name.upper(),
                     'salary': v.salary,
                     'company_name': v.company.name,
                     'slug_url': v.slug_url
@@ -211,7 +213,6 @@ class VacancyListView(ListView):
         if Vacancy.objects.all().count() == 0:
             context['message'] = 'Вакансий нет'
         return context
-
 
 class VacancyDetailView(DetailView):
     model = Vacancy

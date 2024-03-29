@@ -112,17 +112,18 @@ $(document).ready(function () {
       $('#vacancy_3').text(page + 2);
 
     }
-    else if (page == totalPage) {
-      $('#vacancy_1').text(page - 2);
-      $('#vacancy_2').text(page - 1);
-      $('#vacancy_3').text(page);
+    else if (totalPage > 3) {
+        if (page == totalPage){
+          $('#vacancy_1').text(page - 2);
+          $('#vacancy_2').text(page - 1);
+          $('#vacancy_3').text(page);
 
-    }
-    else {
-      $('#vacancy_1').text(page - 1);
-      $('#vacancy_2').text(page);
-      $('#vacancy_3').text(page + 1);
-
+        }
+        else {
+          $('#vacancy_1').text(page - 1);
+          $('#vacancy_2').text(page);
+          $('#vacancy_3').text(page + 1);
+        }
     }
   }
 

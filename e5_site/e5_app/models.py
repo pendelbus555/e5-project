@@ -99,7 +99,7 @@ class WorkComponent(models.Model):
 class Company(Common):
     name = models.CharField(max_length=100, verbose_name='Название', )
     photo = models.ImageField(upload_to='photos/companies/', verbose_name='Фото', )
-    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Описание', )
+    description = models.TextField(null=True, blank=True, verbose_name='Описание', )
 
     class Meta:
         verbose_name = 'Компания'
