@@ -91,7 +91,7 @@
           {% for news in last_news %}
           <li class="list-group-item py-1">
             <h5><a class='text-break stretched-link text-black custom-link fw-normal lh-1 fs-6 text-dark '
-                href="{% url 'news_single' news_single.slug_url %}">{{ news.name }}</a></h5>
+                href="{% url 'news_single' news.slug_url %}">{{ news.name }}</a></h5>
             <small class='text-body-secondary'>{{ news.created_at }}</small>
           </li>
           {% endfor %}
