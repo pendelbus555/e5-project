@@ -17,17 +17,18 @@ $(document).ready(function () {
       $('#news_3').text(page + 2);
 
     }
-    else if (page == totalPage) {
-      $('#news_1').text(page - 2);
-      $('#news_2').text(page - 1);
-      $('#news_3').text(page);
+    else if (totalPage > 3) {
+        if (page == totalPage){
+          $('#news_1').text(page - 2);
+          $('#news_2').text(page - 1);
+          $('#news_3').text(page);
 
-    }
-    else {
-      $('#news_1').text(page - 1);
-      $('#news_2').text(page);
-      $('#news_3').text(page + 1);
-
+        }
+        else {
+          $('#news_1').text(page - 1);
+          $('#news_2').text(page);
+          $('#news_3').text(page + 1);
+        }
     }
   }
 

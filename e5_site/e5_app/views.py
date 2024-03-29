@@ -15,6 +15,8 @@ from django.template.context_processors import csrf
 from django.contrib.postgres.search import SearchVector
 from django.utils.timezone import make_aware
 from datetime import datetime
+from django.utils.text import Truncator
+
 
 def index(request):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
@@ -29,7 +31,7 @@ def index(request):
             for n in news:
                 news_data = {
                     'name': n.name,
-                    'description': n.description,
+                    'description': Truncator(n.description).words(20),
                     'created_at': n.created_at.strftime('%d.%m.%Y'),
                     'slug_url': n.slug_url
                 }

@@ -35,7 +35,7 @@ class News(Common):
         'e': 'Ничего'
     }
     name = models.CharField(max_length=150, verbose_name='Имя')
-    description = models.TextField(max_length=500, verbose_name='Описание', )
+    description = models.TextField(verbose_name='Описание', )
     picture = models.ImageField(null=True, blank=True, upload_to='photos/news/%Y/%m', verbose_name='Картинка', )
     show = models.CharField(choices=SHOW_CHOICES, default='a', verbose_name='Отображать странице новости')
     content = RichTextUploadingField(null=True, blank=True, verbose_name='Дополнительная информация', )
