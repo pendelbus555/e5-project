@@ -184,6 +184,12 @@ class EmployeesListView(ListView):
     context_object_name = "employees_list"
     template_name = "e5_app/employees.html"
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        for employee in queryset:
+            employee.name = employee.name.split()
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if Employee.objects.all().count() == 0:
@@ -213,6 +219,7 @@ class VacancyListView(ListView):
         if Vacancy.objects.all().count() == 0:
             context['message'] = 'Вакансий нет'
         return context
+
 
 class VacancyDetailView(DetailView):
     model = Vacancy

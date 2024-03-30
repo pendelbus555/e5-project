@@ -55,7 +55,7 @@ class News(Common):
 class Employee(Common):
     photo = models.ImageField(upload_to='photos/employee/', verbose_name='Фото', )
     name = models.CharField(max_length=150, verbose_name='Имя', )
-    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Информация', )
+    description = models.TextField(null=True, blank=True, verbose_name='Информация', )
     email_first = models.EmailField(null=True, blank=True, max_length=50, verbose_name='Первая почта', )
     email_second = models.EmailField(null=True, blank=True, max_length=50, verbose_name='Вторая почта', )
 
@@ -75,7 +75,7 @@ class WComponent(Common):
 class Work(Common):
     photo = models.ImageField(upload_to='photos/works/', verbose_name='Фото', )
     name = models.CharField(max_length=150, verbose_name='Название', )
-    description = models.TextField(null=True, blank=True, max_length=500, verbose_name='Описание', )
+    description = models.TextField(null=True, blank=True, verbose_name='Описание', )
     components = models.ManyToManyField(WComponent, through='WorkComponent',
                                         through_fields=('work', 'component',), )
 

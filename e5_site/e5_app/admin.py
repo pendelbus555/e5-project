@@ -59,7 +59,11 @@ class CompanyAdmin(admin.ModelAdmin):
     def get_photo(self, obj):
         return mark_safe(f'<img src = "{obj.photo.url}" width = "50"/>')
 
-
+@admin.register(Employee)
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email_first', 'email_second']
+    def get_photo(self, obj):
+        return mark_safe(f'<img src = "{obj.photo.url}" width = "50"/>')
 @admin.register(Partner)
 class PartnerAdmin(admin.ModelAdmin):
     list_display = ['name', 'get_photo', ]
@@ -117,4 +121,4 @@ class EventScheduleAdmin(admin.ModelAdmin):
 
 
 admin.site.register(
-    [VComponent, WComponent, Rubric, Employee, EventType, Visitor, Mailing])
+    [VComponent, WComponent, Rubric,  EventType, Visitor, Mailing])

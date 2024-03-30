@@ -17,14 +17,26 @@
       {% if message %}{{ message }}{% endif %}
     {% for employee in employees_list %}
     <div class="col-md-6 col-lg-4 text-center">
-      <img class="custom-image rounded-circle" src="{{ employee.photo.url }}">
-      <h3>{{ employee.name }}</h3>
-      <p>{{ employee.description }} </br>
-        <small><a href="mailto:{{ employee.email_first }}">{{ employee.email_first }}</a>
+      <img class="custom-image rounded-circle" src="{{ employee.photo.url }}" width="200" height="200">
+      <h3>
+        {% for name in employee.name %}
+            {{ name }}<br>
+        {% endfor %}
+      </h3>
+      {% if employee.description %}
+      <p>{{ employee.description }}
+        </br>
+          {% endif %}
+        {% if employee.email_first %}
+        <small>
+          <a href="mailto:{{ employee.email_first }}">{{ employee.email_first }}</a>
         </small>
+        {% endif %}
+        {% if employee.email_second %}
         <small>
           <a href="mailto:{{ employee.email_second }}">{{ employee.email_second }}</a>
         </small>
+        {% endif %}
       </p>
     </div>
     {% endfor %}
