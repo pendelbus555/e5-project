@@ -117,7 +117,7 @@ class VComponent(Common):
 
 class Vacancy(Common):
     name = models.CharField(max_length=150, verbose_name='Название', )
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, )
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Компания' )
     salary = models.CharField(null=True, blank=True, max_length=100, verbose_name='Заработная плата', )
     experience = models.CharField(null=True, blank=True, max_length=100, verbose_name='Опыт работы', )
     schedule = models.CharField(null=True, blank=True, max_length=100, verbose_name='График труда', )

@@ -5,6 +5,7 @@ from rangefilter.filters import DateRangeQuickSelectListFilterBuilder
 from django.utils.html import mark_safe
 from django.conf import settings
 from django.utils.html import strip_tags
+
 # Register your models here.
 
 admin.site.site_title = 'Сайт админа'
@@ -44,6 +45,30 @@ class NewsAdmin(admin.ModelAdmin):
             return mark_safe(f'<img src="{settings.STATIC_URL}e5_app/frontend/images/news_default.png" width="50"/>')
 
 
+@admin.register(Company)
+class CompanyAdmin(admin.ModelAdmin):
+    list_display = ['name', 'get_photo', 'get_description', ]
+
+    @admin.display(description='Описание')
+    def get_description(self, obj):
+        if len(obj.description) > 100:
+            return obj.description[:100] + '...'
+        return obj.description
+
+    @admin.display(description='Фото')
+    def get_photo(self, obj):
+        return mark_safe(f'<img src = "{obj.photo.url}" width = "50"/>')
+
+
+@admin.register(Partner)
+class PartnerAdmin(admin.ModelAdmin):
+    list_display = ['name', 'get_photo', ]
+
+    @admin.display(description='Фото')
+    def get_photo(self, obj):
+        return mark_safe(f'<img src = "{obj.photo.url}" width = "50"/>')
+
+
 class WorkComponentInline(admin.TabularInline):
     model = WorkComponent
     extra = 1
@@ -66,7 +91,9 @@ class VacancyComponentInline(admin.TabularInline):
 
 @admin.register(Vacancy)
 class VacancyAdmin(admin.ModelAdmin):
+    list_display = ['name', 'company', 'slug_url', ]
     prepopulated_fields = {"slug_url": ["name"]}
+    inlines = [VacancyComponentInline]
 
 
 class ScheduleInline(admin.TabularInline):
@@ -90,4 +117,4 @@ class EventScheduleAdmin(admin.ModelAdmin):
 
 
 admin.site.register(
-    [VComponent, WComponent, Rubric, Company, Employee, Partner, EventType, Visitor, Mailing])
+    [VComponent, WComponent, Rubric, Employee, EventType, Visitor, Mailing])

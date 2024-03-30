@@ -32,7 +32,7 @@
             {% endif %}
         </h6>
 
-        <div class="d-flex flex-column flex-md-row align-items-center">
+        <div class="d-flex flex-column flex-md-row align-items-center gap-3">
             <img src="{{ vacancy.company.photo.url }}" class="rounded custom-image flex-fill" alt="...">
             <p class="text-break align-self-center flex-fill custom-p">
                 <span class="fw-bold">{{ vacancy.company.name }}</span>
@@ -46,7 +46,7 @@
 
 
         {% for vacancy_component in vacancy.vacancycomponent_set.all %}
-        <h5>{{ vacancy_component.component.name }}</h5>
+        <h5>{{ vacancy_component.component.name|capfirst }}:</h5>
         <!-- custom templatetag -->
         {% show_list vacancy_component.filling %}
         {% endfor %}

@@ -26,7 +26,7 @@
         </div>
     </div>
     {% for work_component in work.workcomponent_set.all %}
-    <h5>{{ work_component.component.name }}</h5>
+    <h5>{{ work_component.component.name|capfirst }}:</h5>
     <!-- custom templatetag -->
     {% show_list work_component.filling %}
     {% endfor %}

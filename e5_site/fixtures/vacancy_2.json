@@ -1,0 +1,80 @@
+[
+{
+    "model": "e5_app.vacancy",
+    "pk": 1,
+    "fields": {
+        "name": "Инженер-теплотехник (для обследования конденсатоотводчиков и др.)",
+        "company": 1,
+        "salary": "от 100 000 до 150 000 ₽ на руки.",
+        "experience": "1–3 года",
+        "schedule": "Полная занятость, полный день.",
+        "slug_url": "inzhener-teplotehnik-dlya-obsledovaniya-kondensato",
+        "content": "<p><strong>&laquo;MIYAWAKI&raquo;</strong>&nbsp;&ndash; ведущий японский производитель конденсатоотводчиков с более чем 90-летним опытом исследований и разработок в области энергосбережения для пароконденсатных систем. Оборудование MIYAWAKI установлено и успешно эксплуатируется на ведущих нефте/газоперерабатывающих и химических предприятиях России.</p>\r\n\r\n<p>В то время, как все основные мировые конкуренты покинули рынок РФ, компания MIYAWAKI продолжает официальные поставки своего оборудования в Россию. Поэтому мы продолжаем расширять свою деятельность по поставкам оборудования и находимся в поиске квалифицированного инженера-теплоэнергетика.</p>\r\n\r\n<p>Все условия индивидуальные и обсуждаются на собеседовании.</p>\r\n\r\n<p><strong>Для связи:</strong><br />\r\n+79064217406 (также WhatsApp)<br />\r\ntelegram: @lizaspic<br />\r\n<a href=\"https://hh.ru/vacancy/91665803?hhtmFrom=employer_vacancies\" rel=\"noopener\" target=\"_blank\">Ссылка на вакансию.</a></p>"
+    }
+},
+{
+    "model": "e5_app.vacancy",
+    "pk": 2,
+    "fields": {
+        "name": "Инженер-конструктор вакуумного оборудования в компании Ostec",
+        "company": 2,
+        "salary": null,
+        "experience": "От 1 года",
+        "schedule": "Полная занятость, гибкий график.",
+        "slug_url": "inzhener-konstruktor-vakuumnogo-oborudovaniya-v-ko",
+        "content": "<p>В одном из подразделений ГК Остек, которое реализует комплексные проекты развития технических и технологических возможностей производств электронных компонентов открыта вакансия Инженера-конструктора.</p>\r\n\r\n<p><strong>Контакты:</strong></p>\r\n\r\n<p>Любовь Шебеко, специалист по подбору персонала<br />\r\nГруппа компаний Остек <a href=\"http://ostec-group.ru\" rel=\"noopener\" target=\"_blank\">https://ostec-group.ru/</a><br />\r\nМосква, ул. Молдавская, д. 5, стр. 2.<br />\r\nE-mail:&nbsp;<a href=\"mailto:hr_ostec_group@mail.ru\" rel=\"noopener\" target=\"_blank\">hr_ostec_group@mail.ru</a><br />\r\nМоб. тел.: <a href=\"tel:+79855817164\" rel=\"noopener\" target=\"_blank\">+7(985)581-71-64</a></p>"
+    }
+},
+{
+    "model": "e5_app.vacancy",
+    "pk": 3,
+    "fields": {
+        "name": "Региональный менеджер по продажам трубопроводной арматуры",
+        "company": 3,
+        "salary": "от 110 000 ₽ на руки",
+        "experience": null,
+        "schedule": "Полная занятость, полный день.",
+        "slug_url": "regionalnyj-menedzher-po-prodazham-truboprovodnoj",
+        "content": "<p>Хотите стать частью успешной команды? Присоединяйтесь к нам!&nbsp;<strong>Компания LD</strong>&nbsp;&mdash; это твоя история успеха!</p>\r\n\r\n<p><strong>ОБРАЩАТЬСЯ:</strong> Айрапетян Саркис Рубики, <a href=\"tel:+79162205404\">+7-916-220-54-04</a>,&nbsp;<a href=\"mailto:7701@ldtd.ru\">7701@ldtd.ru</a></p>"
+    }
+},
+{
+    "model": "e5_app.vacancy",
+    "pk": 4,
+    "fields": {
+        "name": "Менеджер по развитию направления ТС",
+        "company": 3,
+        "salary": "от 110 000 ₽ на руки",
+        "experience": "Полная занятость, полный день.",
+        "schedule": null,
+        "slug_url": "menedzher-po-razvitiyu-napravleniya-ts",
+        "content": "<p>Наша вакансия подойдет начинающим специалистам по продажам в сфере В2В. Мы гарантируем наставничество и профессиональную адаптацию в нашей активной команде. Вы сможете заниматься продажами технических продуктов и услуг, а также учиться у опытных коллег. Наша компания обеспечит Вас необходимыми инструментами и ресурсами для работы, а также поддержкой в виде обучения и наставничества, чтобы Вы могли развиваться и достигать своих карьерных целей.</p>\r\n\r\n<p>Хотите стать частью успешной команды? Присоединяйтесь к нам!&nbsp;<strong>Компания LD</strong>&nbsp;&mdash; это твоя история успеха!</p>\r\n\r\n<p><strong>ОБРАЩАТЬСЯ:</strong> Айрапетян Саркис Рубики, <a href=\"tel:+79162205404\">+7-916-220-54-04</a>,&nbsp;<a href=\"mailto:7701@ldtd.ru\">7701@ldtd.ru</a></p>"
+    }
+},
+{
+    "model": "e5_app.vacancy",
+    "pk": 5,
+    "fields": {
+        "name": "РУКОВОДИТЕЛЬ ПРОЕКТОВ / ПОМОЩНИК РУКОВОДИТЕЛЯ ПРОЕКТОВ",
+        "company": 4,
+        "salary": null,
+        "experience": null,
+        "schedule": null,
+        "slug_url": "rukovoditel-proektov-pomoshnik-rukovoditelya-proek",
+        "content": "<h2>Сфера деятельности:</h2>\r\n\r\n<p>Ведение проектов по созданию и модернизации вакуумных систем и вакуумных установок различного<br />\r\nтехнологического назначения.</p>\r\n\r\n<h2>Контакт:</h2>\r\n\r\n<p>Константин Михайлович Моисеев, технический директор<br />\r\n<a href=\"tel:+79637849587\">+7-963-7849587</a><br />\r\n<a href=\"mailto:konstantin.moiseev@intech-group.ru\">konstantin.moiseev@intech-group.ru</a></p>\r\n\r\n<p><a href=\"http://www.intech-group.ru/\" rel=\"noopener\" target=\"_blank\">www.intech-group.ru</a></p>"
+    }
+},
+{
+    "model": "e5_app.vacancy",
+    "pk": 6,
+    "fields": {
+        "name": "Инженер-испытатель в НПО «Техномаш»",
+        "company": 5,
+        "salary": "от 50 000 до 75 000 руб. на руки.",
+        "experience": "1–3 года.",
+        "schedule": "Полная занятость, полный день.",
+        "slug_url": "inzhener-ispytatel-v-npo-tehnomash",
+        "content": "<div class=\"vacancy-section\">\r\n<h2><strong>Обязанности</strong></h2>\r\n\r\n<div class=\"g-user-content\">\r\n<p>Принимать участие:</p>\r\n\r\n<ul>\r\n\t<li>в разработке конструкторской и технологической документации на испытательное оборудование в рамках ОКР;</li>\r\n\t<li>в изготовлении и испытании опытных образцов оборудования;</li>\r\n\t<li>в разработке и корректировке отраслевой и нормативной документации.</li>\r\n</ul>\r\n</div>\r\n</div>\r\n\r\n<div class=\"vacancy-section\">\r\n<h2><strong>Ключевые навыки</strong></h2>\r\n\r\n<div>\r\n<div class=\"bloko-tag-list\">\r\n<div class=\"bloko-tag bloko-tag_inline\">ЕСКД</div>\r\n\r\n<h2><strong>Контакты</strong></h2>\r\n\r\n<p><strong>Отдел управления персоналом:</strong><br />\r\nтелефон: <a href=\"tel:+74956899690\">8 (495) 689-96-90</a><br />\r\ne-mail:&nbsp;<a href=\"mailto:job@tmnpo.ru\"><span style=\"color:#0066cc\">job@tmnpo.ru</span></a></p>\r\n</div>\r\n</div>\r\n</div>"
+    }
+}
+]
