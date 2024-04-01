@@ -11,9 +11,6 @@
 <script>
     {% url 'news' as news_url %}
     var site_news_url = '{{ news_url }}';
-</script>
-
-<script>
     {% url 'vacancy' as vacancy_url %}
     var site_vacancy_url = '{{ vacancy_url }}';
 </script>
@@ -39,11 +36,11 @@
 </header>
 <main>
 
-    <div class="container text-center" data-aos="fade-up">
+    <div class="container text-center">
         <h1>Новости</h1>
         {% if message_news %}{{ message_news }}{% endif %}
-        <div class="row gy-2" id="news_row">
-        </div>
+        <div class="row gy-2" id="news_row" data-aos="fade-left"
+        ></div>
     </div>
     <nav>
         <ul class="pagination justify-content-center custom-pagination my-1">
@@ -73,11 +70,10 @@
     </div>
 
 
-    <div class="container text-center" data-aos="fade-down">
+    <div class="container text-center">
         <h1>Вакансии</h1>
         {% if message_vacancy %}{{ message_vacancy }}{% endif %}
-        <div class="row gy-2" id="vacancy_row">
-        </div>
+        <div class="row gy-2" id="vacancy_row" data-aos="fade-right"></div>
     </div>
     <nav>
         <ul class="pagination justify-content-center custom-pagination my-1">
@@ -104,7 +100,9 @@
      url('/static/e5_app/frontend/images/background_3.png');
     height: 50vh;">
         <button class=" btn btn-outline-primary btn-lg stretched-link" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" data-aos="zoom-out" data-aos-anchor-placement="top-bottom">Посмотреть
+                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" data-aos="zoom-out"
+                data-aos-anchor-placement="center-bottom"
+                data-aos-duration="1000">Посмотреть
             партнеров
         </button>
     </div>
@@ -121,7 +119,8 @@
                     {% if message_partners %}{{ message_partners }}{% endif %}
                     {% for partner in partners %}
                     <div class="col-4 text-center">
-                        <img src="{{ partner.photo.url }}" alt="{{ partner.name }}" class="img-fluid" style='max-height:300px;'>
+                        <img src="{{ partner.photo.url }}" alt="{{ partner.name }}" class="img-fluid"
+                             style='max-height:300px;'>
                     </div>
                     {% endfor %}
                 </div>
@@ -167,20 +166,21 @@
                 </li>
             </ul>
         </div>
-        <p data-aos="flip-up" data-aos-anchor-placement="top-bottom">Студенты кафедры принимают активное участие в научно-исследовательских и опытно-конструкторских работах
+        <p data-aos="flip-up" data-aos-anchor-placement="top-bottom">Студенты кафедры принимают активное участие в
+            научно-исследовательских и опытно-конструкторских работах
             кафедры. На кафедре есть студенческий вычислительный центр и студенческое конструкторское бюро. Любимой
             дисциплиной студентов является 3D-проектирование и использование 3D-принтера при создании собственных
             разработок. Новые магистерские программы содержат курсы по цифровым технологиям и применении искусственного
             интеллекта.</p>
     </div>
-
-
     </div>
 </main>
 
 
 <script>
+    $(window).on('load', function() {
     AOS.init();
+    });
 </script>
 
 {% endblock %}

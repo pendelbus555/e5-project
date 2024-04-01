@@ -85,6 +85,10 @@ $(document).ready(function () {
         page = pageIn;
         updateCards(data, prefix);
         updatePagination(page, totalPage, prefix);
+      },
+      complete: function (data) {
+        console.log(1);
+        AOS.refresh();
       }
     });
   }
@@ -120,4 +124,5 @@ $(document).ready(function () {
   $('#vacancy_1, #vacancy_2, #vacancy_3').on('click', function () {
     ajax_function(parseInt($(this).text()), 'vacancy');
   });
+
 });
