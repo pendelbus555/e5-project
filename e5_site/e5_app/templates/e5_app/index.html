@@ -121,7 +121,7 @@
                     {% if message_partners %}{{ message_partners }}{% endif %}
                     {% for partner in partners %}
                     <div class="col-4 text-center">
-                        <img src="{{ partner.photo.url }}" class="img-fluid" style='max-height:300px;'>
+                        <img src="{{ partner.photo.url }}" alt="{{ partner.name }}" class="img-fluid" style='max-height:300px;'>
                     </div>
                     {% endfor %}
                 </div>

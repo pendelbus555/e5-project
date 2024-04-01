@@ -16,59 +16,51 @@ from django.contrib.postgres.search import SearchVector
 from django.utils.timezone import make_aware
 from datetime import datetime
 from django.utils.text import Truncator
+from django.core import serializers
+from django.db.models import Case, When, F, Value, CharField, ImageField
+from django.core.paginator import Paginator
 
 
 def index(request):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        if request.GET.get('from') == 'news':
-            page = int(request.GET.get('page'))
-            per_page = 4
-            starting_number = (page - 1) * per_page
-            ending_number = page * per_page
-            news = News.objects.all()[starting_number:ending_number]
-            total_pages = math.ceil(News.objects.count() / per_page)
-            serialized_news = []
-            for n in news:
-                news_data = {
-                    'name': n.name,
-                    'description': Truncator(n.description).words(20),
-                    'created_at': n.created_at.strftime('%d.%m.%Y'),
-                    'slug_url': n.slug_url
-                }
-                if n.picture:
-                    news_data['picture_url'] = n.picture.url
-                else:
-                    news_data['picture_url'] = static('e5_app/frontend/images/news_default.png')
-                serialized_news.append(news_data)
+        page = int(request.GET.get('page'))
+        per_page = 4
 
-            return JsonResponse({'data_news': serialized_news, 'total_pages': total_pages})
-        elif request.GET.get('from') == 'vacancy':
-            page = int(request.GET.get('page'))
-            per_page = 4
-            starting_number = (page - 1) * per_page
-            ending_number = page * per_page
-            vacancy = Vacancy.objects.all()[starting_number:ending_number]
-            total_pages = math.ceil(Vacancy.objects.count() / per_page)
-            serialized_news = []
-            for v in vacancy:
-                if v.salary:
-                    v.salary = v.salary.lower()
-                vacancy_data = {
-                    'name': v.name.upper(),
-                    'salary': v.salary,
-                    'company_name': v.company.name,
-                    'slug_url': v.slug_url
-                }
-                serialized_news.append(vacancy_data)
-            return JsonResponse({'data_vacancy': serialized_news, 'total_pages': total_pages})
+        request_type = request.headers.get('From')
+
+        if request_type == 'news':
+            queryset = News.objects.only('name', 'description', 'created_at', 'slug_url', 'picture')
+            serializer = lambda obj: {
+                'name': obj.name,
+                'description': Truncator(obj.description).words(20),
+                'created_at': obj.created_at.strftime('%d.%m.%Y'),
+                'slug_url': obj.slug_url,
+                'picture_url': obj.picture.url if obj.picture else static('e5_app/frontend/images/news_default.png')
+            }
+        elif request_type == 'vacancy':
+            queryset = Vacancy.objects.only('name', 'salary', 'company__name', 'slug_url').select_related('company')
+            serializer = lambda obj: {
+                'name': obj.name.upper(),
+                'salary': obj.salary.lower() if obj.salary else None,
+                'company_name': obj.company.name,
+                'slug_url': obj.slug_url
+            }
+
+        paginator = Paginator(queryset, per_page)
+        page_data = paginator.page(page)
+
+        serialized_data = [serializer(obj) for obj in page_data]
+        total_pages = paginator.num_pages
+
+        return JsonResponse({'data': serialized_data, 'total_pages': total_pages})
     else:
         partners = Partner.objects.all()
         ctx = {'partners': partners, }
-        if Partner.objects.all().count() == 0:
+        if not partners.exists():
             ctx.update({'message_partners': 'Партнеров нет'})
-        if News.objects.all().count() == 0:
+        if not News.objects.exists():
             ctx.update({'message_news': 'Новостей нет'})
-        if Vacancy.objects.all().count() == 0:
+        if not Vacancy.objects.exists():
             ctx.update({'message_vacancy': 'Вакансий нет'})
         return render(request, 'e5_app/index.html', ctx)
 

@@ -40,7 +40,7 @@ class News(Common):
     show = models.CharField(choices=SHOW_CHOICES, default='a', verbose_name='Отображать странице новости')
     content = RichTextUploadingField(null=True, blank=True, verbose_name='Дополнительная информация', )
     rubrics = models.ManyToManyField(Rubric, verbose_name='Рубрики' )
-    created_at = models.DateTimeField(verbose_name='Дата создания', blank=True, )
+    created_at = models.DateTimeField(verbose_name='Дата создания', blank=True, db_index=True, )
     slug_url = models.SlugField(unique=True, verbose_name='Ссылка', )
 
     def get_absolute_url(self):
@@ -97,7 +97,7 @@ class WorkComponent(models.Model):
 
 
 class Company(Common):
-    name = models.CharField(max_length=100, verbose_name='Название', )
+    name = models.CharField(max_length=100, verbose_name='Название', db_index=True)
     photo = models.ImageField(upload_to='photos/companies/', verbose_name='Фото', )
     description = models.TextField(null=True, blank=True, verbose_name='Описание', )
 
@@ -132,6 +132,7 @@ class Vacancy(Common):
     class Meta:
         verbose_name = 'Вакансия'
         verbose_name_plural = 'Вакансии'
+        ordering = ['pk']
 
 
 class VacancyComponent(models.Model):
@@ -147,11 +148,13 @@ class VacancyComponent(models.Model):
 
 
 class Partner(Common):
+    name = models.CharField(max_length=150, verbose_name='Название', db_index=True)
     photo = models.ImageField(upload_to='photos/partners/', verbose_name='Фото', )
 
     class Meta:
         verbose_name = 'Партнер'
         verbose_name_plural = 'Партнеры'
+        ordering = ['name']
 
 
 class EventType(Common):
