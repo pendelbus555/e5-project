@@ -69,34 +69,34 @@ def news(request, rubric=0):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         page = int(request.GET.get('page'))
         segment = request.GET.get('segment')
-        per_page = 10
-        starting_number = (page - 1) * per_page
-        ending_number = page * per_page
-        if segment == 'news':
-            news = News.objects.all()[starting_number:ending_number]
-            total_pages = math.ceil(News.objects.count() / per_page)
-        else:
-            news = News.objects.all().filter(rubrics__pk=int(segment))[starting_number:ending_number]
-            total_pages = math.ceil(News.objects.filter(rubrics__pk=int(segment)).count() / per_page)
 
-        serialized_news = []
-        for n in news:
-            news_data = {
-                'name': n.name,
-                'created_at': n.created_at.strftime("%d.%m.%Y %H:%M"),
-                'slug_url': n.slug_url
-            }
-            serialized_news.append(news_data)
-        return JsonResponse({'data_news': serialized_news, 'total_pages': total_pages})
+        if segment == 'news':
+            queryset = News.objects.only('name', 'created_at', 'slug_url')
+        else:
+            queryset = News.objects.all().filter(rubrics__pk=int(segment)).only('name', 'created_at', 'slug_url')
+
+        serializer = lambda obj: {
+            'name': obj.name,
+            'created_at': obj.created_at.strftime("%d.%m.%Y %H:%M"),
+            'slug_url': obj.slug_url,
+        }
+
+        per_page = 10
+        paginator = Paginator(queryset, per_page)
+        page_data = paginator.page(page)
+
+        serialized_data = [serializer(obj) for obj in page_data]
+        total_pages = paginator.num_pages
+
+        return JsonResponse({'data_news': serialized_data, 'total_pages': total_pages})
     else:
         rubrics = Rubric.objects.all()
-        if News.objects.all().count() == 0:
+        news = News.objects.all().only('name', 'created_at', 'slug_url')
+        if not news.exists():
             return render(request, 'e5_app/news.html', {'rubrics': rubrics, 'message': 'Новостей нет'})
-        min_date = News.objects.aggregate(Min('created_at'))['created_at__min']
-        max_date = News.objects.aggregate(Max('created_at'))['created_at__max']
-        min_date = min_date.replace(day=1)
-        max_date = max_date.replace(day=1)
-        form = NewsFilterForm(min_date=min_date.strftime('%Y-%m-%d'), max_date=max_date.strftime('%Y-%m-%d'))
+        min_date = News.objects.earliest('created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
+        max_date = News.objects.latest('created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
+        form = NewsFilterForm(min_date=min_date, max_date=max_date)
         return render(request, 'e5_app/news.html', {'rubrics': rubrics, 'selected': rubric, 'form': form})
 
 

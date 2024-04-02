@@ -19,7 +19,7 @@ class Common(models.Model):
 
 
 class Rubric(Common):
-    name = models.CharField(max_length=100, verbose_name='Название', )
+    name = models.CharField(max_length=100, verbose_name='Название', db_index=True )
 
     class Meta:
         verbose_name = 'Рубрика'
@@ -39,7 +39,7 @@ class News(Common):
     picture = models.ImageField(null=True, blank=True, upload_to='photos/news/%Y/%m', verbose_name='Картинка', )
     show = models.CharField(choices=SHOW_CHOICES, default='a', verbose_name='Отображать странице новости')
     content = RichTextUploadingField(null=True, blank=True, verbose_name='Дополнительная информация', )
-    rubrics = models.ManyToManyField(Rubric, verbose_name='Рубрики' )
+    rubrics = models.ManyToManyField(Rubric, verbose_name='Рубрики')
     created_at = models.DateTimeField(verbose_name='Дата создания', blank=True, db_index=True, )
     slug_url = models.SlugField(unique=True, verbose_name='Ссылка', )
 
@@ -117,7 +117,7 @@ class VComponent(Common):
 
 class Vacancy(Common):
     name = models.CharField(max_length=150, verbose_name='Название', )
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Компания' )
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Компания', db_index=True )
     salary = models.CharField(null=True, blank=True, max_length=100, verbose_name='Заработная плата', )
     experience = models.CharField(null=True, blank=True, max_length=100, verbose_name='Опыт работы', )
     schedule = models.CharField(null=True, blank=True, max_length=100, verbose_name='График труда', )

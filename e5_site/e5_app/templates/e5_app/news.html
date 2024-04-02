@@ -23,18 +23,20 @@
 {% block content %}
 <header>
   <h1 class="entry-title text-center my-3">Новости</h1>
+  <div class="container">
   <ul class="nav nav-pills m-3">
-    <li class="nav-item mx-1">
+    <li class="nav-item m-1">
       <a class="shadow-sm nav-link text-black custom-nav {% if selected == 0 %}active{% endif %}" aria-current="page"
         href="{% url 'news' %}">Все</a>
     </li>
     {% for rubric in rubrics %}
-    <li class="nav-item mx-1">
+    <li class="nav-item m-1">
       <a class="shadow-sm nav-link text-black custom-nav {% if selected == rubric.pk %}active{% endif %}"
         href="{% url 'news_rubric' rubric.pk %}">{{ rubric.name }}</a>
     </li>
     {% endfor %}
   </ul>
+  </div>
 </header>
 <main>
   <div class="container">
