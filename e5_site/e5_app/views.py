@@ -73,7 +73,7 @@ def news(request, rubric=0):
         if segment == 'news':
             queryset = News.objects.only('name', 'created_at', 'slug_url')
         else:
-            queryset = News.objects.all().filter(rubrics__pk=int(segment)).only('name', 'created_at', 'slug_url')
+            queryset = News.objects.filter(rubrics__pk=int(segment)).only('name', 'created_at', 'slug_url')
 
         serializer = lambda obj: {
             'name': obj.name,
@@ -91,23 +91,24 @@ def news(request, rubric=0):
         return JsonResponse({'data_news': serialized_data, 'total_pages': total_pages})
     else:
         rubrics = Rubric.objects.all()
-        news = News.objects.all().only('name', 'created_at', 'slug_url')
+        news = News.objects.only('name', 'created_at', 'slug_url')
         if not news.exists():
             return render(request, 'e5_app/news.html', {'rubrics': rubrics, 'message': 'Новостей нет'})
-        min_date = News.objects.earliest('created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
-        max_date = News.objects.latest('created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
+
+        min_date = News.objects.only('created_at').earliest('created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
+        max_date = News.objects.only('created_at').latest('created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
+
         form = NewsFilterForm(min_date=min_date, max_date=max_date)
+
         return render(request, 'e5_app/news.html', {'rubrics': rubrics, 'selected': rubric, 'form': form})
 
 
 def news_filter(request):
     if request.method == 'POST':
-        min_date = News.objects.aggregate(Min('created_at'))['created_at__min']
-        max_date = News.objects.aggregate(Max('created_at'))['created_at__max']
-        min_date = min_date.replace(day=1)
-        max_date = max_date.replace(day=1)
-        form = NewsFilterForm(request.POST, min_date=min_date.strftime('%Y-%m-%d'),
-                              max_date=max_date.strftime('%Y-%m-%d'))
+        min_date = News.objects.only('created_at').earliest('created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
+        max_date = News.objects.only('created_at').latest('created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
+
+        form = NewsFilterForm(request.POST, min_date=min_date, max_date=max_date)
         if form.is_valid():
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
@@ -124,7 +125,7 @@ def news_filter(request):
             start_date = make_aware(start_date)
             end_date = make_aware(end_date)
 
-            filtered_news = News.objects.filter(created_at__range=[start_date, end_date])
+            filtered_news = News.objects.filter(created_at__range=[start_date, end_date]).only('name', 'created_at', 'slug_url')
 
             return render(request, 'e5_app/news_filter.html',
                           {'form': form, 'start_date': start_date, 'end_date': end_date,
@@ -136,9 +137,9 @@ def news_filter(request):
 def news_single(request, slug):
     rubrics = Rubric.objects.all()
     news_single_obj = News.objects.get(slug_url=slug)
-    news_before = News.objects.filter(created_at__lt=news_single_obj.created_at).order_by('-created_at').first()
-    news_after = News.objects.filter(created_at__gt=news_single_obj.created_at).order_by('created_at').first()
-    last_news = News.objects.all()[:5]
+    news_before = News.objects.only('name', 'slug_url').filter(created_at__lt=news_single_obj.created_at).order_by('-created_at').first()
+    news_after = News.objects.only('name', 'slug_url').filter(created_at__gt=news_single_obj.created_at).order_by('created_at').first()
+    last_news = News.objects.only('name', 'created_at', 'slug_url')[:5]
     return render(request, 'e5_app/news_single.html',
                   {'rubrics': rubrics, 'news_single': news_single_obj, 'last_news': last_news,
                    'news_before': news_before, 'news_after': news_after})
