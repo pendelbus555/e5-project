@@ -2,9 +2,7 @@ import django.db
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from .models import News, Rubric, Employee, Work, Vacancy, Partner, Event, Mailing, EventSchedule, Visitor, HTMLPage
-import math
 from .forms import NewsFilterForm, MailingForm, VisitorForm
-from django.db.models import Min, Max
 import calendar
 import datetime as dt
 from django.views.generic import ListView, DetailView
@@ -16,8 +14,6 @@ from django.contrib.postgres.search import SearchVector
 from django.utils.timezone import make_aware
 from datetime import datetime
 from django.utils.text import Truncator
-from django.core import serializers
-from django.db.models import Case, When, F, Value, CharField, ImageField
 from django.core.paginator import Paginator
 
 
@@ -125,7 +121,8 @@ def news_filter(request):
             start_date = make_aware(start_date)
             end_date = make_aware(end_date)
 
-            filtered_news = News.objects.filter(created_at__range=[start_date, end_date]).only('name', 'created_at', 'slug_url')
+            filtered_news = News.objects.filter(created_at__range=[start_date, end_date]).only('name', 'created_at',
+                                                                                               'slug_url')
 
             return render(request, 'e5_app/news_filter.html',
                           {'form': form, 'start_date': start_date, 'end_date': end_date,
@@ -137,8 +134,10 @@ def news_filter(request):
 def news_single(request, slug):
     rubrics = Rubric.objects.all()
     news_single_obj = News.objects.get(slug_url=slug)
-    news_before = News.objects.only('name', 'slug_url').filter(created_at__lt=news_single_obj.created_at).order_by('-created_at').first()
-    news_after = News.objects.only('name', 'slug_url').filter(created_at__gt=news_single_obj.created_at).order_by('created_at').first()
+    news_before = News.objects.only('name', 'slug_url').filter(created_at__lt=news_single_obj.created_at).order_by(
+        '-created_at').first()
+    news_after = News.objects.only('name', 'slug_url').filter(created_at__gt=news_single_obj.created_at).order_by(
+        'created_at').first()
     last_news = News.objects.only('name', 'created_at', 'slug_url')[:5]
     return render(request, 'e5_app/news_single.html',
                   {'rubrics': rubrics, 'news_single': news_single_obj, 'last_news': last_news,
@@ -185,7 +184,7 @@ class EmployeesListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if Employee.objects.all().count() == 0:
+        if not super().get_queryset().exists():
             context['message'] = 'Сотрудников нет'
         return context
 
@@ -195,11 +194,11 @@ class WorkListView(ListView):
     context_object_name = 'work_list'
     template_name = 'e5_app/works.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if Work.objects.all().count() == 0:
-            context['message'] = 'Разработок нет'
-        return context
+    def get_queryset(self):
+        queryset = super().get_queryset().prefetch_related("workcomponent_set__component")
+        if not queryset.exists():
+            self.extra_context = {'message': 'Разработок нет'}
+        return queryset
 
 
 class VacancyListView(ListView):
@@ -207,11 +206,13 @@ class VacancyListView(ListView):
     context_object_name = 'vacancy_list'
     template_name = 'e5_app/vacancy.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if Vacancy.objects.all().count() == 0:
-            context['message'] = 'Вакансий нет'
-        return context
+    def get_queryset(self):
+        queryset = super().get_queryset().select_related('company').only(
+            'name', 'salary', 'company__name', 'experience', 'schedule', 'slug_url')
+        if not queryset.exists():
+            self.extra_context['message'] = 'Вакансий нет'
+
+        return queryset
 
 
 class VacancyDetailView(DetailView):
@@ -220,17 +221,16 @@ class VacancyDetailView(DetailView):
     context_object_name = 'vacancy'
     template_name = 'e5_app/vacancy_single.html'
 
+    def get_queryset(self):
+        queryset = super().get_queryset().select_related('company').prefetch_related(
+            "vacancycomponent_set__component")
+        return queryset
+
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        vacancy = self.get_object()
-        try:
-            vacancy_before = Vacancy.objects.get(pk=vacancy.pk - 1)
-        except Vacancy.DoesNotExist:
-            vacancy_before = None
-        try:
-            vacancy_after = Vacancy.objects.get(pk=vacancy.pk + 1)
-        except Vacancy.DoesNotExist:
-            vacancy_after = None
+        context = super().get_context_data()
+        obj = self.object
+        vacancy_before = Vacancy.objects.only('name', 'slug_url').filter(pk__lt=obj.pk).first()
+        vacancy_after = Vacancy.objects.only('name', 'slug_url').filter(pk__gt=obj.pk).first()
         context['vacancy_before'] = vacancy_before
         context['vacancy_after'] = vacancy_after
         return context
@@ -240,14 +240,13 @@ class EventListView(ListView):
     model = Event
     context_object_name = 'event_list'
     template_name = 'e5_app/events.html'
+    extra_context = {'mailing_form': MailingForm()}
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        form = MailingForm()
-        context['mailing_form'] = form
-        if Event.objects.all().count() == 0:
-            context['message'] = 'Мероприятий нет'
-        return context
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if not queryset.exists():
+            self.extra_context['message'] = 'Мероприятий нет'
+        return queryset
 
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
