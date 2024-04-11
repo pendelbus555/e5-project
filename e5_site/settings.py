@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 import os
 from django.contrib.staticfiles import finders
 
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-mc3e!le4q@*mpo11mjaoa29+458l9e9)+&lkkp&)fs+k6hdm^!'
+SECRET_KEY = os.get_env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.get_env('DEBUG'))
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.get_env('DJANGO_ALLOWED_HOSTS').split(' ')
 
 # Application definition
 
@@ -207,7 +208,6 @@ CKEDITOR_CONFIGS = {
 }
 
 # SMTP
-load_dotenv()
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'mrusipusi@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('SMTP_PASSWORD')

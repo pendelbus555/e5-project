@@ -19,7 +19,8 @@ class Common(models.Model):
 
 
 class Rubric(Common):
-    name = models.CharField(max_length=100, verbose_name='Название', db_index=True )
+    name = models.CharField(
+        max_length=100, verbose_name='Название', db_index=True)
 
     class Meta:
         verbose_name = 'Рубрика'
@@ -36,11 +37,15 @@ class News(Common):
     }
     name = models.CharField(max_length=150, verbose_name='Имя')
     description = models.TextField(verbose_name='Описание', )
-    picture = models.ImageField(null=True, blank=True, upload_to='photos/news/%Y/%m', verbose_name='Картинка', )
-    show = models.CharField(choices=SHOW_CHOICES, default='a', verbose_name='Отображать странице новости')
-    content = RichTextUploadingField(null=True, blank=True, verbose_name='Дополнительная информация', )
+    picture = models.ImageField(
+        null=True, blank=True, upload_to='photos/news/%Y/%m', verbose_name='Картинка', )
+    show = models.CharField(choices=SHOW_CHOICES, default='a',
+                            verbose_name='Отображать странице новости')
+    content = RichTextUploadingField(
+        null=True, blank=True, verbose_name='Дополнительная информация', )
     rubrics = models.ManyToManyField(Rubric, verbose_name='Рубрики')
-    created_at = models.DateTimeField(verbose_name='Дата создания', blank=True, db_index=True, )
+    created_at = models.DateTimeField(
+        verbose_name='Дата создания', blank=True, db_index=True, )
     slug_url = models.SlugField(unique=True, verbose_name='Ссылка', )
 
     def get_absolute_url(self):
@@ -53,11 +58,15 @@ class News(Common):
 
 
 class Employee(Common):
-    photo = models.ImageField(upload_to='photos/employee/', verbose_name='Фото', )
+    photo = models.ImageField(
+        upload_to='photos/employee/', verbose_name='Фото', )
     name = models.CharField(max_length=150, verbose_name='Имя', )
-    description = models.TextField(null=True, blank=True, verbose_name='Информация', )
-    email_first = models.EmailField(null=True, blank=True, max_length=50, verbose_name='Первая почта', )
-    email_second = models.EmailField(null=True, blank=True, max_length=50, verbose_name='Вторая почта', )
+    description = models.TextField(
+        null=True, blank=True, verbose_name='Информация', )
+    email_first = models.EmailField(
+        null=True, blank=True, max_length=50, verbose_name='Первая почта', )
+    email_second = models.EmailField(
+        null=True, blank=True, max_length=50, verbose_name='Вторая почта', )
 
     class Meta:
         verbose_name = 'Работник'
@@ -75,7 +84,8 @@ class WComponent(Common):
 class Work(Common):
     photo = models.ImageField(upload_to='photos/works/', verbose_name='Фото', )
     name = models.CharField(max_length=150, verbose_name='Название', )
-    description = models.TextField(null=True, blank=True, verbose_name='Описание', )
+    description = models.TextField(
+        null=True, blank=True, verbose_name='Описание', )
     components = models.ManyToManyField(WComponent, through='WorkComponent',
                                         through_fields=('work', 'component',), )
 
@@ -85,9 +95,12 @@ class Work(Common):
 
 
 class WorkComponent(models.Model):
-    work = models.ForeignKey(Work, on_delete=models.CASCADE, verbose_name='Разработка', )
-    component = models.ForeignKey(WComponent, on_delete=models.CASCADE, verbose_name='Свойство', )
-    filling = models.TextField(null=True, blank=True, verbose_name='Заполнение', )
+    work = models.ForeignKey(
+        Work, on_delete=models.CASCADE, verbose_name='Разработка', )
+    component = models.ForeignKey(
+        WComponent, on_delete=models.CASCADE, verbose_name='Свойство', )
+    filling = models.TextField(
+        null=True, blank=True, verbose_name='Заполнение', )
 
     def __str__(self):
         return 'Разработка-Свойство'
@@ -97,9 +110,12 @@ class WorkComponent(models.Model):
 
 
 class Company(Common):
-    name = models.CharField(max_length=100, verbose_name='Название', db_index=True)
-    photo = models.ImageField(upload_to='photos/companies/', verbose_name='Фото', )
-    description = models.TextField(null=True, blank=True, verbose_name='Описание', )
+    name = models.CharField(
+        max_length=100, verbose_name='Название', db_index=True)
+    photo = models.ImageField(
+        upload_to='photos/companies/', verbose_name='Фото', )
+    description = models.TextField(
+        null=True, blank=True, verbose_name='Описание', )
 
     class Meta:
         verbose_name = 'Компания'
@@ -117,12 +133,17 @@ class VComponent(Common):
 
 class Vacancy(Common):
     name = models.CharField(max_length=150, verbose_name='Название', )
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Компания', db_index=True )
-    salary = models.CharField(null=True, blank=True, max_length=100, verbose_name='Заработная плата', )
-    experience = models.CharField(null=True, blank=True, max_length=100, verbose_name='Опыт работы', )
-    schedule = models.CharField(null=True, blank=True, max_length=100, verbose_name='График труда', )
+    company = models.ForeignKey(
+        Company, on_delete=models.CASCADE, verbose_name='Компания', db_index=True)
+    salary = models.CharField(
+        null=True, blank=True, max_length=100, verbose_name='Заработная плата', )
+    experience = models.CharField(
+        null=True, blank=True, max_length=100, verbose_name='Опыт работы', )
+    schedule = models.CharField(
+        null=True, blank=True, max_length=100, verbose_name='График труда', )
     slug_url = models.SlugField(unique=True, verbose_name='Ссылка', )
-    content = RichTextUploadingField(null=True, blank=True, verbose_name='Дополнительная информация', )
+    content = RichTextUploadingField(
+        null=True, blank=True, verbose_name='Дополнительная информация', )
     components = models.ManyToManyField(VComponent, through='VacancyComponent',
                                         through_fields=('vacancy', 'component',), )
 
@@ -136,9 +157,12 @@ class Vacancy(Common):
 
 
 class VacancyComponent(models.Model):
-    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, verbose_name='Вакансия', )
-    component = models.ForeignKey(VComponent, on_delete=models.CASCADE, verbose_name='Свойство', )
-    filling = models.TextField(null=True, blank=True, verbose_name='Заполнение', )
+    vacancy = models.ForeignKey(
+        Vacancy, on_delete=models.CASCADE, verbose_name='Вакансия', )
+    component = models.ForeignKey(
+        VComponent, on_delete=models.CASCADE, verbose_name='Свойство', )
+    filling = models.TextField(
+        null=True, blank=True, verbose_name='Заполнение', )
 
     def __str__(self):
         return 'Вакансия-Свойство'
@@ -148,8 +172,10 @@ class VacancyComponent(models.Model):
 
 
 class Partner(Common):
-    name = models.CharField(max_length=150, verbose_name='Название', db_index=True)
-    photo = models.ImageField(upload_to='photos/partners/', verbose_name='Фото', )
+    name = models.CharField(
+        max_length=150, verbose_name='Название', db_index=True)
+    photo = models.ImageField(
+        upload_to='photos/partners/', verbose_name='Фото', )
 
     class Meta:
         verbose_name = 'Партнер'
@@ -167,8 +193,10 @@ class EventType(Common):
 
 class Event(Common):
     date = models.DateField(verbose_name='Дата', )
-    info = models.TextField(null=True, blank=True, max_length=500, verbose_name='Дополнительно', )
-    event_type = models.ForeignKey(EventType, on_delete=models.CASCADE, verbose_name='Тип мероприятия', )
+    info = models.TextField(null=True, blank=True,
+                            max_length=500, verbose_name='Дополнительно', )
+    event_type = models.ForeignKey(
+        EventType, on_delete=models.CASCADE, verbose_name='Тип мероприятия', )
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -186,7 +214,8 @@ class EventSchedule(Common):
     name = None
     start = models.TimeField(verbose_name='Время начала', )
     end = models.TimeField(null=True, blank=True, verbose_name='Время конца', )
-    place = models.CharField(max_length=100, null=True, blank=True, verbose_name='Место проведения', )
+    place = models.CharField(max_length=100, null=True,
+                             blank=True, verbose_name='Место проведения', )
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     class Meta:
