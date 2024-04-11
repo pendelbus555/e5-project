@@ -32,9 +32,9 @@ $(document).ready(function () {
     var rowElement = $(`#${prefix}_row`);
     rowElement.empty();
     $.each(data[`data`], function (index, item) {
-      var innerUrl = site_news_url + item.slug_url + '/';
       var additionalInfo = '';
       if (prefix === 'news') {
+        var innerUrl = site_news_url + item.slug_url + '/';
         additionalInfo = `
           <img src="${item.picture_url}" class="card-img-top card-img-top-custom" alt="...">
           <div class="card-body">
@@ -47,6 +47,7 @@ $(document).ready(function () {
           </div>
         `;
       } else if (prefix === 'vacancy') {
+        var innerUrl = site_vacancy_url + item.slug_url + '/';
         var salaryTitle = item.salary !== null ? `<h5 class="card-title">${item.salary}</h5>` : '';
         additionalInfo = `
           <div class="card-header">${item.name}</div>
