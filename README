@@ -4,3 +4,4 @@ coverage report -m
 python manage.py parse
 python3 manage.py runserver 0.0.0.0:8000
 python manage.py dumpdata app.model_name --indent 4 > fixtures/model_n.json
+docker compose up -d --build
