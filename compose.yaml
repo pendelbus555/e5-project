@@ -12,6 +12,7 @@ services:
       - ./.env
     depends_on:
       - db
+      - redis
   db:
     image: postgres:14.11
     volumes:
@@ -20,6 +21,8 @@ services:
       - POSTGRES_USER=django
       - POSTGRES_PASSWORD=django
       - POSTGRES_DB=e5_db_docker
+  redis:
+    image: redis:7
 
 volumes:
   postgres_data:

@@ -104,6 +104,7 @@ DATABASES = {
     }
 }
 
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -215,3 +216,11 @@ EMAIL_HOST_USER = 'mrusipusi@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('SMTP_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+# Cache
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
