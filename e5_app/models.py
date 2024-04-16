@@ -45,7 +45,7 @@ class News(Common):
         null=True, blank=True, verbose_name='Дополнительная информация', )
     rubrics = models.ManyToManyField(Rubric, verbose_name='Рубрики')
     created_at = models.DateTimeField(
-        verbose_name='Дата создания', blank=True, db_index=True, )
+        verbose_name='Дата создания', db_index=True, )
     slug_url = models.SlugField(unique=True, verbose_name='Ссылка', )
 
     def get_absolute_url(self):
