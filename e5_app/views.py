@@ -25,8 +25,10 @@ def index(request):
         request_type = request.headers.get('From')
 
         if request_type == 'news':
-            queryset = News.objects.only('name', 'description', 'created_at', 'slug_url', 'picture')
-            serializer = lambda obj: {
+            queryset = News.objects.only(
+                'name', 'description', 'created_at', 'slug_url', 'picture')
+
+            def serializer(obj): return {
                 'name': obj.name,
                 'description': Truncator(obj.description).words(20),
                 'created_at': obj.created_at.strftime('%d.%m.%Y'),
@@ -34,8 +36,10 @@ def index(request):
                 'picture_url': obj.picture.url if obj.picture else static('e5_app/frontend/images/news_default.png')
             }
         elif request_type == 'vacancy':
-            queryset = Vacancy.objects.only('name', 'salary', 'company__name', 'slug_url').select_related('company')
-            serializer = lambda obj: {
+            queryset = Vacancy.objects.only(
+                'name', 'salary', 'company__name', 'slug_url').select_related('company')
+
+            def serializer(obj): return {
                 'name': obj.name.upper(),
                 'salary': obj.salary.lower() if obj.salary else None,
                 'company_name': obj.company.name,
@@ -69,9 +73,10 @@ def news(request, rubric=0):
         if segment == 'news':
             queryset = News.objects.only('name', 'created_at', 'slug_url')
         else:
-            queryset = News.objects.filter(rubrics__pk=int(segment)).only('name', 'created_at', 'slug_url')
+            queryset = News.objects.filter(rubrics__pk=int(
+                segment)).only('name', 'created_at', 'slug_url')
 
-        serializer = lambda obj: {
+        def serializer(obj): return {
             'name': obj.name,
             'created_at': obj.created_at.strftime("%d.%m.%Y %H:%M"),
             'slug_url': obj.slug_url,
@@ -91,8 +96,10 @@ def news(request, rubric=0):
         if not news.exists():
             return render(request, 'e5_app/news.html', {'rubrics': rubrics, 'message': 'Новостей нет'})
 
-        min_date = News.objects.only('created_at').earliest('created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
-        max_date = News.objects.only('created_at').latest('created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
+        min_date = News.objects.only('created_at').earliest(
+            'created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
+        max_date = News.objects.only('created_at').latest(
+            'created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
 
         form = NewsFilterForm(min_date=min_date, max_date=max_date)
 
@@ -101,10 +108,13 @@ def news(request, rubric=0):
 
 def news_filter(request):
     if request.method == 'POST':
-        min_date = News.objects.only('created_at').earliest('created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
-        max_date = News.objects.only('created_at').latest('created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
+        min_date = News.objects.only('created_at').earliest(
+            'created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
+        max_date = News.objects.only('created_at').latest(
+            'created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
 
-        form = NewsFilterForm(request.POST, min_date=min_date, max_date=max_date)
+        form = NewsFilterForm(
+            request.POST, min_date=min_date, max_date=max_date)
         if form.is_valid():
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
@@ -113,7 +123,8 @@ def news_filter(request):
                 start_date, end_date = end_date, start_date
 
             start_date = start_date.replace(day=1)
-            end_date = end_date.replace(day=calendar.monthrange(end_date.year, end_date.month)[1])
+            end_date = end_date.replace(
+                day=calendar.monthrange(end_date.year, end_date.month)[1])
 
             start_date = datetime.combine(start_date, datetime.min.time())
             end_date = datetime.combine(end_date, datetime.max.time())
@@ -229,8 +240,10 @@ class VacancyDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         obj = self.object
-        vacancy_before = Vacancy.objects.only('name', 'slug_url').filter(pk__lt=obj.pk).first()
-        vacancy_after = Vacancy.objects.only('name', 'slug_url').filter(pk__gt=obj.pk).first()
+        vacancy_before = Vacancy.objects.only(
+            'name', 'slug_url').filter(pk__lt=obj.pk).first()
+        vacancy_after = Vacancy.objects.only(
+            'name', 'slug_url').filter(pk__gt=obj.pk).first()
         context['vacancy_before'] = vacancy_before
         context['vacancy_after'] = vacancy_after
         return context
@@ -264,7 +277,8 @@ class EventListView(ListView):
                                               Данная почта уже подписана на рассылку</div>''')
             if 'submit_visitor' in request.POST:
                 event_schedule_pk = int(request.POST.get('event'))
-                form = VisitorForm(request.POST, event_pk=EventSchedule.objects.get(pk=event_schedule_pk).event.pk)
+                form = VisitorForm(request.POST, event_pk=EventSchedule.objects.get(
+                    pk=event_schedule_pk).event.pk)
                 if form.is_valid():
                     data = form.cleaned_data
                     Visitor.objects.create(event=data['event'], name=data['name'], mail=data['mail'],
@@ -290,10 +304,12 @@ def search(request):
     if request.method == 'POST':
         search_text = request.POST.get('search', None)
         news_list = News.objects.annotate(
-            search=SearchVector("name", "description", "created_at", "content"),
+            search=SearchVector("name", "description",
+                                "created_at", "content"),
         ).filter(search=search_text)
         vacancy_list = Vacancy.objects.annotate(
-            search=SearchVector("name", "company__name", "salary", "experience", "schedule", "content"),
+            search=SearchVector("name", "company__name",
+                                "salary", "experience", "schedule", "content"),
         ).filter(search=search_text)
         page_list = HTMLPage.objects.annotate(
             search=SearchVector("content"),

@@ -5,3 +5,6 @@ class E5AppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'e5_app'
     verbose_name = 'Приложение Э5'
+
+    def ready(self):
+        from . import signals

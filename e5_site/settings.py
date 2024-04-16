@@ -130,7 +130,7 @@ LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'Europe/Moscow'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_TZ = True
 
@@ -217,10 +217,11 @@ EMAIL_HOST_PASSWORD = os.getenv('SMTP_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-# Cache
+# Caching
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
+        "LOCATION": "redis://redis:6379",
     }
 }
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
