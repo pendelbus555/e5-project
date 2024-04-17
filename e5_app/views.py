@@ -22,6 +22,7 @@ def index(request):
         page = int(request.GET.get('page'))
         per_page = 4
 
+        # Take additional headers to distinguish ajax
         request_type = request.headers.get('From')
 
         if request_type == 'news':
@@ -33,6 +34,7 @@ def index(request):
                 'description': Truncator(obj.description).words(20),
                 'created_at': obj.created_at.strftime('%d.%m.%Y'),
                 'slug_url': obj.slug_url,
+                # Take picture from static if it doesn't exist
                 'picture_url': obj.picture.url if obj.picture else static('e5_app/frontend/images/news_default.png')
             }
         elif request_type == 'vacancy':
@@ -54,14 +56,17 @@ def index(request):
 
         return JsonResponse({'data': serialized_data, 'total_pages': total_pages})
     else:
+        # If not ajax request - check for some models existing
         partners = Partner.objects.all()
         ctx = {'partners': partners, }
+
         if not partners.exists():
             ctx.update({'message_partners': 'Партнеров нет'})
         if not News.objects.exists():
             ctx.update({'message_news': 'Новостей нет'})
         if not Vacancy.objects.exists():
             ctx.update({'message_vacancy': 'Вакансий нет'})
+
         return render(request, 'e5_app/index.html', ctx)
 
 
@@ -70,6 +75,8 @@ def news(request, rubric=0):
         page = int(request.GET.get('page'))
         segment = request.GET.get('segment')
 
+        # If the segment is 'news' - take all news, else - convert 
+        # segment to integer and filter news by rubric pk
         if segment == 'news':
             queryset = News.objects.only('name', 'created_at', 'slug_url')
         else:
@@ -91,6 +98,8 @@ def news(request, rubric=0):
 
         return JsonResponse({'data_news': serialized_data, 'total_pages': total_pages})
     else:
+        # If not ajax request - check for some models existing
+        # and create filter form with boundary dates
         rubrics = Rubric.objects.all()
         news = News.objects.only('name', 'created_at', 'slug_url')
         if not news.exists():
@@ -108,6 +117,7 @@ def news(request, rubric=0):
 
 def news_filter(request):
     if request.method == 'POST':
+        # Absorb News boundary dates
         min_date = News.objects.only('created_at').earliest(
             'created_at').created_at.replace(day=1).strftime('%Y-%m-%d')
         max_date = News.objects.only('created_at').latest(
@@ -119,16 +129,21 @@ def news_filter(request):
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
 
+            # Change for increasing if neeeded
             if end_date < start_date:
                 start_date, end_date = end_date, start_date
 
+            # For start month replace day with 1
+            # For end month replace day with last day of the month
             start_date = start_date.replace(day=1)
             end_date = end_date.replace(
                 day=calendar.monthrange(end_date.year, end_date.month)[1])
 
+            # Also add time for dates
             start_date = datetime.combine(start_date, datetime.min.time())
             end_date = datetime.combine(end_date, datetime.max.time())
 
+            # Include TIMEZONES! 
             start_date = make_aware(start_date)
             end_date = make_aware(end_date)
 
@@ -144,12 +159,16 @@ def news_filter(request):
 
 def news_single(request, slug):
     rubrics = Rubric.objects.all()
+
     news_single_obj = News.objects.get(slug_url=slug)
+
     news_before = News.objects.only('name', 'slug_url').filter(created_at__lt=news_single_obj.created_at).order_by(
         '-created_at').first()
     news_after = News.objects.only('name', 'slug_url').filter(created_at__gt=news_single_obj.created_at).order_by(
         'created_at').first()
+
     last_news = News.objects.only('name', 'created_at', 'slug_url')[:5]
+
     return render(request, 'e5_app/news_single.html',
                   {'rubrics': rubrics, 'news_single': news_single_obj, 'last_news': last_news,
                    'news_before': news_before, 'news_after': news_after})
@@ -172,9 +191,12 @@ class PlanView(TemplateView):
 
 
 def schedule(request):
+    # Absorb week's number of year
     today = dt.date.today()
     week = today.isocalendar()[1]
+
     ctx = {'week': week - 5}
+
     return render(request, 'e5_app/schedule.html', context=ctx)
 
 
@@ -189,14 +211,18 @@ class EmployeesListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
         for employee in queryset:
             employee.name = employee.name.split()
+
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         if not super().get_queryset().exists():
             context['message'] = 'Сотрудников нет'
+
         return context
 
 
@@ -207,8 +233,10 @@ class WorkListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset().prefetch_related("workcomponent_set__component")
+
         if not queryset.exists():
             self.extra_context = {'message': 'Разработок нет'}
+
         return queryset
 
 
@@ -220,6 +248,7 @@ class VacancyListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset().select_related('company').only(
             'name', 'salary', 'company__name', 'experience', 'schedule', 'slug_url')
+
         if not queryset.exists():
             self.extra_context['message'] = 'Вакансий нет'
 
@@ -235,17 +264,22 @@ class VacancyDetailView(DetailView):
     def get_queryset(self):
         queryset = super().get_queryset().select_related('company').prefetch_related(
             "vacancycomponent_set__component")
+
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
+
         obj = self.object
+
         vacancy_before = Vacancy.objects.only(
             'name', 'slug_url').filter(pk__lt=obj.pk).first()
         vacancy_after = Vacancy.objects.only(
             'name', 'slug_url').filter(pk__gt=obj.pk).first()
+
         context['vacancy_before'] = vacancy_before
         context['vacancy_after'] = vacancy_after
+
         return context
 
 
@@ -257,15 +291,20 @@ class EventListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
         if not queryset.exists():
             self.extra_context['message'] = 'Мероприятий нет'
+
         return queryset
 
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
+
+        # Distinquish htmx ajax request
         if request.headers.get('HX-Boosted'):
             if 'submit_mailing' in request.POST:
                 form = MailingForm(request.POST)
+
                 if form.is_valid():
                     data = form.cleaned_data
                     try:
@@ -279,6 +318,7 @@ class EventListView(ListView):
                 event_schedule_pk = int(request.POST.get('event'))
                 form = VisitorForm(request.POST, event_pk=EventSchedule.objects.get(
                     pk=event_schedule_pk).event.pk)
+
                 if form.is_valid():
                     data = form.cleaned_data
                     Visitor.objects.create(event=data['event'], name=data['name'], mail=data['mail'],
@@ -286,15 +326,19 @@ class EventListView(ListView):
                     return HttpResponse('''<div class="text-success">
                                                                  Запись принята!</div>''')
                 else:
+                    # Show form errors
                     response = HttpResponse(str(form.errors))
                     response["HX-Retarget"] = "#visitor_errors"
                     return response
         elif request.headers.get('Event'):
             event_pk = int(request.headers.get('Event'))
             form = VisitorForm(event_pk=event_pk)
+
             ctx = {}
             ctx.update(csrf(request))
+
             form_html = render_crispy_form(form, context=ctx)
+
             return HttpResponse(form_html)
 
         return response
@@ -303,32 +347,43 @@ class EventListView(ListView):
 def search(request):
     if request.method == 'POST':
         search_text = request.POST.get('search', None)
+
+        # Start search with SearchVector with filter
+
+        page_list = HTMLPage.objects.annotate(
+            search=SearchVector("content"),
+        ).filter(search=search_text)
+
         news_list = News.objects.annotate(
             search=SearchVector("name", "description",
                                 "created_at", "content"),
         ).filter(search=search_text)
+
         vacancy_list = Vacancy.objects.annotate(
             search=SearchVector("name", "company__name",
                                 "salary", "experience", "schedule", "content"),
         ).filter(search=search_text)
-        page_list = HTMLPage.objects.annotate(
-            search=SearchVector("content"),
-        ).filter(search=search_text)
+
         works_list = Work.objects.annotate(
             search=SearchVector("name", "description"),
         ).filter(search=search_text)
+        # Add works page if it is not in page_list, but Work objects searched
         if works_list and not page_list.filter(url_name='works'):
             page_list |= HTMLPage.objects.filter(url_name='works')
+
         employee_list = Employee.objects.annotate(
             search=SearchVector("name", "description"),
         ).filter(search=search_text)
+        # Add empoyees page if it is not in page_list, but Employee objects searched
         if employee_list and not page_list.filter(url_name='employees'):
             page_list |= HTMLPage.objects.filter(url_name='employees')
+
         if not any([news_list, vacancy_list, page_list]):
             ctx = {'search_text': search_text, 'message': 'Ничего не найдено'}
         else:
             ctx = {'search_text': search_text, 'news_list': news_list, 'vacancy_list': vacancy_list,
                    'page_list': page_list}
+
         return render(request, 'e5_app/search.html', ctx)
     else:
         return redirect('index')
