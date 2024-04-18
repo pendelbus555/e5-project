@@ -10,6 +10,7 @@ from phonenumber_field.formfields import PhoneNumberField
 
 
 class NewsFilterForm(forms.Form):
+    # Allow 2 date formats
     start_date = forms.DateField(
         label='From',
         input_formats=['%Y-%m-%d', '%Y-%m', ],
@@ -20,9 +21,13 @@ class NewsFilterForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
+        # Gather booundary dates
         min_date = kwargs.pop('min_date', None)
         max_date = kwargs.pop('max_date', None)
+
         super().__init__(*args, **kwargs)
+
+        # if News exists
         if min_date and max_date:
             self.fields['start_date'].widget = MonthPickerInput(
                 options={'format': 'YYYY-MM', 'minDate': min_date,
@@ -52,6 +57,7 @@ class MailingForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
         self.helper = FormHelper()
         self.helper.form_show_labels = False
         self.helper.form_method = 'post'
@@ -68,6 +74,7 @@ class VisitorForm(forms.Form):
         ('10', '10 класс'),
         ('dr', 'Другое'),
     ]
+    # At first event queryset is empty
     event = forms.ModelChoiceField(empty_label=None, queryset=EventSchedule.objects.none())
     name = forms.CharField(max_length=100, )
     mail = forms.EmailField()
@@ -75,10 +82,15 @@ class VisitorForm(forms.Form):
     stand = forms.ChoiceField(widget=forms.RadioSelect, choices=STAND_CHOICES, label='')
 
     def __init__(self, *args, **kwargs):
+
         event_pk = kwargs.pop('event_pk', None)
+
         super().__init__(*args, **kwargs)
+
         event_schedule = EventSchedule.objects.filter(event__pk=event_pk)
+        # Fill event queryset
         self.fields['event'].queryset = event_schedule
+
         self.helper = FormHelper()
         self.helper.form_show_labels = False
         self.helper.form_method = 'post'
@@ -92,11 +104,13 @@ class VisitorForm(forms.Form):
             PrependedText('phone', 'Телефон'),
             InlineRadios('stand'),
             Submit('submit_visitor', 'Отправить', css_class='btn btn-primary'),
-            Div(css_id='visitor_errors',css_class='text-danger'),
+            Div(css_id='visitor_errors', css_class='text-danger'),
         )
 
+    # 'name' field validation
     def clean_name(self):
         name = self.cleaned_data.get('name')
+        # 'name' should have 3 words
         if len(name.split(' ')) != 3:
             raise forms.ValidationError('Введите правильное ФИО (3 слова через пробел)')
         return name
