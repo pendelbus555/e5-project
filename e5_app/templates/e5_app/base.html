@@ -1,133 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     {% load static %}
-
     <!-- Bootstrap -->
-    <link href="{% static 'e5_app/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'e5_app/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
     <script src="{% static 'e5_app/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-
     <!-- Jquery -->
     <script src="{% static 'e5_app/jquery/jquery-3.7.1.min.js' %}" type="text/javascript"></script>
-
     <!-- Custom -->
-    <link href="{% static 'e5_app/frontend/css/main.css' %}" rel="stylesheet">
-    <link rel="shortcut icon" href="{% static 'e5_app/frontend/images/logo.png' %}" type="image/x-icon">
+    <link href="{% static 'e5_app/frontend/css/main.css' %}" rel="stylesheet" />
+    <link rel="shortcut icon" href="{% static 'e5_app/frontend/images/logo.png' %}" type="image/x-icon" />
     <script src="{% static 'e5_app/frontend/js/main_icon.js' %}" type="text/javascript"></script>
     <script src="{% static 'e5_app/frontend/js/search_button.js' %}" type="text/javascript"></script>
     {% block head %}{% endblock %}
-
-    <meta charset="UTF-8">
-
+    <meta charset="UTF-8" />
     <title>{% block title %}{% endblock %}</title>
-</head>
-
-<body>
-    <div style="min-height: calc(100vh - 134px);">
-        <nav class="navbar sticky-top navbar-expand-lg bg-light-subtle" style="z-index:1071;" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand position-relative" href="{% url 'index' %}">
-                    <img src="{% static 'e5_app/frontend/images/main_icon_part_2.png' %}" id="custom_icon">
-                    <img src="{% static 'e5_app/frontend/images/main_icon_part_1.png' %}"
-                        class="position-absolute custom_icon_1_out" id="custom_icon_1">
-                    <img src="{% static 'e5_app/frontend/images/main_icon_part_1.png' %}"
-                        class="position-absolute custom_icon_2_out" id="custom_icon_2">
+  </head>
+  <body>
+    <div style="min-height: calc(100vh - 134px)">
+      <nav class="navbar sticky-top navbar-expand-lg bg-light-subtle" style="z-index: 1071" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand position-relative" href="{% url 'index' %}">
+            <img
+              src="{% static 'e5_app/frontend/images/main_icon_part_2.png' %}"
+              id="custom_icon"
+              alt="Внешняя  часть иконки"
+            />
+            <img
+              src="{% static 'e5_app/frontend/images/main_icon_part_1.png' %}"
+              class="position-absolute custom_icon_1_out"
+              id="custom_icon_1"
+              alt="Внутренняя часть иконки"
+            />
+            <img
+              src="{% static 'e5_app/frontend/images/main_icon_part_1.png' %}"
+              class="position-absolute custom_icon_2_out"
+              id="custom_icon_2"
+              alt="Внутренняя часть иконки"
+            />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Главная</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'news' %}">Новости</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link active dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Абитуриентам
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Главная</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'news' %}">Новости</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Абитуриентам
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'programs' %}">Учебные программы курсов</a>
-                                </li>
-                                <li><a class="dropdown-item" href="{% url 'events' %}">Мероприятия в МГТУ кафедры Э5</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Студентам
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'schedule' %}">Расписание</a></li>
-                                <li><a class="dropdown-item" href="{% url 'plan' %}">Рабочий учебный план</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                О кафедре
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'history' %}">История кафедры</a></li>
-                                <li><a class="dropdown-item" href="{% url 'directions' %}">Основные направления
-                                        развития</a></li>
-                                <li><a class="dropdown-item" href="{% url 'works' %}">Наши разработки</a></li>
-                                <li><a class="dropdown-item" href="{% url 'employees' %}">Преподаватели</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'vacancy' %}">Вакансии</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'contacts' %}">Контакты</a>
-                        </li>
-                    </ul>
-
-
-                    <form class="d-flex" role="search" action="{% url 'search' %}" method="POST">
-                        {% csrf_token %}
-                        <input id="search_input" class="form-control me-2" type="search" name='search'
-                            placeholder="Поиск" aria-label="Search">
-                        <button id="search_button" class="btn btn-outline-light" type="submit" disabled>Найти</button>
-                    </form>
-
-                </div>
-            </div>
-        </nav>
-
-        {% block content %}{% endblock %}
-
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'programs' %}">Учебные программы курсов</a></li>
+                  <li><a class="dropdown-item" href="{% url 'events' %}">Мероприятия в МГТУ кафедры Э5</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link active dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Студентам
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'schedule' %}">Расписание</a></li>
+                  <li><a class="dropdown-item" href="{% url 'plan' %}">Рабочий учебный план</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link active dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  О кафедре
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'history' %}">История кафедры</a></li>
+                  <li><a class="dropdown-item" href="{% url 'directions' %}">Основные направления развития</a></li>
+                  <li><a class="dropdown-item" href="{% url 'works' %}">Наши разработки</a></li>
+                  <li><a class="dropdown-item" href="{% url 'employees' %}">Преподаватели</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'vacancy' %}">Вакансии</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'contacts' %}">Контакты</a>
+              </li>
+            </ul>
+            <form class="d-flex" role="search" action="{% url 'search' %}" method="POST">
+              {% csrf_token %}
+              <input
+                id="search_input"
+                class="form-control me-2"
+                type="search"
+                name="search"
+                placeholder="Поиск"
+                aria-label="Search"
+              />
+              <button id="search_button" class="btn btn-outline-light" type="submit" disabled>Найти</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+      {% block content %}{% endblock %}
     </div>
     <footer class="bg-light-subtle text-center text-white" data-bs-theme="dark">
-        <div class="container">
-            <!-- Vk -->
-            <a class="btn btn-outline-dark btn-floating m-1" href="https://vk.com/kafedra_e5" role="button">
-                <img src="{% static 'e5_app/frontend/images/vk_icon.png' %}" alt="Вконтакте"
-                    style="width:40px;height:40px;">
-            </a>
-            <!-- Youtube-->
-            <a class="btn btn-outline-dark btn-floating m-1 btn-social-icon"
-                href="https://www.youtube.com/channel/UC2zKy154i-Z01BJgu_bMPBQ" role="button">
-                <img src="{% static 'e5_app/frontend/images/youtube_icon.png' %}" alt="Ютуб"
-                    style="width:40px;height:40px;color:white;">
-            </a>
-        </div>
-        <!-- Copyright -->
-        <div class="text-end pe-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            <small>105005, Москва, 2-я Бауманская ул., 5. МГТУ им. Н.Э.Баумана</small>
-        </div>
-        <div class="text-end pe-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            <small>8 (499) 263-62-64</small>
-        </div>
-        <div class="text-start ps-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            <small>Авторские права © 2024 Кафедра Э-5 Все права защищены.</small>
-        </div>
+      <div class="container">
+        <!-- Vk -->
+        <a class="btn btn-outline-dark btn-floating m-1" href="https://vk.com/kafedra_e5" role="button">
+          <img
+            src="{% static 'e5_app/frontend/images/vk_icon.png' %}"
+            alt="Вконтакте"
+            style="width: 40px; height: 40px"
+          />
+        </a>
+        <!-- Youtube-->
+        <a
+          class="btn btn-outline-dark btn-floating m-1 btn-social-icon"
+          href="https://www.youtube.com/channel/UC2zKy154i-Z01BJgu_bMPBQ"
+          role="button"
+        >
+          <img
+            src="{% static 'e5_app/frontend/images/youtube_icon.png' %}"
+            alt="Ютуб"
+            style="width: 40px; height: 40px; color: white"
+          />
+        </a>
+      </div>
+      <!-- Copyright -->
+      <div class="text-end pe-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        <small>105005, Москва, 2-я Бауманская ул., 5. МГТУ им. Н.Э.Баумана</small>
+      </div>
+      <div class="text-end pe-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        <small>8 (499) 263-62-64</small>
+      </div>
+      <div class="text-start ps-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        <small>Авторские права © 2024 Кафедра Э-5 Все права защищены.</small>
+      </div>
     </footer>
-</body>
+  </body>
+</html>

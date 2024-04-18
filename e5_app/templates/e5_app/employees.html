@@ -1,38 +1,25 @@
-{% extends './base.html' %}
-
-{% block head %}
-
-{% load static %}
-
-<link href="{% static 'e5_app/frontend/css/employees.css' %}" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
-
-{% endblock %}
-
-{% block title %}Сотрудники - Кафедра Э-5{% endblock %}
-
-{% block content %}
+{% extends './base.html' %} {% block head %} {% load static %}
+<link href="{% static 'e5_app/frontend/css/employees.css' %}" rel="stylesheet" xmlns="http://www.w3.org/1999/html" />
+{% endblock %} {% block title %}Сотрудники - Кафедра Э-5{% endblock %} {% block content %}
 <div class="container">
   <h1 class="entry-title text-center my-3">Сотрудники</h1>
   <div class="row justify-content-center g-1">
-      {% if message %}{{ message }}{% endif %}
-    {% for employee in employees_list %}
+    {% if message %}{{ message }}{% endif %} {% for employee in employees_list %}
     <div class="col-md-6 col-lg-4 text-center">
-      <img class="custom-image rounded-circle" src="{{ employee.photo.url }}" width="200" height="200">
+      <img alt="Фото" class="custom-image rounded-circle" src="{{ employee.photo.url }}" width="200" height="200" />
       <h3>
-        {% for name in employee.name %}
-            {{ name }}<br>
+        {% for name in employee.name %} {{ name }}<br />
         {% endfor %}
       </h3>
       {% if employee.description %}
-      <p>{{ employee.description }}
-        </br>
-          {% endif %}
-        {% if employee.email_first %}
+      <p>
+        {{ employee.description }}
+        <br />
+        {% endif %} {% if employee.email_first %}
         <small>
           <a href="mailto:{{ employee.email_first }}">{{ employee.email_first }}</a>
         </small>
-        {% endif %}
-        {% if employee.email_second %}
+        {% endif %} {% if employee.email_second %}
         <small>
           <a href="mailto:{{ employee.email_second }}">{{ employee.email_second }}</a>
         </small>

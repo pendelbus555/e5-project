@@ -1,72 +1,123 @@
-{% extends './base.html' %}
-
-{% block head %}
-
-{% load static %}
-
+{% extends './base.html' %} {% block head %} {% load static %}
 <!-- Popovers initialization -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl);
-        });
+  document.addEventListener("DOMContentLoaded", function () {
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+      return new bootstrap.Popover(popoverTriggerEl);
     });
+  });
 </script>
-
-{% endblock %}
-
-{% block title %}Контакты - Кафедра Э-5{% endblock %}
-
-{% block content %}
+{% endblock %} {% block title %}Контакты - Кафедра Э-5{% endblock %} {% block content %}
 <div class="container">
-    <h1 class="entry-title text-center my-3">Контакты</h1>
-    <div class="text-center text-md-start">
-        <h5 class="fw-bolder">Заведующий кафедрой Э-5</h5>
-        <button type="button" class="btn btn-dark mb-3" data-bs-trigger='focus' data-bs-toggle="popover"
-            data-bs-placement="bottom" data-bs-title="Чернышев Андрей Владимирович" data-bs-html="true" data-bs-content="
-   <p><img class='me-1' src='{% static 'e5_app/frontend/contacts/phone_icon.png' %}' width='23' height='23'>Телефон: <a href='tel:+74992636743'>+7(499)263-67-43</a></p>
-    <p><img class='me-1' src='{% static 'e5_app/frontend/contacts/mail_icon.png' %}' width='23' height='23'>Почта: <a href='mailto:chernyshev@bmstu.ru'>chernyshev@bmstu.ru</a></p>
-">Посмотреть</button>
-        <h5 class="fw-bolder">Заместитель заведующего кафедрой Э-5</h5>
-        <button type="button" class="btn btn-dark mb-3" data-bs-trigger='focus' data-bs-toggle="popover"
-            data-bs-placement="bottom" data-bs-title="Калинкин Дмитрий Анатольевич" data-bs-html="true" data-bs-content="
-   <p><img class='me-1' src='{% static 'e5_app/frontend/contacts/phone_icon.png' %}' width='23' height='23'>Телефон: <a href='tel:+74992636331'>+7(499)263-63-31</a></p>
-    <p><img class='me-1' src='{% static 'e5_app/frontend/contacts/mail_icon.png' %}' width='23' height='23'>Почта: <a href='mailto:dakalinkin@bmstu.ru'>dakalinkin@bmstu.ru</a></p>
-">Посмотреть</button>
-        <h5 class="fw-bolder">Секретарь кафедры Э-5</h5>
-        <button type="button" class="btn btn-dark mb-3" data-bs-trigger='focus' data-bs-toggle="popover"
-            data-bs-placement="bottom" data-bs-title="Крестовских Елена Владимировна" data-bs-html="true"
-            data-bs-content="
-   <p><img class='me-1' src='{% static 'e5_app/frontend/contacts/phone_icon.png' %}' width='23' height='23'>Телефон: <a href='tel:+74992636264'>+7(499)263-62-64</a> (внут. 6264)</p>
-    <p><img class='me-1' src='{% static 'e5_app/frontend/contacts/mail_icon.png' %}' width='23' height='23'>Почта: <a href='mailto:kev@bmstu.ru'>kev@bmstu.ru</a></p>
-">Посмотреть</button>
-    </div>
-    <p><img class='me-1' src="{% static 'e5_app/frontend/contacts/adress_icon.png' %}" width='23' height='23'>Адрес:
-        <a>105005, г. Москва, 2-я Бауманская ул., 5</a>
-    </p>
-    <p><img class='me-1' src="{% static 'e5_app/frontend/contacts/vk_icon.png' %}" width='23' height='23'>Вконтакте: <a
-            href="https://vk.com/kafedra_e5" target="_blank">vk.com/kafedra_e5</a></p>
-    <p><img class='me-1' src="{% static 'e5_app/frontend/contacts/youtube_icon.png' %}" width='23' height='23'>Ютуб: <a
-            href="https://www.youtube.com/@kafedra_e5" target="_blank">youtube.com/@kafedra_e5</a></p>
-    <h4>Схема расположения кафедры Э-5</h4>
-    <p>Со стороны 2-ой Бауманской улицы, находится 1-ая проходная (бюро пропусков). Вход на кафедру расположен во
-        внутреннем дворе главного здания Университета.</p>
-    <div class="text-center"><img src="{% static 'e5_app/frontend/contacts/map.png' %}" class="img-fluid my-1"></div>
-    <h4>Путь до кафедры</h4>
-    <p>От памятника следуйте прямо к главному зданию и заходите в двери расположенные в центре. В длинном коридоре идти
-        прямо и выйти во внутренний двор. Во внутреннем дворе идете вниз по лестнице на право и следуйте в проход на
-        улице в другое крыло. После держитесь правее и идете между двумя зданиями, пока не увидите у правого здания вход
-        на кафедру.
-    <p>
-    <div class="text-center"><img src="{% static 'e5_app/frontend/contacts/way.jpg' %}" class="img-fluid my-1"></div>
-    <h4>Путь от м.Бауманская до МГТУ</h4>
-    <p>При выходе из метро держитесь левее. Пройдите в сторону улицы Фридриха Энгельса. Перейдите дорогу и двигайтесь по
-        пешеходной улицеЛадожская мимо «Макдональдс» к Волховскому переулку. Поверните направо и двигаетесь прямо до
-        конца улицы (пересечение со Старокирочным перулком и 2-ой Бауманской улицей). Пересеките перекресток, далее
-        двигаетесь по левой стороне 2-ой Бауманской улицы порядка 250 метров до 1-ой проходной.</p>
-    <iframe loading="lazy"
-        src="https://yandex.ru/map-widget/v1/?um=constructor%3A5a82c199a0298ad921e1509731d76fc30270b7b8c93b1c8c3a2a5fea1a700aa4&amp;source=constructor"
-        width="100%" height="400" class="my-1"></iframe>
+  <h1 class="entry-title text-center my-3">Контакты</h1>
+  <div class="text-center text-md-start">
+    <h5 class="fw-bolder">Заведующий кафедрой Э-5</h5>
+    <button
+      type="button"
+      class="btn btn-dark mb-3"
+      data-bs-trigger="focus"
+      data-bs-toggle="popover"
+      data-bs-placement="bottom"
+      data-bs-title="Чернышев Андрей Владимирович"
+      data-bs-html="true"
+      data-bs-content="
+   <p><img alt='Иконка телефона' class='me-1' src='{% static 'e5_app/frontend/contacts/phone_icon.png' %}' width='23' height='23'>Телефон: <a href='tel:+74992636743'>+7(499)263-67-43</a></p>
+    <p><img alt='Иконка почты' class='me-1' src='{% static 'e5_app/frontend/contacts/mail_icon.png' %}' width='23' height='23'>Почта: <a href='mailto:chernyshev@bmstu.ru'>chernyshev@bmstu.ru</a></p>"
+    >
+      Посмотреть
+    </button>
+    <h5 class="fw-bolder">Заместитель заведующего кафедрой Э-5</h5>
+    <button
+      type="button"
+      class="btn btn-dark mb-3"
+      data-bs-trigger="focus"
+      data-bs-toggle="popover"
+      data-bs-placement="bottom"
+      data-bs-title="Калинкин Дмитрий Анатольевич"
+      data-bs-html="true"
+      data-bs-content="
+   <p><img alt='Иконка телефона' class='me-1' src='{% static 'e5_app/frontend/contacts/phone_icon.png' %}' width='23' height='23'>Телефон: <a href='tel:+74992636331'>+7(499)263-63-31</a></p>
+    <p><img alt='Иконка почты' class='me-1' src='{% static 'e5_app/frontend/contacts/mail_icon.png' %}' width='23' height='23'>Почта: <a href='mailto:dakalinkin@bmstu.ru'>dakalinkin@bmstu.ru</a></p>"
+    >
+      Посмотреть
+    </button>
+    <h5 class="fw-bolder">Секретарь кафедры Э-5</h5>
+    <button
+      type="button"
+      class="btn btn-dark mb-3"
+      data-bs-trigger="focus"
+      data-bs-toggle="popover"
+      data-bs-placement="bottom"
+      data-bs-title="Крестовских Елена Владимировна"
+      data-bs-html="true"
+      data-bs-content="
+   <p><img alt='Иконка телефона' class='me-1' src='{% static 'e5_app/frontend/contacts/phone_icon.png' %}' width='23' height='23'>Телефон: <a href='tel:+74992636264'>+7(499)263-62-64</a> (внут. 6264)</p>
+    <p><img alt='Иконка почты' class='me-1' src='{% static 'e5_app/frontend/contacts/mail_icon.png' %}' width='23' height='23'>Почта: <a href='mailto:kev@bmstu.ru'>kev@bmstu.ru</a></p>"
+    >
+      Посмотреть
+    </button>
+  </div>
+  <p>
+    <img
+      alt="Иконка адреса"
+      class="me-1"
+      src="{% static 'e5_app/frontend/contacts/adress_icon.png' %}"
+      width="23"
+      height="23"
+    />Адрес:
+    <a>105005, г. Москва, 2-я Бауманская ул., 5</a>
+  </p>
+  <p>
+    <img
+      alt="Иконка Вконтакте"
+      class="me-1"
+      src="{% static 'e5_app/frontend/contacts/vk_icon.png' %}"
+      width="23"
+      height="23"
+    />Вконтакте:
+    <a href="https://vk.com/kafedra_e5" target="_blank">vk.com/kafedra_e5</a>
+  </p>
+  <p>
+    <img
+      alt="Иконка Ютуб"
+      class="me-1"
+      src="{% static 'e5_app/frontend/contacts/youtube_icon.png' %}"
+      width="23"
+      height="23"
+    />Ютуб:
+    <a href="https://www.youtube.com/@kafedra_e5" target="_blank">youtube.com/@kafedra_e5</a>
+  </p>
+  <h4>Схема расположения кафедры Э-5</h4>
+  <p>
+    Со стороны 2-ой Бауманской улицы, находится 1-ая проходная (бюро пропусков). Вход на кафедру расположен во
+    внутреннем дворе главного здания Университета.
+  </p>
+  <div class="text-center">
+    <img alt="Расположение кафедры" src="{% static 'e5_app/frontend/contacts/map.png' %}" class="img-fluid my-1" />
+  </div>
+  <h4>Путь до кафедры</h4>
+  <p>
+    От памятника следуйте прямо к главному зданию и заходите в двери расположенные в центре. В длинном коридоре идти
+    прямо и выйти во внутренний двор. Во внутреннем дворе идете вниз по лестнице на право и следуйте в проход на улице в
+    другое крыло. После держитесь правее и идете между двумя зданиями, пока не увидите у правого здания вход на кафедру.
+  </p>
+  <div class="text-center">
+    <img alt="Карта мгту" src="{% static 'e5_app/frontend/contacts/way.jpg' %}" class="img-fluid my-1" />
+  </div>
+  <h4>Путь от м.Бауманская до МГТУ</h4>
+  <p>
+    При выходе из метро держитесь левее. Пройдите в сторону улицы Фридриха Энгельса. Перейдите дорогу и двигайтесь по
+    пешеходной улицеЛадожская мимо «Макдональдс» к Волховскому переулку. Поверните направо и двигаетесь прямо до конца
+    улицы (пересечение со Старокирочным перулком и 2-ой Бауманской улицей). Пересеките перекресток, далее двигаетесь по
+    левой стороне 2-ой Бауманской улицы порядка 250 метров до 1-ой проходной.
+  </p>
+  <iframe
+    loading="lazy"
+    src="https://yandex.ru/map-widget/v1/?um=constructor%3A5a82c199a0298ad921e1509731d76fc30270b7b8c93b1c8c3a2a5fea1a700aa4&amp;source=constructor"
+    width="100%"
+    height="400"
+    class="my-1"
+  ></iframe>
 </div>
 {% endblock %}

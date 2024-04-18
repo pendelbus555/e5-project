@@ -1,189 +1,202 @@
-{% extends './base.html' %}
-
-{% block head %}
-
-{% load static %}
-
+{% extends './base.html' %} {% block head %} {% load static %}
 <!-- Подключение скриптов FullCalendar -->
 <script src="{% static 'e5_app/fullcalendar/dist/index.global.min.js' %}"></script>
 <script src="{% static 'e5_app/fullcalendar/packages/core/locales/ru.global.min.js' %}"></script>
 <script src="{% static 'e5_app/fullcalendar/packages/bootstrap5/index.global.min.js' %}"></script>
-
-<link href="{% static 'e5_app/frontend/css/events.css' %}" rel="stylesheet">
+<!-- Подключение остальных скриптов -->
+<link href="{% static 'e5_app/frontend/css/events.css' %}" rel="stylesheet" />
 <script src="{% static 'e5_app/htmx/htmx.min.js' %}"></script>
 <script src="{% static 'e5_app/frontend/js/events.js' %}"></script>
-
-
-{% endblock %}
-
-{% block title %}Мероприятия - Кафедра Э-5{% endblock %}
-
-{% block content %}
+{% endblock %} {% block title %}Мероприятия - Кафедра Э-5{% endblock %} {% block content %}
 <h1 class="entry-title text-center my-3">Мероприятия</h1>
 <main>
-    <div class="container">
-        <p>Наши мероприятия — это уникальная возможность узнать больше о специальности, деятельности кафедры, специфике
-            работы выпускников, получить ответы на все вопросы. Вы сможете своими глазами увидеть, где вам предстоит
-            учиться после поступления на кафедру Э5. Также мы дадим развернутую информацию по вступительным экзаменам и
-            поможем к ним подготовиться.</p>
-        <div class="row row-gap-3">
-            <div class="col-lg-9 mb-3">
-                <p><strong>Регистрация закрывается за 24 часа до начала мероприятия.<br>
-                    Количество мест ограничено!</strong></p>
-                <div class="dropdown mb-3">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        Тип мероприятия
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu">
-                        <li>
-                            <button class="dropdown-item active" data-type='all'>Все
-                                <span class="badge text-bg-warning rounded-pill ms-1"
-                                      style="background-color: white !important;">{{ event_list|length }}</span>
-                            </button>
-                        </li>
-                        {% regroup event_list by event_type as event_types %}
-                        {% for event_type in event_types %}
-                        <li>
-                            <button class="dropdown-item" data-type='{{ event_type.grouper.pk }}'>{{ event_type.grouper.name }}
-                                <span class="badge text-bg-warning rounded-pill ms-1"
-                                      style="background-color: {{ event_type.grouper.color }} !important;">{{ event_type.list|length }}</span>
-                            </button>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-
-
-                <div class="modal fade" id="ModalToggle" aria-hidden="true"
-                     aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="ModalToggleLabel">Запись на мероприятие</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div id="form-container">
-
-                                </div>
-
-                            </div>
-                            <div class="modal-footer justify-content-start">
-                            <p class="lh-lg"> По всем вопросам:<br>
-                               <img class='me-1' src='/static/e5_app/frontend/contacts/phone_icon.png' width='23' height='23'>Телефон: <a href='tel:+79254354722,'>+7(925)435-47-22,</a><br>
-                                <img class='me-1' src='/static/e5_app/frontend/contacts/mail_icon.png' width='23' height='23'>Почта: <a href='mailto:e5@bmstu.ru'>e5@bmstu.ru</a><br>
-                           </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                 {% if message %}{{ message }}{% endif %}
-
-                <div class="accordion" id="accordionExample">
-                    {% for event in event_list %}
-                    <div class="accordion-item" data-type="{{ event.event_type.pk }}">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapse{{ event.pk }}" aria-expanded="false"
-                                    aria-controls="collapse{{ event.pk }}"
-                                    style="background-color: {{ event.event_type.color }};">
-                                {{ event.date }} {{ event.name }}
-                            </button>
-                        </h2>
-                        <div id="collapse{{ event.pk }}" class="accordion-collapse collapse"
-                             data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                {% if event.info %}
-                                <p>{{ event.info }}</p>
-                                {% endif %}
-                                <button class="btn btn-primary" value="{{ event }}" hx-get="{% url 'events' %}"
-                                        hx-headers='{"event": "{{ event.pk }}"}' data-bs-toggle="modal"
-                                        data-bs-target="#ModalToggle"
-                                        hx-target="#form-container">Записаться
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="col-lg-3 d-flex flex-column align-items-center mb-3 text-center">
-                <p><strong> Хочешь быть в курсе и не пропустить полезные события, подписывайся на рассылку:</strong></p>
-
-                <div class="modal fade" id="exampleModalToggle" aria-hidden="true"
-                     aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Подписка на анонсы
-                                    мероприятий</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-
-                                {% load crispy_forms_tags %}
-                                {% csrf_token %}
-                                {% crispy mailing_form %}
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-warning mb-3" data-bs-toggle="modal"
-                        data-bs-target="#exampleModalToggle">Хочу быть в курсе
-                </button>
-
-                <div id="calendar">
-                    <script defer data-current_date="{% now 'Y-m-d' %}">
-                        const data = document.currentScript.dataset;
-
-                        var calendarEl = document.getElementById('calendar');
-                        var calendar = new FullCalendar.Calendar(calendarEl, {
-                          themeSystem: 'bootstrap5',
-                          buttonIcons: false,
-                          height: 'auto',
-                          buttonText: {
-                              prev:    '<',
-                              next:    '>',
-                          },
-                          headerToolbar: {
-                            left: '',
-                            center: 'title',
-                            right: '',
-                          },
-                          footerToolbar: {
-                            left: 'prev',
-                            center: 'today',
-                            right: 'next'
-                          },
-                          initialDate: data.current_date,
-                          locale: 'ru',
-                          events: [
-                            {% for event in event_list %}
-                            {
-                              start: '{{ event.date|date:"Y-m-d" }}',
-                              end: '{{ event.date|date:"Y-m-d" }}',
-                              display: 'background',
-                              color: '{{ event.event_type.color }}',
-                            },
-                            {% endfor %}
-                            {
-                              start: '2024-02-11T10:00:00',
-                              end: '2024-02-11T16:00:00',
-                              display: 'background',
-                              color: '#ff9f89'
-                            },
-                          ]
-                        });
-
-                        calendar.render();
-                    </script>
-                </div>
-            </div>
+  <div class="container">
+    <p>
+      Наши мероприятия — это уникальная возможность узнать больше о специальности, деятельности кафедры, специфике
+      работы выпускников, получить ответы на все вопросы. Вы сможете своими глазами увидеть, где вам предстоит учиться
+      после поступления на кафедру Э5. Также мы дадим развернутую информацию по вступительным экзаменам и поможем к ним
+      подготовиться.
+    </p>
+    <div class="row row-gap-3">
+      <div class="col-lg-9 mb-3">
+        <p>
+          <strong
+            >Регистрация закрывается за 24 часа до начала мероприятия.<br />
+            Количество мест ограничено!</strong
+          >
+        </p>
+        <div class="dropdown mb-3">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Тип мероприятия
+          </button>
+          <ul class="dropdown-menu dropdown-menu">
+            <li>
+              <button class="dropdown-item active" data-type="all">
+                Все
+                <span class="badge text-bg-warning rounded-pill ms-1" style="background-color: white !important"
+                  >{{ event_list|length }}</span
+                >
+              </button>
+            </li>
+            {% regroup event_list by event_type as event_types %} {% for event_type in event_types %}
+            <li>
+              <button class="dropdown-item" data-type="{{ event_type.grouper.pk }}">
+                {{ event_type.grouper.name }}
+                <span
+                  class="badge text-bg-warning rounded-pill ms-1"
+                  style="background-color: {{ event_type.grouper.color }} !important;"
+                  >{{ event_type.list|length }}</span
+                >
+              </button>
+            </li>
+            {% endfor %}
+          </ul>
         </div>
+        <div
+          class="modal fade"
+          id="ModalToggle"
+          aria-hidden="true"
+          aria-labelledby="exampleModalToggleLabel"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ModalToggleLabel">Запись на мероприятие</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div id="form-container"></div>
+              </div>
+              <div class="modal-footer justify-content-start">
+                <p class="lh-lg">
+                  По всем вопросам:<br />
+                  <img
+                    class="me-1"
+                    src="/static/e5_app/frontend/contacts/phone_icon.png"
+                    width="23"
+                    height="23"
+                    alt="Иконка теелфона"
+                  />Телефон: <a href="tel:+79254354722,">+7(925)435-47-22,</a><br />
+                  <img
+                    alt="Иконка почты"
+                    class="me-1"
+                    src="/static/e5_app/frontend/contacts/mail_icon.png"
+                    width="23"
+                    height="23"
+                  />Почта: <a href="mailto:e5@bmstu.ru">e5@bmstu.ru</a><br />
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% if message %}{{ message }}{% endif %}
+        <div class="accordion" id="accordionExample">
+          {% for event in event_list %}
+          <div class="accordion-item" data-type="{{ event.event_type.pk }}">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse{{ event.pk }}"
+                aria-expanded="false"
+                aria-controls="collapse{{ event.pk }}"
+                style="background-color: {{ event.event_type.color }};"
+              >
+                {{ event.date }} {{ event.name }}
+              </button>
+            </h2>
+            <div id="collapse{{ event.pk }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                {% if event.info %}
+                <p>{{ event.info }}</p>
+                {% endif %}
+                <button
+                  class="btn btn-primary"
+                  value="{{ event }}"
+                  hx-get="{% url 'events' %}"
+                  hx-headers='{"event": "{{ event.pk }}"}'
+                  data-bs-toggle="modal"
+                  data-bs-target="#ModalToggle"
+                  hx-target="#form-container"
+                >
+                  Записаться
+                </button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-lg-3 d-flex flex-column align-items-center mb-3 text-center">
+        <p><strong> Хочешь быть в курсе и не пропустить полезные события, подписывайся на рассылку:</strong></p>
+        <div
+          class="modal fade"
+          id="exampleModalToggle"
+          aria-hidden="true"
+          aria-labelledby="exampleModalToggleLabel"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Подписка на анонсы мероприятий</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">{% load crispy_forms_tags %} {% csrf_token %} {% crispy mailing_form %}</div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-warning mb-3" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+          Хочу быть в курсе
+        </button>
+        <div id="calendar">
+          <script defer data-current_date="{% now 'Y-m-d' %}">
+            const data = document.currentScript.dataset;
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+              themeSystem: 'bootstrap5',
+              buttonIcons: false,
+              height: 'auto',
+              buttonText: {
+                  prev:    '<',
+                  next:    '>',
+              },
+              headerToolbar: {
+                left: '',
+                center: 'title',
+                right: '',
+              },
+              footerToolbar: {
+                left: 'prev',
+                center: 'today',
+                right: 'next'
+              },
+              initialDate: data.current_date,
+              locale: 'ru',
+              events: [
+                {% for event in event_list %}
+                {
+                  start: '{{ event.date|date:"Y-m-d" }}',
+                  end: '{{ event.date|date:"Y-m-d" }}',
+                  display: 'background',
+                  color: '{{ event.event_type.color }}',
+                },
+                {% endfor %}
+                {
+                  start: '2024-02-11T10:00:00',
+                  end: '2024-02-11T16:00:00',
+                  display: 'background',
+                  color: '#ff9f89'
+                },
+              ]
+            });
+            calendar.render();
+          </script>
+        </div>
+      </div>
     </div>
+  </div>
 </main>
 {% endblock %}

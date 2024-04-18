@@ -1,0 +1,7 @@
+.fc-toolbar {
+    margin-bottom: 4px !important;
+    margin-top: 4px !important;
+}
+.fc-daygrid-day-events {
+    min-height: 0 !important;
+}

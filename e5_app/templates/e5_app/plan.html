@@ -1,26 +1,21 @@
-{% extends './base.html' %}
-
-{% block head %}
-
-{% load static %}
-
-{% endblock %}
-
-{% block title %}Рабочий учебный план - Кафедра Э-5{% endblock %}
-
-{% block content %}
+{% extends './base.html' %} {% block head %} {% load static %} {% endblock %} {% block title %}Рабочий учебный план -
+Кафедра Э-5{% endblock %} {% block content %}
 <div class="container">
   <h1 class="entry-title text-center my-3">Рабочий учебный план</h1>
   <p>В файлах представлена информация о;дисциплинах на 2018/2019 учебный год.</p>
-  <p>Помимо названия дисциплины вы можете посмотреть объем аудиторной работы, график выполнения контрольных мероприятий,
-    а также узнать какие зачеты и экзамены необходимо сдавать в сессию.</p>
-  <p>Рабочий учебный план Бакалавров — <a href="{% static 'e5_app/frontend/plan/plan_b.pdf' %}"
-      target="_blank">скачать</a><br>
-    Рабочий учебный план Специалистов — <a href="{% static 'e5_app/frontend/plan/plan_c.pdf' %}"
-      target="_blank">скачать</a><br>
-    Рабочий учебный план Магистров — <a href="{% static 'e5_app/frontend/plan/plan_m.pdf' %}"
-      target="_blank">скачать</a><br>
-    Рабочий учебный план Аспирантов — <a href="{% static 'e5_app/frontend/plan/plan_a.pdf' %}"
-      target="_blank">скачать</a></p>
+  <p>
+    Помимо названия дисциплины вы можете посмотреть объем аудиторной работы, график выполнения контрольных мероприятий,
+    а также узнать какие зачеты и экзамены необходимо сдавать в сессию.
+  </p>
+  <p>
+    Рабочий учебный план Бакалавров —
+    <a href="{% static 'e5_app/frontend/plan/plan_b.pdf' %}" target="_blank">скачать</a><br />
+    Рабочий учебный план Специалистов —
+    <a href="{% static 'e5_app/frontend/plan/plan_c.pdf' %}" target="_blank">скачать</a><br />
+    Рабочий учебный план Магистров — <a href="{% static 'e5_app/frontend/plan/plan_m.pdf' %}" target="_blank">скачать</a
+    ><br />
+    Рабочий учебный план Аспирантов —
+    <a href="{% static 'e5_app/frontend/plan/plan_a.pdf' %}" target="_blank">скачать</a>
+  </p>
 </div>
 {% endblock %}
