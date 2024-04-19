@@ -6,7 +6,7 @@
   <div class="row justify-content-center g-1">
     {% if message %}{{ message }}{% endif %} {% for employee in employees_list %}
     <div class="col-md-6 col-lg-4 text-center">
-      <img alt="Фото" class="custom-image rounded-circle" src="{{ employee.photo.url }}" width="200" height="200" />
+      <img alt="Фото" class="rounded-circle" src="{{ employee.photo.url }}" width="200" height="200" />
       <h3>
         {% for name in employee.name %} {{ name }}<br />
         {% endfor %}

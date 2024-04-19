@@ -1,52 +1,54 @@
-{% extends './base.html' %} {% block head %} {% load static %} {% endblock %} {% block title %}Вакансии - Кафедра Э-5{%
-endblock %} {% block content %}
-<div class="container">
-  <h1 class="entry-title text-center my-3">Вакансии</h1>
-  <div class="row justify-content-center g-3">
-    {% if message %}{{ message }}{% endif %} {% for vacancy in vacancy_list %}
-    <div class="col-xl-3 col-lg-4 col-md-6">
-      <div class="border-start border-primary border-3 border-opacity-75">
-        <div class="ms-1">
-          <h4>
-            <a
-              href="{% url 'vacancy_single' vacancy.slug_url %}"
-              class="text-decoration-none text-uppercase text-break"
-            >
-              {{ vacancy.name }}</a
-            >
-            {% if vacancy.salary %}<br />
-            <div class="fs-3">{{ vacancy.salary }}</div>
-            {% endif %}
-          </h4>
-          <p class="mb-1">{{ vacancy.company.name}}</p>
-          {% if vacancy.experience %}
-          <p class="mb-1">
-            <img
-              class="me-1 text-lowercase"
-              src="{% static 'e5_app/frontend/vacancy/experience_icon.png' %}"
-              width="18"
-              height="18"
-              alt="Иконка опыта"
-            />
-            {{ vacancy.experience }}
-          </p>
-          {% endif %} {% if vacancy.schedule %}
-          <p class="mb-1">
-            <img
-              class="me-1 text-capitalize"
-              src="{% static 'e5_app/frontend/vacancy/schedule_icon.png' %}"
-              width="18"
-              height="18"
-              alt="Иконка расписания"
-            />
-            {{ vacancy.schedule }}
-          </p>
-          {% endif %}
-          <a href="{% url 'vacancy_single' vacancy.slug_url %}" class="btn btn-primary">Подробнее</a>
+{% extends "./base.html" %}
+{% block head %}
+  {% load static %}
+{% endblock head %}
+{% block title %}
+  Вакансии - Кафедра Э-5
+{% endblock title %}
+{% block content %}
+  <div class="container">
+    <h1 class="entry-title text-center my-3">Вакансии</h1>
+    <div class="row justify-content-center g-3">
+      {% if message %}{{ message }}{% endif %}
+      {% for vacancy in vacancy_list %}
+        <div class="col-xl-3 col-lg-4 col-md-6">
+          <div class="border-start border-primary border-3 border-opacity-75">
+            <div class="ms-1">
+              <h4>
+                <a href="{% url 'vacancy_single' {{ vacancy.slug_url }} %}"
+                   class="text-decoration-none text-uppercase text-break">{{ vacancy.name }}</a>
+                {% if vacancy.salary %}
+                  <br />
+                  <div class="fs-3">{{ vacancy.salary }}</div>
+                {% endif %}
+              </h4>
+              <p class="mb-1">{{ vacancy.company.name }}</p>
+              {% if vacancy.experience %}
+                <p class="mb-1">
+                  <img class="me-1 text-lowercase"
+                       src="{% static 'e5_app/frontend/vacancy/experience_icon.png' %}"
+                       width="18"
+                       height="18"
+                       alt="Иконка опыта" />
+                  {{ vacancy.experience }}
+                </p>
+              {% endif %}
+              {% if vacancy.schedule %}
+                <p class="mb-1">
+                  <img class="me-1 text-capitalize"
+                       src="{% static 'e5_app/frontend/vacancy/schedule_icon.png' %}"
+                       width="18"
+                       height="18"
+                       alt="Иконка расписания" />
+                  {{ vacancy.schedule }}
+                </p>
+              {% endif %}
+              <a href="{% url 'vacancy_single' {{ vacancy.slug_url }} %}"
+                 class="btn btn-primary">Подробнее</a>
+            </div>
+          </div>
         </div>
-      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
-</div>
-{% endblock %}
+{% endblock content %}

@@ -1,6 +1,5 @@
 {% extends './base.html' %} {% block head %} {% load static %}
 <link href="{% static 'e5_app/frontend/css/history.css' %}" rel="stylesheet" />
-<script src="{% static 'e5_app/frontend/js/carousel.js' %}" type="text/javascript"></script>
 {% endblock %} {% block title %}История кафедры - Кафедра Э-5{% endblock %} {% block content %}
 <div class="container">
   <h1 class="entry-title text-center my-3">История кафедры</h1>
@@ -166,7 +165,7 @@
     </div>
     <div class="carousel-inner carousel-inner-custom">
       <div class="carousel-item active">
-        <img src="" class="d-block w-75 image-fluid" />
+        <img src="{% static 'e5_app/frontend/history/history1.jpeg' %}" class="d-block w-75 image-fluid" />
         <div class="carousel-caption d-none d-md-block">
           <p class="text-white" style="text-shadow: black 1px 0 10px">Соловьев и Лубенец</p>
         </div>
@@ -456,4 +455,5 @@
     процесса.
   </p>
 </div>
+<script src="{% static 'e5_app/frontend/js/carousel.js' %}" type="text/javascript"></script>
 {% endblock %}

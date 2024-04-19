@@ -1,15 +1,12 @@
 $(document).ready(function () {
-    document.querySelector('.navbar-brand').addEventListener('mouseenter', function() {
-      document.querySelector('#custom_icon_2').classList.remove('custom_icon_2_out');
-      document.querySelector('#custom_icon_2').classList.add('custom_icon_2_in');
-      document.querySelector('#custom_icon_1').classList.remove('custom_icon_1_out');
-      document.querySelector('#custom_icon_1').classList.add('custom_icon_1_in');
-    });
-
-    document.querySelector('.navbar-brand').addEventListener('mouseleave', function() {
-      document.querySelector('#custom_icon_2').classList.remove('custom_icon_2_in');
-      document.querySelector('#custom_icon_2').classList.add('custom_icon_2_out');
-      document.querySelector('#custom_icon_1').classList.remove('custom_icon_1_in');
-      document.querySelector('#custom_icon_1').classList.add('custom_icon_1_out');
-    });
+  $(".navbar-brand").hover(
+    function () {
+      $("#custom_icon_2").removeClass("custom_icon_2_out").addClass("custom_icon_2_in");
+      $("#custom_icon_1").removeClass("custom_icon_1_out").addClass("custom_icon_1_in");
+    },
+    function () {
+      $("#custom_icon_2").removeClass("custom_icon_2_in").addClass("custom_icon_2_out");
+      $("#custom_icon_1").removeClass("custom_icon_1_in").addClass("custom_icon_1_out");
+    }
+  );
 });

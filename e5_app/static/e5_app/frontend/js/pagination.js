@@ -13,14 +13,12 @@ $(document).ready(function () {
       $(`#${prefix}_1`).text(page);
       $(`#${prefix}_2`).text(page + 1);
       $(`#${prefix}_3`).text(page + 2);
-    }
-    else if (totalPage > 3) {
-      if (page == totalPage){
+    } else if (totalPage > 3) {
+      if (page == totalPage) {
         $(`#${prefix}_1`).text(page - 2);
         $(`#${prefix}_2`).text(page - 1);
         $(`#${prefix}_3`).text(page);
-      }
-      else {
+      } else {
         $(`#${prefix}_1`).text(page - 1);
         $(`#${prefix}_2`).text(page);
         $(`#${prefix}_3`).text(page + 1);
@@ -32,9 +30,9 @@ $(document).ready(function () {
     var rowElement = $(`#${prefix}_row`);
     rowElement.empty();
     $.each(data[`data`], function (index, item) {
-      var additionalInfo = '';
-      if (prefix === 'news') {
-        var innerUrl = site_news_url + item.slug_url + '/';
+      var additionalInfo = "";
+      if (prefix === "news") {
+        var innerUrl = site_news_url + item.slug_url + "/";
         additionalInfo = `
           <img src="${item.picture_url}" class="card-img-top card-img-top-custom" alt="...">
           <div class="card-body">
@@ -46,9 +44,9 @@ $(document).ready(function () {
             <small class="text-body-secondary">${item.created_at}</small>
           </div>
         `;
-      } else if (prefix === 'vacancy') {
-        var innerUrl = site_vacancy_url + item.slug_url + '/';
-        var salaryTitle = item.salary !== null ? `<h5 class="card-title">${item.salary}</h5>` : '';
+      } else if (prefix === "vacancy") {
+        var innerUrl = site_vacancy_url + item.slug_url + "/";
+        var salaryTitle = item.salary !== null ? `<h5 class="card-title">${item.salary}</h5>` : "";
         additionalInfo = `
           <div class="card-header">${item.name}</div>
           <div class="card-body">
@@ -71,16 +69,16 @@ $(document).ready(function () {
 
   function ajax_function(pageIn, prefix) {
     $.ajax({
-      url: '/site/',
+      url: "/site/",
       type: "get",
       headers: {
-        "From": prefix
+        From: prefix,
       },
       data: {
-        'from': prefix,
-        'page': pageIn,
+        from: prefix,
+        page: pageIn,
       },
-      dataType: 'json',
+      dataType: "json",
       success: function (data) {
         totalPage = data.total_pages;
         page = pageIn;
@@ -90,7 +88,7 @@ $(document).ready(function () {
       complete: function (data) {
         console.log(1);
         AOS.refresh();
-      }
+      },
     });
   }
 
@@ -99,31 +97,30 @@ $(document).ready(function () {
   var page_vacancy = 1;
   var totalPage_vacancy = 3;
 
-  ajax_function(1, 'news');
-  ajax_function(1, 'vacancy');
+  ajax_function(1, "news");
+  ajax_function(1, "vacancy");
 
-  $('#news_left').on('click', function () {
-    ajax_function(1, 'news');
+  $("#news_left").on("click", function () {
+    ajax_function(1, "news");
   });
 
-  $('#news_right').on('click', function () {
-    ajax_function(totalPage_news, 'news');
+  $("#news_right").on("click", function () {
+    ajax_function(totalPage_news, "news");
   });
 
-  $('#news_1, #news_2, #news_3').on('click', function () {
-    ajax_function(parseInt($(this).text()), 'news');
+  $("#news_1, #news_2, #news_3").on("click", function () {
+    ajax_function(parseInt($(this).text()), "news");
   });
 
-  $('#vacancy_left').on('click', function () {
-    ajax_function(1, 'vacancy');
+  $("#vacancy_left").on("click", function () {
+    ajax_function(1, "vacancy");
   });
 
-  $('#vacancy_right').on('click', function () {
-    ajax_function(totalPage_vacancy, 'vacancy');
+  $("#vacancy_right").on("click", function () {
+    ajax_function(totalPage_vacancy, "vacancy");
   });
 
-  $('#vacancy_1, #vacancy_2, #vacancy_3').on('click', function () {
-    ajax_function(parseInt($(this).text()), 'vacancy');
+  $("#vacancy_1, #vacancy_2, #vacancy_3").on("click", function () {
+    ajax_function(parseInt($(this).text()), "vacancy");
   });
-
 });

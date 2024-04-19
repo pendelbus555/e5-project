@@ -1,70 +1,71 @@
 .custom-nav {
-    border-radius: 30px !important;
-    border: 2px solid transparent;
+  border-radius: 30px !important;
+  border: 2px solid transparent;
 }
 
 .custom-nav.active {
-    background-color: var(--bs-gray-500) !important;
+  background-color: var(--bs-gray-500) !important;
 }
 
 .custom-nav:hover {
-    border: 2px solid #7d7d7d3b;
-    border-color: var(--bs-gray-600) !important;
+  border: 2px solid #7d7d7d3b;
+  border-color: var(--bs-gray-600) !important;
 }
 
 .custom-link {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .custom-link:hover {
-    color: var(--bs-blue) !important;
+  color: var(--bs-blue) !important;
 }
 
 .custom-btn {
-    color: black !important;
-    border-color: var(--bs-gray-600) !important;
+  color: black !important;
+  border-color: var(--bs-gray-600) !important;
 }
 
 .custom-btn:hover {
-    background-color: var(--bs-gray-500) !important;
+  background-color: var(--bs-gray-500) !important;
 }
 
 .custom-date {
-    flex: 0 0 6em !important;
-    text-align: center;
+  flex: 0 0 6em !important;
+  text-align: center;
 }
 
 .bootstrap-datetimepicker-widget.dropdown-menu.bottom:before {
-    all: initial;
+  all: initial;
 }
 
 .bootstrap-datetimepicker-widget.dropdown-menu.bottom:after {
-    all: initial;
+  all: initial;
 }
 
 .bootstrap-datetimepicker-widget.dropdown-menu.top:before {
-    all: initial;
+  all: initial;
 }
 
 .bootstrap-datetimepicker-widget.dropdown-menu.top:after {
-    all: initial;
+  all: initial;
 }
 
 .bootstrap-datetimepicker-widget.dropdown-menu {
-    inset: auto auto 40px auto !important;
+  inset: auto auto 40px auto !important;
 }
 
 .custom-iframe {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .custom-image {
-    flex-shrink: 0 !important;
-    width: 200px;
-    max-width: 100%;
-    height: 200px;
+  flex-shrink: 0 !important;
+  width: 200px;
+  max-width: 100%;
+  height: 200px;
 }
+
 #content img {
-    max-width: 100% !important;
-    height: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
 }

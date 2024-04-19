@@ -1,112 +1,110 @@
 .custom-background {
-    background-attachment: fixed;
-    background-position: center;
-    position: relative;
-    background-size: cover;
-    width: 100%;
-    background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  position: relative;
+  background-size: cover;
+  width: 100%;
+  background-repeat: no-repeat;
 }
 
 .custom-description p {
-    font-size: 1.3rem;
-    line-height: 1.5;
+  font-size: 1.3rem;
+  line-height: 1.5;
 }
 
 .custom-card {
-    max-width: 300px;
+  max-width: 300px;
 }
 
-.custom-pagination>li>button:focus {
-    outline: none;
-    box-shadow: none;
+.custom-pagination > li > button:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 #custom_icon {
-    width: 50px;
+  width: 50px;
 }
 
 #custom_icon_1 {
-    width: 28px;
-    height: 15px;
-    top: 15px;
-    left: 1px;
-    animation-fill-mode: forwards;
-    animation-duration: 400ms;
-    animation-timing-function: linear;
+  width: 28px;
+  height: 15px;
+  top: 15px;
+  left: 1px;
+  animation-fill-mode: forwards;
+  animation-duration: 400ms;
+  animation-timing-function: linear;
 }
 
 .custom_icon_1_in {
-    animation-name: rotation_1_in;
+  animation-name: rotation_1_in;
 }
 
 .custom_icon_1_out {
-    animation-name: rotation_1_out;
+  animation-name: rotation_1_out;
 }
 
 @keyframes rotation_1_in {
-    from {
-        transform: rotate(-90deg);
-    }
+  from {
+    transform: rotate(-90deg);
+  }
 
-    to {
-        transform: rotate(-180deg);
-    }
+  to {
+    transform: rotate(-180deg);
+  }
 }
 
 @keyframes rotation_1_out {
-    from {
-        transform: rotate(-180deg);
-    }
+  from {
+    transform: rotate(-180deg);
+  }
 
-    to {
-        transform: rotate(-270deg);
-    }
+  to {
+    transform: rotate(-270deg);
+  }
 }
 
 #custom_icon_2 {
-    width: 28px;
-    height: 15px;
-    top: 15px;
-    left: 21px;
-    animation-fill-mode: forwards;
-    animation-duration: 400ms;
-    animation-timing-function: linear;
+  width: 28px;
+  height: 15px;
+  top: 15px;
+  left: 21px;
+  animation-fill-mode: forwards;
+  animation-duration: 400ms;
+  animation-timing-function: linear;
 }
 
 .custom_icon_2_in {
-    animation-name: rotation_2_in;
+  animation-name: rotation_2_in;
 }
 
 .custom_icon_2_out {
-    animation-name: rotation_2_out;
+  animation-name: rotation_2_out;
 }
 
 @keyframes rotation_2_in {
-    from {
-        transform: rotate(0deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
 
-    to {
-        transform: rotate(90deg);
-    }
+  to {
+    transform: rotate(90deg);
+  }
 }
 
 @keyframes rotation_2_out {
-    from {
-        transform: rotate(90deg);
-    }
+  from {
+    transform: rotate(90deg);
+  }
 
-    to {
-        transform: rotate(180deg);
-    }
+  to {
+    transform: rotate(180deg);
+  }
 }
 
 .glassmorphism {
-    background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.02),
-            rgba(255, 255, 255, 0));
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
 }
