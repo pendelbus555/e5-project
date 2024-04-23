@@ -34,7 +34,7 @@ $(document).ready(function () {
       if (prefix === "news") {
         var innerUrl = site_news_url + item.slug_url + "/";
         additionalInfo = `
-          <img src="${item.picture_url}" class="card-img-top card-img-top-custom" alt="...">
+          <img src="${item.picture_url}" class="card-img-top" alt="Новость">
           <div class="card-body">
             <h5 class="card-title">${item.name}</h5>
             <p class="card-text">${item.description}</p>
@@ -86,7 +86,6 @@ $(document).ready(function () {
         updatePagination(page, totalPage, prefix);
       },
       complete: function (data) {
-        console.log(1);
         AOS.refresh();
       },
     });

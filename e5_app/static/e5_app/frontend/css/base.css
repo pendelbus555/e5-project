@@ -1,24 +1,13 @@
-.custom-background {
-  background-attachment: fixed;
-  background-position: center;
-  position: relative;
-  background-size: cover;
-  width: 100%;
-  background-repeat: no-repeat;
+.custom-min-height {
+  min-height: calc(100vh - 134px);
 }
 
-.custom-description p {
-  font-size: 1.3rem;
-  line-height: 1.5;
+.custom-navbar {
+  z-index: 1071;
 }
 
-.custom-card {
-  max-width: 300px;
-}
-
-.custom-pagination > li > button:focus {
-  outline: none;
-  box-shadow: none;
+.custom-copyright {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 #custom_icon {
@@ -57,7 +46,6 @@
   from {
     transform: rotate(-180deg);
   }
-
   to {
     transform: rotate(-270deg);
   }
@@ -85,7 +73,6 @@
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(90deg);
   }
@@ -95,16 +82,7 @@
   from {
     transform: rotate(90deg);
   }
-
   to {
     transform: rotate(180deg);
   }
-}
-
-.glassmorphism {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
 }

@@ -1,0 +1,49 @@
+.custom-background {
+  background-attachment: fixed;
+  background-position: center;
+  position: relative;
+  background-size: cover;
+  width: 100%;
+  background-repeat: no-repeat;
+}
+
+.custom-card {
+  max-width: 300px;
+}
+
+.custom-pagination > li > button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.custom-glassmorphism {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+}
+
+.custom-fade {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+#background_1 {
+  background-image: url("/static/e5_app/frontend/images/background_1.png");
+  height: 100vh;
+}
+#background_2 {
+  background-image: url("/static/e5_app/frontend/images/background_2.png");
+  height: 50vh;
+}
+#background_3 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("/static/e5_app/frontend/images/background_3.png");
+  height: 50vh;
+}
+#custom-offcanvas {
+  height: 50vh;
+}
+#custom-image {
+  height: 50vh;
+}
