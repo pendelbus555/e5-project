@@ -3,6 +3,7 @@ from colorfield.fields import ColorField
 from ckeditor_uploader.fields import RichTextUploadingField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.core.mail import send_mail
+from .tasks import *
 
 
 class Common(models.Model):
@@ -200,9 +201,7 @@ class Event(Common):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        mails = Mailing.objects.all()
-        send_mail(f'Новое мероприятие Э5 {self.date}', f'{self.event_type.name}, {self.info}',
-                  'mrusipusi@gmail.com', list(mails))
+        send_mail_event.delay(self.pk)
 
     class Meta:
         verbose_name = 'Мероприятие'
@@ -254,9 +253,7 @@ class Visitor(Common):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        send_mail(f'Запись на мероприятие Э5 {self.event.event}, {self.event.event.date}',
-                  f'Здравствуйте {self.name}, вы были успешно запсаны на {self.event}',
-                  'mrusipusi@gmail.com', [self.mail])
+        send_mail_visitor.delay(self.pk)
 
     class Meta:
         verbose_name = 'Посетитель'
@@ -275,6 +272,10 @@ class Mailing(models.Model):
 
     def __repr__(self):
         return self.mail
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        send_mail_submitting.delay(self.mail)
 
 
 class HTMLPage(models.Model):

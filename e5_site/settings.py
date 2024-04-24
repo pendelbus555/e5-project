@@ -223,8 +223,7 @@ EMAIL_USE_TLS = True
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://redis:6379",
+        "LOCATION": "redis://redis:6379/0",
     }
 }
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-
