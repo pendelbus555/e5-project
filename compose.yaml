@@ -1,7 +1,7 @@
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: sh -c "python manage.py runserver 0.0.0.0:8000 && celery -A e5_app worker -l info"
     volumes:
       - type: bind
         source: .
@@ -13,6 +13,15 @@ services:
     depends_on:
       - db
       - redis
+  celery:
+    build: .
+    command: celery -A e5_app worker -l info
+    volumes:
+      - type: bind
+        source: .
+        target: /usr/src/e5_site/
+    depends_on:
+      - web
   db:
     image: postgres:14.11
     volumes:
