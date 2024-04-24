@@ -1,113 +1,124 @@
-{% extends './base.html' %} {% block head %} {% load static %}
-<script>
+{% extends "./base.html" %}
+{% block head %}
+  {% load static %}
+  <script>
   {% url 'news' as news_url %}
   var site_news_url = '{{ news_url }}';
-</script>
-<!-- My -->
-<link href="{% static 'e5_app/frontend/css/news.css' %}" rel="stylesheet" />
-{% endblock %} {% block title %}Новости - Кафедра Э-5{% endblock %} {% block content %}
-<header>
-  <h1 class="entry-title text-center my-3">Новости</h1>
-  <div class="container">
-    <ul class="nav nav-pills m-3">
-      <li class="nav-item m-1">
-        <a
-          class="shadow-sm nav-link text-black custom-nav {% if selected == 0 %}active{% endif %}"
-          aria-current="page"
-          href="{% url 'news' %}"
-          >Все</a
-        >
-      </li>
-      {% for rubric in rubrics %}
-      <li class="nav-item m-1">
-        <a
-          class="shadow-sm nav-link text-black custom-nav {% if selected == rubric.pk %}active{% endif %}"
-          href="{% url 'news_rubric' rubric.pk %}"
-          >{{ rubric.name }}</a
-        >
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-</header>
-<main>
-  <div class="container">
-    <div class="row row-gap-3">
-      <div class="col-lg-8">
-        <h2>{{ news_single.name }}</h2>
-        <h6>{{ news_single.created_at }}</h6>
-        {% if news_single.show == 'a' %}
-        <div class="d-flex flex-column flex-md-row">
-          {% if news_single.show == 'a' or news_single.show == 'd' %}
-          <p class="text-break align-self-center flex-fill custom-p">{{ news_single.description }}</p>
-          {% endif %} {% if news_single.show == 'a' or news_single.show == 'p' %} {% if news_single.picture %}
-          <img src="{{ news_single.picture.url }}" class="rounded custom-image flex-fill" alt="Картинка" />
-          {% else %}
-          <img
-            src="{% static 'e5_app/frontend/images/news_default.png' %}"
-            class="rounded custom-image flex-fill"
-            alt="Картинка"
-          />
-          {% endif %} {% endif %}
-        </div>
-        {% elif news_single.show != 'e' %} {% if news_single.show == 'd' %}
-        <p class="text-break align-self-center flex-fill custom-p">{{ news_single.description }}</p>
-        {% endif %} {% if news_single.show == 'p' %} {% if news_single.picture %}
-        <img src="{{ news_single.picture.url }}" class="rounded custom-image flex-fill" alt="Картинка" />
-        {% else %}
-        <img
-          src="{% static 'e5_app/frontend/images/news_default.png' %}"
-          class="rounded custom-image flex-fill"
-          alt="Картинка"
-        />
-        {% endif %} {% endif %} {% endif %}
-        <div class="overflow-scroll" id="content">{{ news_single.content|safe }}</div>
-        <hr />
-        <ul class="nav justify-content-center">
-          {% if news_before %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'news_single' news_before.slug_url %}">&larr;{{ news_before.name }}</a>
+  </script>
+  <!-- My -->
+  <link href="{% static 'e5_app/frontend/css/news.css' %}" rel="stylesheet" />
+{% endblock head %}
+{% block title %}
+  Новости - Кафедра Э-5
+{% endblock title %}
+{% block content %}
+  <header>
+    <h1 class="entry-title text-center my-3">Новости</h1>
+    <div class="container">
+      <ul class="nav nav-pills m-3">
+        <li class="nav-item m-1">
+          <a class="shadow-sm nav-link text-black custom-nav {% if selected == 0 %}active{% endif %}"
+             aria-current="page"
+             href="{% url 'news' %}">Все</a>
+        </li>
+        {% for rubric in rubrics %}
+          <li class="nav-item m-1">
+            <a class="shadow-sm nav-link text-black custom-nav {% if selected == rubric.pk %}active{% endif %}"
+               href="{% url 'news_rubric' rubric.pk %}">{{ rubric.name }}</a>
           </li>
-          {% endif %} {% if news_after %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'news_single' news_after.slug_url %}">{{ news_after.name }}&rarr;</a>
-          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <div class="row row-gap-3">
+        <div class="col-lg-8">
+          <h2>{{ news_single.name }}</h2>
+          <h6>{{ news_single.created_at }}</h6>
+          {% if news_single.show == 'a' %}
+            <div class="d-flex flex-column flex-md-row">
+              {% if news_single.show == 'a' or news_single.show == 'd' %}
+                <p class="text-break align-self-center flex-fill">{{ news_single.description }}</p>
+              {% endif %}
+              {% if news_single.show == 'a' or news_single.show == 'p' %}
+                {% if news_single.picture %}
+                  <img src="{{ news_single.picture.url }}"
+                       width="auto"
+                       height="auto"
+                       class="rounded custom-image flex-fill"
+                       alt="Картинка" />
+                {% else %}
+                  <img src="{% static 'e5_app/frontend/images/news_default.png' %}"
+                       width="auto"
+                       height="auto"
+                       class="rounded custom-image flex-fill"
+                       alt="Картинка" />
+                {% endif %}
+              {% endif %}
+            </div>
+          {% elif news_single.show != 'e' %}
+            {% if news_single.show == 'd' %}
+              <p class="text-break align-self-center flex-fill">{{ news_single.description }}</p>
+            {% endif %}
+            {% if news_single.show == 'p' %}
+              {% if news_single.picture %}
+                <img src="{{ news_single.picture.url }}"
+                     width="auto"
+                     height="auto"
+                     class="rounded custom-image flex-fill"
+                     alt="Картинка" />
+              {% else %}
+                <img src="{% static 'e5_app/frontend/images/news_default.png' %}"
+                     width="auto"
+                     height="auto"
+                     class="rounded custom-image flex-fill"
+                     alt="Картинка" />
+              {% endif %}
+            {% endif %}
           {% endif %}
-        </ul>
-      </div>
-      <div class="col-lg-4 d-flex flex-column align-items-center">
-        <h4>Последние новости</h4>
-        <ul class="list-group list-group-flush mx-3">
-          {% for news in last_news %}
-          <li class="list-group-item py-1">
-            <h5>
-              <a
-                class="text-break stretched-link text-black custom-link fw-normal lh-1 fs-6 text-dark"
-                href="{% url 'news_single' news.slug_url %}"
-                >{{ news.name }}</a
-              >
-            </h5>
-            <small class="text-body-secondary">{{ news.created_at }}</small>
-          </li>
-          {% endfor %}
-        </ul>
-        <a href="{% url 'news' %}"
-          ><button type="button" class="btn btn-outline-secondary align-self-center custom-btn my-1">
-            Все новости
-          </button></a
-        >
-        <iframe
-          class="my-1 custom-iframe"
-          id="ytplayer"
-          type="text/html"
-          width="300"
-          height="150"
-          src="https://www.youtube.com/embed/rdR2PFekmTM"
-          frameborder="0"
-          allowfullscreen
-        ></iframe>
+          <div class="overflow-scroll" id="content">{{ news_single.content|safe }}</div>
+          <hr />
+          <ul class="nav justify-content-center">
+            {% if news_before %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'news_single' news_before.slug_url %}">«{{ news_before.name }}</a>
+              </li>
+            {% endif %}
+            {% if news_after %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'news_single' news_after.slug_url %}">{{ news_after.name }}»</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="col-lg-4 d-flex flex-column align-items-center">
+          <h4>Последние новости</h4>
+          <ul class="list-group list-group-flush mx-3">
+            {% for news in last_news %}
+              <li class="list-group-item py-1">
+                <h5>
+                  <a class="text-break stretched-link text-black custom-link fw-normal lh-1 fs-6 text-dark"
+                     href="{% url 'news_single' news.slug_url %}">{{ news.name }}</a>
+                </h5>
+                <small class="text-body-secondary">{{ news.created_at }}</small>
+              </li>
+            {% endfor %}
+          </ul>
+          <a href="{% url 'news' %}">
+            <button type="button"
+                    class="btn btn-outline-secondary align-self-center custom-btn my-1">Все новости</button>
+          </a>
+          <iframe class="my-1 custom-iframe"
+                  id="ytplayer"
+                  type="text/html"
+                  width="300"
+                  height="150"
+                  src="https://www.youtube.com/embed/rdR2PFekmTM"
+                  frameborder="0"
+                  allowfullscreen></iframe>
+        </div>
       </div>
     </div>
-  </div>
-</main>
-{% endblock %}
+  </main>
+{% endblock content %}

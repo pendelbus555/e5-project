@@ -1,48 +1,50 @@
-{% extends './base.html' %} {% block head %} {% load static %}
-<script>
+{% extends "./base.html" %}
+{% block head %}
+  {% load static %}
+  <script>
   {% url 'news' as news_url %}
   var site_news_url = '{{ news_url }}';
-</script>
-<!-- My -->
-<link href="{% static 'e5_app/frontend/css/news.css' %}" rel="stylesheet" />
-<script src="{% static 'e5_app/frontend/js/load.js' %}" type="text/javascript"></script>
-<!-- Vkontakte Widget -->
-<script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
-{% endblock %} {% block title %}Новости - Кафедра Э-5{% endblock %} {% block content %}
-<header>
-  <h1 class="entry-title text-center my-3">Новости</h1>
-  <div class="container">
-    <ul class="nav nav-pills m-3">
-      <li class="nav-item m-1">
-        <a
-          class="shadow-sm nav-link text-black custom-nav {% if selected == 0 %}active{% endif %}"
-          aria-current="page"
-          href="{% url 'news' %}"
-          >Все</a
-        >
-      </li>
-      {% for rubric in rubrics %}
-      <li class="nav-item m-1">
-        <a
-          class="shadow-sm nav-link text-black custom-nav {% if selected == rubric.pk %}active{% endif %}"
-          href="{% url 'news_rubric' rubric.pk %}"
-          >{{ rubric.name }}</a
-        >
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-</header>
-<main>
-  <div class="container">
-    <div class="row row-gap-3">
-      <div id="newsColumn" class="col-lg-8 d-flex flex-column">
-        {% if message %}{{ message }}{% endif %}
-        <ul class="list-group list-group-flush"></ul>
-      </div>
-      <div class="col-lg-4 d-flex flex-column align-items-center">
-        <div id="vk_groups"></div>
-        <script type="text/javascript">
+  </script>
+  <!-- My -->
+  <link href="{% static 'e5_app/frontend/css/news.css' %}" rel="stylesheet" />
+  <script src="{% static 'e5_app/frontend/js/load.js' %}"
+          type="text/javascript"></script>
+  <!-- Vkontakte Widget -->
+  <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
+{% endblock head %}
+{% block title %}
+  Новости - Кафедра Э-5
+{% endblock title %}
+{% block content %}
+  <header>
+    <h1 class="entry-title text-center my-3">Новости</h1>
+    <div class="container">
+      <ul class="nav nav-pills m-3">
+        <li class="nav-item m-1">
+          <a class="shadow-sm nav-link text-black custom-nav {% if selected == 0 %}active{% endif %}"
+             aria-current="page"
+             href="{% url 'news' %}">Все</a>
+        </li>
+        {% for rubric in rubrics %}
+          <li class="nav-item m-1">
+            <a class="shadow-sm nav-link text-black custom-nav {% if selected == rubric.pk %}active{% endif %}"
+               href="{% url 'news_rubric' rubric.pk %}">{{ rubric.name }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <div class="row row-gap-3">
+        <div id="newsColumn" class="col-lg-8 d-flex flex-column">
+          {% if message %}{{ message }}{% endif %}
+          <ul class="list-group list-group-flush">
+          </ul>
+        </div>
+        <div class="col-lg-4 d-flex flex-column align-items-center">
+          <div id="vk_groups"></div>
+          <script type="text/javascript">
           $(document).ready(function () {
             VK.Widgets.Group(
               "vk_groups",
@@ -50,10 +52,13 @@
               78712884
             );
           });
-        </script>
-        {% if form %} {% load crispy_forms_tags %} {% csrf_token %} {% crispy form %} {% endif %}
+          </script>
+          {% if form %}
+            {% load crispy_forms_tags %}
+            {% csrf_token %} {% crispy form %}
+          {% endif %}
+        </div>
       </div>
     </div>
-  </div>
-</main>
-{% endblock %}
+  </main>
+{% endblock content %}

@@ -6,3 +6,6 @@
 .fc-daygrid-day-events {
   min-height: 0 !important;
 }
+.custom-badge {
+  background-color: white !important;
+}
