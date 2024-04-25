@@ -1,9 +1,6 @@
 {% extends "./base.html" %}
 {% block head %}
   {% load static %}
-  <link href="{% static 'e5_app/frontend/css/employees.css' %}"
-        rel="stylesheet"
-        xmlns="http://www.w3.org/1999/html" />
 {% endblock head %}
 {% block title %}
   Сотрудники - Кафедра Э-5
@@ -19,15 +16,15 @@
                class="rounded-circle"
                src="{{ employee.photo.url }}"
                width="200"
-               height="200" />
+               height="200">
           <h3>
             {% for name in employee.name %}
               {{ name }}
               <br />
             {% endfor %}
           </h3>
-          {% if employee.description %}
-            <p>
+          <p>
+            {% if employee.description %}
               {{ employee.description }}
               <br />
             {% endif %}

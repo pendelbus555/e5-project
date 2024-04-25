@@ -15,7 +15,7 @@
           <div class="border-start border-primary border-3 border-opacity-75">
             <div class="ms-1">
               <h4>
-                <a href="{% url 'vacancy_single' {{ vacancy.slug_url }} %}"
+                <a href="{% url 'vacancy_single' vacancy.slug_url %}"
                    class="text-decoration-none text-uppercase text-break">{{ vacancy.name }}</a>
                 {% if vacancy.salary %}
                   <br />
@@ -43,7 +43,7 @@
                   {{ vacancy.schedule }}
                 </p>
               {% endif %}
-              <a href="{% url 'vacancy_single' {{ vacancy.slug_url }} %}"
+              <a href="{% url 'vacancy_single' vacancy.slug_url %}"
                  class="btn btn-primary">Подробнее</a>
             </div>
           </div>

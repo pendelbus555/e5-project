@@ -81,6 +81,11 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         totalPage = data.total_pages;
+        if (prefix === "news") {
+          totalPage_news = totalPage;
+        } else if (prefix === "vacancy") {
+          totalPage_vacancy = totalPage;
+        }
         page = pageIn;
         updateCards(data, prefix);
         updatePagination(page, totalPage, prefix);
