@@ -1,0 +1,12 @@
+{% load static %}
+<div class="row justify-content-center g-2 m-1">
+    {% for n in counts %}
+        <div class="col-sm-6 col-md-4">
+            <img alt="{{ alt }} {{ n }}"
+                 width="auto"
+                 height="auto"
+                 src="{% static 'e5_app/frontend/directions/'|add:src|add:n|add:'.jpg' %}"
+                 class="rounded img-fluid mx-auto d-block" />
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,6 @@
+{% for i in counts %}
+    <button type="button"
+            data-bs-target="{{ target }}"
+            data-bs-slide-to="{{ i|add:'-1' }}"
+            aria-label="Slide {{ i }}"></button>
+{% endfor %}

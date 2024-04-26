@@ -1,0 +1,10 @@
+{% load static %}
+{% for h in counts %}
+    <div class="carousel-item">
+        <img alt="{{ alt }} {{ h }}"
+             width="auto"
+             height="auto"
+             src="{% static 'e5_app/frontend/history/'|add:src|add:h|add:'.jpeg' %}"
+             class="d-block image-fluid" />
+    </div>
+{% endfor %}

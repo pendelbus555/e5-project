@@ -1,6 +1,7 @@
 {% extends "./base.html" %}
 {% block head %}
   {% load static %}
+  {% load e5_app_extras %}
 {% endblock head %}
 {% block title %}
   Основные направления
@@ -17,23 +18,7 @@
       сертифицированы и серийно производятся. Данные изделия отличатся высокими техническими и потребительскими
       характеристиками и пользуются устойчивым спросом на рынке экологически чистых компрессоров.
     </p>
-    <div class="row justify-content-center g-2 m-1">
-      <div class="col-sm-6 col-md-4">
-        <img alt="Направление 1"
-             src="{% static 'e5_app/frontend/directions/directions1.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Направление 2"
-             src="{% static 'e5_app/frontend/directions/directions2.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Направление 3"
-             src="{% static 'e5_app/frontend/directions/directions3.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-    </div>
+    {% directions_tag 1 4 'Направления' 'directions' %}
     <p>
       Научное направление и специализацию «вакуумные машины и установки» основала к.т.н., доцент Е.Е. Соколова. Сегодня ее
       возглавляет к.т.н., доцент Н.К. Никулин. Преподавателями кафедры разработана теория расчета и оптимизации параметров
@@ -44,23 +29,7 @@
       молекулярно-вязкостном режиме МВВН5. Данная машина обладает высокими техническими характеристиками и
       конкурентоспособна на рынке вакуумной техники.
     </p>
-    <div class="row justify-content-center g-2 m-1">
-      <div class="col-sm-6 col-md-4">
-        <img alt="Направление 4"
-             src="{% static 'e5_app/frontend/directions/directions4.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Направление 5"
-             src="{% static 'e5_app/frontend/directions/directions5.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Направление 6"
-             src="{% static 'e5_app/frontend/directions/directions6.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-    </div>
+    {% directions_tag 4 7 'Направления' 'directions' %}
     <p>
       Научное направление и специализацию «пневмосистемы и пневмоагрегаты» основал к.т.н., доцент Л.В. Мышляев. Сегодня ее
       возглавляет д.т.н., профессор А.В. Чернышев. Основным направлением научной деятельности являлось создание теории
@@ -76,38 +45,7 @@
       серийному производству и применению в медицинской практике в РФ. Оборудование серийно производится и поставляется в
       российские и зарубежные исследовательские и медицинские учреждения.
     </p>
-    <div class="row justify-content-center g-2 m-1">
-      <div class="col-sm-6 col-md-4">
-        <img alt="Направление 7"
-             src="{% static 'e5_app/frontend/directions/directions7.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Направление 8"
-             src="{% static 'e5_app/frontend/directions/directions8.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Направление 9"
-             src="{% static 'e5_app/frontend/directions/directions9.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Направление 10"
-             src="{% static 'e5_app/frontend/directions/directions10.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Направление 11"
-             src="{% static 'e5_app/frontend/directions/directions11.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Направление 12"
-             src="{% static 'e5_app/frontend/directions/directions12.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-    </div>
+    {% directions_tag 7 13 'Направления' 'directions' %}
     <h4>Партнеры кафедры</h4>
     <p>
       Кафедра поддерживает тесные научно-педагогические связи с ведущими университетами России. Это прежде всего МГУ им.
@@ -127,13 +65,7 @@
       высоковакуумных механических насосов».
     </p>
     <h4>Оснащение</h4>
-    <div class="row justify-content-center g-2 m-1">
-      <div class="col-sm-6 col-md-4">
-        <img alt="Оснащение"
-             src="{% static 'e5_app/frontend/directions/equipment1.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-    </div>
+    {% directions_tag 1 2 'Оснащения' 'equipment' %}
     <p>
       В вакуумной лаборатории создана установка для исследования турбомолекулярного вакуумного насоса в режиме удаленного
       доступа.Учебные и исследовательские лаборатории кафедры оснащены современным оборудованием и лабораторными стендами.
@@ -143,23 +75,7 @@
       оборудованием, в том числе 3D принтером Z-450 (компании Z-Сorporation США).
     </p>
     <h4>Научно-исследовательская работа студентов</h4>
-    <div class="row justify-content-center g-2 m-1">
-      <div class="col-sm-6 col-md-4">
-        <img alt="Студенты 1"
-             src="{% static 'e5_app/frontend/directions/students1.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Студенты 2"
-             src="{% static 'e5_app/frontend/directions/students2.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Студенты 3"
-             src="{% static 'e5_app/frontend/directions/students3.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-    </div>
+    {% directions_tag 1 4 'Студенты' 'students' %}
     <p>
       Современные методы обучения дополняются самостоятельной научно-исследовательской работой студентов по конкретным
       инженерным проблемам. Студенты кафедры принимают активное участие в научно-исследовательских и
@@ -169,22 +85,6 @@
       Z-450.
       <br />
     </p>
-    <div class="row justify-content-center g-2 m-1">
-      <div class="col-sm-6 col-md-4">
-        <img alt="Студенты 4"
-             src="{% static 'e5_app/frontend/directions/students4.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Студенты 5"
-             src="{% static 'e5_app/frontend/directions/students5.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <img alt="Студенты 6"
-             src="{% static 'e5_app/frontend/directions/students6.jpg' %}"
-             class="rounded img-fluid mx-auto d-block" />
-      </div>
-    </div>
+    {% directions_tag 4 7 'Студенты' 'students' %}
   </div>
 {% endblock content %}
